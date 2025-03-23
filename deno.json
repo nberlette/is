@@ -9,8 +9,8 @@
   },
   "exports": {
     ".": "./mod.ts",
-    "./namespace": "./namespace.ts",
-    "./namespace/types": "./types.ts",
+    "./namespace": "./src/namespace.ts",
+    "./namespace/types": "./src/namespace_types.ts",
     "./arguments": "./src/arguments.ts",
     "./arraybuffer": "./src/array_buffer.ts",
     "./arraybuffer/like": "./src/array_buffer_like.ts",

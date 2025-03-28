@@ -1,3 +1,9 @@
+/*!
+ * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
+ * @license MIT (https://nick.mit-license.org/2024)
+ * @see https://jsr.io/@nick/is@0.2.0-rc.2/doc/date
+ */
+
 /**
  * Checks if a given value is a `Date` instance. This is a more reliable check
  * than `it instanceof Date` because it also works across different realms.

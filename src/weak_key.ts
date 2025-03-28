@@ -1,3 +1,9 @@
+/*!
+ * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
+ * @license MIT (https://nick.mit-license.org/2024)
+ * @see https://jsr.io/@nick/is@0.2.0-rc.2/doc/weak-key
+ */
+
 /**
  * Checks if a value is valid as a weak key, meaning it can be used as a key
  * in a `WeakMap`, a value in a `WeakSet`, or as the target of a `WeakRef`.

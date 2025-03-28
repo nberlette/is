@@ -1,3 +1,9 @@
+/*!
+ * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
+ * @license MIT (https://nick.mit-license.org/2024)
+ * @see https://jsr.io/@nick/is@0.2.0-rc.2/doc/unique-symbol
+ */
+
 import type { Brand } from "./_internal.ts";
 import { isRegisteredSymbol } from "./registered_symbol.ts";
 import { isWellKnownSymbol } from "./well_known_symbol.ts";

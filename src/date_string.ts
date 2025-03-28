@@ -1,3 +1,9 @@
+/*!
+ * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
+ * @license MIT (https://nick.mit-license.org/2024)
+ * @see https://jsr.io/@nick/is@0.2.0-rc.2/doc/date-string
+ */
+
 /**
  * This module provides a function to check if a given value is a valid date
  * string, meaning it can be parsed by the native `Date` constructor as-is,

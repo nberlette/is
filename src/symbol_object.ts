@@ -1,3 +1,9 @@
+/*!
+ * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
+ * @license MIT (https://nick.mit-license.org/2024)
+ * @see https://jsr.io/@nick/is@0.2.0-rc.2/doc/symbol-object
+ */
+
 /**
  * Checks if a value is a Symbol Object, which is a boxed symbol primitive that
  * was created by wrapping a primitive symbol with the `Object()` function.

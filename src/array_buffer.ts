@@ -1,3 +1,9 @@
+/*!
+ * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
+ * @license MIT (https://nick.mit-license.org/2024)
+ * @see https://jsr.io/@nick/is@0.2.0-rc.2/doc/array-buffer
+ */
+
 /**
  * Returns `true` if {@linkcode it} is an `ArrayBuffer`. This does not include
  * instances of the `SharedArrayBuffer`, which has its own type guard. To check

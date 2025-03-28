@@ -1,3 +1,9 @@
+/*!
+ * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
+ * @license MIT (https://nick.mit-license.org/2024)
+ * @see https://jsr.io/@nick/is@0.2.0-rc.2/doc/object-like
+ */
+
 /**
  * Check if a given value is a non-null object-like value, which includes plain
  * objects, arrays, functions, classes, class instances, and other objects.

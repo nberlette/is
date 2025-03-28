@@ -1,3 +1,9 @@
+/*!
+ * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
+ * @license MIT (https://nick.mit-license.org/2024)
+ * @see https://jsr.io/@nick/is@0.2.0-rc.2/doc/closer
+ */
+
 /**
  * Checks if a given value implments the `Deno.Closer` interface, which means
  * it has a `close` method that can be called to release associated resources.

@@ -1,3 +1,9 @@
+/*!
+ * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
+ * @license MIT (https://nick.mit-license.org/2024)
+ * @see https://jsr.io/@nick/is@0.2.0-rc.2/doc/number
+ */
+
 /**
  * Checks if the given value is a number. This includes all numbers, without
  * distinguishing between `NaN`, `Infinity`, and other special values.

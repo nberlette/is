@@ -1,3 +1,25 @@
+/*!
+ * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
+ * @license MIT (https://nick.mit-license.org/2024)
+ * @see https://jsr.io/@nick/is@0.2.0-rc.2/doc/writer-sync
+ */
+
+/**
+ * Checks if a given value is a synchronous writer, which is an object that
+ * implements a `writeSync` method as per Deno's `WriterSync` interface.
+ *
+ * @example
+ * ```ts
+ * import { isWriterSync } from "jsr:@nick/is/writer-sync";
+ *
+ * const file = Deno.openSync("file.txt", { write: true });
+ * isWriterSync(file); // true
+ *
+ * const socket = new WebSocket("ws://example.com");
+ * isWriterSync(socket); // false
+ * ```
+ * @module writer-sync
+ */
 /**
  * Checks if a given value is a synchronous writer, which is an object that
  * implements a `writeSync` method as per Deno's `WriterSync` interface.
@@ -15,11 +37,12 @@
  * isWriterSync(socket); // false
  * ```
  * @category I/O
- * @module writer-sync
  */
 export function isWriterSync(it: unknown): it is WriterSync {
-  return typeof it === "object" && it !== null && "writeSync" in it &&
-    typeof it.writeSync === "function";
+  return (
+    (typeof it === "function" || typeof it === "object" && it !== null) &&
+    ("writeSync" in it && typeof it.writeSync === "function")
+  );
 }
 
 export default isWriterSync;

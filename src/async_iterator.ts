@@ -1,3 +1,9 @@
+/*!
+ * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
+ * @license MIT (https://nick.mit-license.org/2024)
+ * @see https://jsr.io/@nick/is@0.2.0-rc.2/doc/async-iterator
+ */
+
 /**
  * Check if the given value is an async iterator, which is an object that has a
  * `"next"` method that returns a promise for an iterator result.

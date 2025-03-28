@@ -1,3 +1,9 @@
+/*!
+ * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
+ * @license MIT (https://nick.mit-license.org/2024)
+ * @see https://jsr.io/@nick/is@0.2.0-rc.2/doc/typed-array
+ */
+
 /**
  * Checks if a given value is a typed array, which is a view over a raw binary
  * data buffer (e.g. `ArrayBuffer`) that provides a fixed-size, typed view into

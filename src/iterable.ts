@@ -1,3 +1,9 @@
+/*!
+ * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
+ * @license MIT (https://nick.mit-license.org/2024)
+ * @see https://jsr.io/@nick/is@0.2.0-rc.2/doc/iterable
+ */
+
 /**
  * Checks if a given value is an iterable. This includes arrays, strings, maps,
  * sets, and any other value with a `Symbol.iterator` method. If you need to

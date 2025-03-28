@@ -1,3 +1,9 @@
+/*!
+ * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
+ * @license MIT (https://nick.mit-license.org/2024)
+ * @see https://jsr.io/@nick/is@0.2.0-rc.2/doc/positive-nonzero-finite-integer
+ */
+
 import type { Cast, FINITE, INTEGER, NON_ZERO, POSITIVE } from "./types.ts";
 import { isNonZeroFiniteInteger } from "./nonzero_finite_integer.ts";
 

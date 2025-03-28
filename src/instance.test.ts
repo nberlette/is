@@ -1,9 +1,15 @@
+/*!
+ * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
+ * @license MIT (https://nick.mit-license.org/2024)
+ * @see https://jsr.io/@nick/is@0.2.0-rc.2/doc/instance
+ */
+
 import { describe, it } from "@std/testing/bdd";
 import { expect } from "@std/expect";
 
 import { isInstance } from "./instance.ts";
 import { expectType } from "./_internal.ts";
-import type { Constructor } from "../types.ts";
+import type { Constructor } from "./constructor.ts";
 
 describe("isInstance: fundamentals", () => {
   it("is a function", () => expect(isInstance).toBeInstanceOf(Function));

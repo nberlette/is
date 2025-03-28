@@ -1,3 +1,9 @@
+/*!
+ * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
+ * @license MIT (https://nick.mit-license.org/2024)
+ * @see https://jsr.io/@nick/is@0.2.0-rc.2/doc/reader
+ */
+
 /**
  * Checks if a given value is an asynchronous reader, which is an object that
  * implements the `read` method as per Deno's `Reader` interface.

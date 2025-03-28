@@ -1,3 +1,24 @@
+/*!
+ * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
+ * @license MIT (https://nick.mit-license.org/2024)
+ * @see https://jsr.io/@nick/is@0.2.0-rc.2/doc/writer
+ */
+
+/**
+ * Checks if a given value is an asynchronous Writer, which is an object that
+ * implements a `write` method as per Deno's `Writer` interface.
+ *
+ * @example
+ * ```ts
+ * import { isWriter } from "jsr:@nick/is/writer";
+ *
+ * isWriter(Deno.stdout); // true
+ * isWriter(Deno.stderr); // true
+ * isWriter(Deno.stdin); // false
+ * ```
+ * @module writer
+ */
+
 /**
  * Checks if a given value is an asynchronous Writer, which is an object that
  * implements a `write` method as per Deno's `Writer` interface.
@@ -13,11 +34,12 @@
  * isWriter(Deno.stdin); // false
  * ```
  * @category I/O
- * @module writer
  */
 export function isWriter(it: unknown): it is Writer {
-  return typeof it === "object" && it !== null && "write" in it &&
-    typeof it.write === "function";
+  return (
+    (typeof it === "function" || typeof it === "object" && it !== null) &&
+    ("write" in it && typeof it.write === "function")
+  );
 }
 
 export default isWriter;

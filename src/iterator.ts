@@ -1,3 +1,9 @@
+/*!
+ * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
+ * @license MIT (https://nick.mit-license.org/2024)
+ * @see https://jsr.io/@nick/is@0.2.0-rc.2/doc/iterator
+ */
+
 /**
  * Provides a type guard function, {@linkcode isIterator}, that checks if a
  * given value appears to be an `Iterator` object, that is, an object with a

@@ -1,3 +1,9 @@
+/*!
+ * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
+ * @license MIT (https://nick.mit-license.org/2024)
+ * @see https://jsr.io/@nick/is@0.2.0-rc.2/doc/boxed-primitive
+ */
+
 /**
  * Checks if a value is a boxed-primitive object, which is an object that was
  * created by wrapping a primitive value in the `Object()` wrapper function,

@@ -1,4 +1,10 @@
 // deno-lint-ignore-file ban-types
+/*!
+ * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
+ * @license MIT (https://nick.mit-license.org/2024)
+ * @see https://jsr.io/@nick/is@0.2.0-rc.2/doc/is-tagged-native
+ */
+
 import { toString } from "./to_string.ts";
 
 /**
@@ -24,13 +30,9 @@ export function isTaggedNative<U extends {}, T extends string>(
   allowCustom?: boolean,
 ): boolean {
   tag = tag.toString().replace(/^\[object (.+)\]$/, "$1") as T;
-
-  if (toString(it = Object(it)) === `[object ${tag}]`) {
-    return (
-      (Symbol.toStringTag in it && it[Symbol.toStringTag] === tag) ||
-      // deno-lint-ignore no-explicit-any
-      (!allowCustom && typeof (it as any)[Symbol.toStringTag] === "undefined")
-    );
-  }
-  return false;
+  return toString(it = Object(it)) === `[object ${tag}]` &&
+    (allowCustom
+      ? Symbol.toStringTag in it && it[Symbol.toStringTag] === tag
+      : typeof (it as Record<symbol, unknown>)[Symbol.toStringTag] ===
+        "undefined");
 }

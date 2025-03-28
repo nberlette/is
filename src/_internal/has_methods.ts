@@ -1,4 +1,10 @@
 // deno-lint-ignore-file ban-types
+/*!
+ * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
+ * @license MIT (https://nick.mit-license.org/2024)
+ * @see https://jsr.io/@nick/is@0.2.0-rc.2/doc/has-methods
+ */
+
 /**
  * Composite type guard that checks if the given value {@linkcode it} contains
  * all the specified {@linkcode keys}, and also that each is a callable method.
@@ -10,7 +16,8 @@
  * @template K The type of the keys to check.
  * @param it The object to check.
  * @param keys The keys to check for.
- * @returns `true` if the object has all the specified keys, and each key is a callable method; otherwise, `false`.
+ * @returns `true` if the object has all the specified keys, and each key is a
+ * callable method; otherwise, `false`.
  * @category Guards
  */
 // deno-fmt-ignore

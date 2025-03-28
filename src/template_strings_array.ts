@@ -1,3 +1,9 @@
+/*!
+ * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
+ * @license MIT (https://nick.mit-license.org/2024)
+ * @see https://jsr.io/@nick/is@0.2.0-rc.2/doc/template-strings-array
+ */
+
 /**
  * Checks if the given value is a template strings array, which is an array of
  * strings with an own property named `raw` that also is an array of strings.

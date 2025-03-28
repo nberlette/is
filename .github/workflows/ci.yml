@@ -1,0 +1,139 @@
+name: CI
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      run-deno-lint:
+        description: "Run deno lint?"
+        required: false
+        default: true
+        type: boolean
+      run-deno-fmt:
+        description: "Run deno fmt --check?"
+        required: false
+        default: true
+        type: boolean
+      run-deno-test:
+        description: "Run deno test?"
+        required: false
+        default: true
+        type: boolean
+      run-doc-lint:
+        description: "Run deno doc --lint?"
+        required: false
+        default: true
+        type: boolean
+      run-doc-test:
+        description: "Run deno test --doc?"
+        required: false
+        default: true
+        type: boolean
+      run-deno-coverage:
+        description: "Run deno coverage?"
+        required: false
+        default: false
+        type: boolean
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: setup deno
+        uses: denoland/setup-deno@main
+        with:
+          deno-version: canary
+
+      - id: lint
+        if: |
+          github.event_name != 'workflow_dispatch' ||
+          github.event.inputs.run-deno-lint == 'true'
+        name: deno lint
+        run: deno lint
+
+      - id: fmt
+        if: |
+          github.event_name != 'workflow_dispatch' ||
+          github.event.inputs.run-deno-fmt == 'true'
+        name: deno fmt
+        run: deno fmt --check
+
+      - id: test
+        if: |
+          github.event_name != 'workflow_dispatch' ||
+          github.event.inputs.run-deno-test == 'true'
+        continue-on-error: true
+        name: deno test
+        run: deno test -A --no-check=remote --parallel --coverage=.coverage --permit-no-files
+
+      # Only run doc test if the workflow is triggered manually and
+      # the doc-test input is set to true. this is temporary until
+      # all the doc test issues are fixed.
+      - id: doc-test
+        continue-on-error: true
+        if: |
+          github.event_name == 'workflow_dispatch' &&
+          github.event.inputs.run-doc-test == 'true'
+        name: deno test --doc
+        run: deno test -A --no-check=remote --parallel --coverage=.coverage --doc
+
+      - id: coverage
+        if: |
+          (
+            steps.test.conclusion == 'success' ||
+            steps.doc-test.conclusion == 'success'
+          ) && (
+            (
+              github.event_name == 'workflow_dispatch' &&
+              github.event.inputs.run-deno-coverage == 'true'
+            ) || (
+              github.event_name != 'workflow_dispatch' &&
+              startsWith(github.ref, 'refs/tags/')
+            )
+          )
+        name: deno coverage
+        run: |
+          deno coverage --detailed .coverage
+          deno coverage --lcov --output=lcov.info .coverage
+          echo -e "\e[92m✔︎ LCOV report generated at $(pwd)/lcov.info\e[0m"
+          deno coverage --html .coverage
+          mv .coverage/html lcov_html
+          echo -e "\e[92m✔︎ HTML report generated at $(pwd)/lcov_html/index.html\e[0m"
+
+      - id: artifacts
+        if: |
+          steps.coverage.outcome == 'success' && (
+            (
+              github.event_name == 'workflow_dispatch' &&
+              github.event.inputs.run-deno-coverage == 'true'
+            ) || (
+              github.event_name != 'workflow_dispatch' &&
+              startsWith(github.ref, 'refs/tags/')
+            )
+          )
+        name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: |
+            lcov_html
+            lcov.info
+            .coverage
+          retention-days: 14
+
+      # Only run doc lint if the workflow is triggered manually and
+      # the doc-lint input is set to true. this is temporary until
+      # all the doc lint issues are fixed.
+      - id: doc-lint
+        if: |
+          github.event_name == 'workflow_dispatch' &&
+          github.event.inputs.run-doc-lint == 'true'
+        name: deno doc
+        run: deno doc --lint mod.ts src/**/*.ts

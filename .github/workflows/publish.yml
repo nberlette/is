@@ -1,0 +1,29 @@
+name: Publish
+on:
+  push:
+    tags:
+      - "*"
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: "Publish to JSR?"
+        required: false
+        default: true
+        type: boolean
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Publish
+        run: |
+          npx jsr publish --dry-run --allow-dirty && \
+          npx jsr publish --allow-dirty

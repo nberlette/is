@@ -1,3 +1,9 @@
+/*!
+ * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
+ * @license MIT (https://nick.mit-license.org/2024)
+ * @see https://jsr.io/@nick/is@0.2.0-rc.2/doc/namespace
+ */
+
 /**
  * This module provides all of the type guards in the library, renamed into the
  * naming convention of `isString -> is.string`.
@@ -56,7 +62,7 @@ import function_ from "./function.ts";
 import generatorFunction from "./generator_function.ts";
 import generator from "./generator.ts";
 import identifier from "./identifier.ts";
-import instance, { isInstance } from "./instance.ts";
+import instance from "./instance.ts";
 import int16Array from "./int16_array.ts";
 import int32Array from "./int32_array.ts";
 import int8Array from "./int8_array.ts";
@@ -116,6 +122,11 @@ import weakKey from "./weak_key.ts";
 import weakMap from "./weak_map.ts";
 import weakRef from "./weak_ref.ts";
 import weakSet from "./weak_set.ts";
+import whitespace, {
+  isWhitespaceChar as whitespaceChar,
+  isWhitespaceCode as whitespaceCode,
+  isWhitespaceLike as whitespaceLike,
+} from "./whitespace.ts";
 import writableStream from "./writable_stream.ts";
 import writerSync from "./writer_sync.ts";
 import writer from "./writer.ts";
@@ -266,6 +277,7 @@ export {
   infinity,
   inRange,
   instance,
+  instance as instanceof,
   int16,
   int16Array,
   int32,
@@ -273,13 +285,12 @@ export {
   int8,
   int8Array,
   integer,
-  isInstance as instanceof,
   iterable,
   iterableIterator,
   iterableObject,
   iterator,
-  keyOf,
   keyof,
+  keyof as keyOf,
   map,
   mapIterator,
   mapLike,
@@ -361,6 +372,10 @@ export {
   weakRef,
   weakSet,
   wellKnownSymbol,
+  whitespace,
+  whitespaceChar,
+  whitespaceCode,
+  whitespaceLike,
   writableStream,
   writer,
   writerSync,

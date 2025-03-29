@@ -38,7 +38,7 @@
  * @category Primitives
  */
 export function isMissing(it: unknown): it is null | undefined {
-  return it === null || it === undefined;
+  return it == null;
 }
 
 export default isMissing;

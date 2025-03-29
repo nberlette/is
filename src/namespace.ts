@@ -21,10 +21,9 @@ import arrayBufferLike from "./array_buffer_like.ts";
 import arrayBufferView from "./array_buffer_view.ts";
 import arrayBuffer from "./array_buffer.ts";
 import arrayIterator from "./array_iterator.ts";
-import arrayLike, {
-  isArrayLikeObject as arrayLikeObject,
-} from "./array_like.ts";
-import array, { isNonEmptyArray as nonEmptyArray } from "./array.ts";
+import arrayLike from "./array_like.ts";
+import arrayLikeObject from "./array_like_object.ts";
+import array from "./array.ts";
 import asyncDisposable from "./async_disposable.ts";
 import asyncFunction from "./async_function.ts";
 import asyncGeneratorFunction from "./async_generator_function.ts";
@@ -70,11 +69,12 @@ import iterableIterator from "./iterable_iterator.ts";
 import iterableObject from "./iterable_object.ts";
 import iterable from "./iterable.ts";
 import iterator from "./iterator.ts";
-import keyof, { isKeyOf as keyOf } from "./keyof.ts";
+import keyof from "./keyof.ts";
 import mapIterator from "./map_iterator.ts";
 import mapLike from "./map_like.ts";
 import map from "./map.ts";
 import missing from "./missing.ts";
+import nonEmptyArray from "./non_empty_array.ts";
 import null_ from "./null.ts";
 import numberObject from "./number_object.ts";
 import objectLike from "./object_like.ts";
@@ -172,6 +172,9 @@ import finite from "./number/finite.ts";
 import negativeNonZero from "./number/negative_nonzero.ts";
 import positiveNonZero from "./number/positive_nonzero.ts";
 import nonZero from "./number/nonzero.ts";
+// why does this need to be imported like this???
+// trying to do `import number from "./number/number.ts"` reults in an error
+// that there is no default export, even though there most certainly is.
 import { isNumber as number } from "./number/number.ts";
 import inRange from "./number/in_range.ts";
 import uint16 from "./number/uint16.ts";

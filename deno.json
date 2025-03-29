@@ -308,6 +308,7 @@
     "./symbol/wellknown": "./src/well_known_symbol.ts",
     "./well-known-symbol": "./src/well_known_symbol.ts",
     "./wellknown-symbol": "./src/well_known_symbol.ts",
+    "./whitespace": "./src/whitespace.ts",
     "./writable-stream": "./src/writable_stream.ts",
     "./writer-sync": "./src/writer_sync.ts",
     "./writer/sync": "./src/writer_sync.ts",

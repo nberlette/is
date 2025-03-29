@@ -5,13 +5,8 @@
  */
 
 /**
- * @module non-array-object
- *
  * Check if a given value is a non-null object other than an array or function.
- * If you want to check for those two types as well, use {@link isObjectLike}.
  *
- * @param it The value to check.
- * @returns `true` if the value is a non-array object. Otherwise `false`.
  * @example
  * ```ts
  * import { isNonArrayObject } from "jsr:@nick/is/non-array-object";
@@ -27,18 +22,84 @@
  * console.log(isNonArrayObject(1)); // false
  * ```
  * @category Objects
+ * @module non-array-object
  */
 
-import isArray from "./array.ts";
+import { isArray } from "./array.ts";
+import { isObject } from "./object.ts";
 import type { EmptyObject } from "./empty_object.ts";
+import type { IsAnyOrUnknownOrNever } from "./type/any_or_unknown_or_never.ts";
+import type { IsArray } from "./type/array.ts";
+import type { IsExact } from "./type/exact.ts";
+
+declare const NON_ARRAY_OBJECT: unique symbol;
+type NON_ARRAY_OBJECT = typeof NON_ARRAY_OBJECT;
+
+interface NonArrayObjectBrand {
+  readonly [NON_ARRAY_OBJECT]: true;
+}
 
 /**
- * Represents an object-like value that is not `null` or `undefined`, and is
- * not a function or array.
+ * Represents a non-null object that is neither an array nor a function. This
+ * is **generic** nominal (branded) type, that can either be used as is to
+ * represent a non-null object that is neither an array nor a function, or can
+ * be parameterized with a specific type.
+ *
+ * When parameterized, the type it receives will be intersected with an
+ * unforgeable unique brand to ensure it is distinct from the base type (and
+ * any other type for that matter). This allows you to create custom subtypes
+ * of your own that have been validated at runtime, providing a level of
+ * type safety that is just not possible with a plain object type.
+ *
+ * @example
+ * ```ts
+ * import nonArray, {
+ *   type NonArrayObject,
+ * } from "jsr:@nick/is/non-array-object";
+ *
+ * let obj: readonly unknown[] | Record<number, unknown> = {};
+ *
+ * const doesntLikeArrays = <T>(obj: NonArrayObject<T>) => {
+ *   // do something with obj
+ * };
+ *
+ * doesntLikeArrays(obj); // error
+ * ```
  * @category Objects
+ * @tags NonArrayObject, branded
  */
-// deno-lint-ignore no-explicit-any
-export type ObjectLike<T = any> = Record<PropertyKey, T>;
+export type NonArrayObject<T = EmptyObject> =
+  & IsAnyOrUnknownOrNever<
+    T,
+    // deno-lint-ignore no-explicit-any
+    Record<PropertyKey, any>,
+    Exclude<T, readonly unknown[]>
+  >
+  & NonArrayObjectBrand;
+
+/**
+ * Converts a given type `T` into a non-array object type, if possible. If `T`
+ * is `any`, `unknown`, or `never`, it resolves to `never`. If `T` is an array
+ * or a function, it also resolves to `never`. If `T` is an object type, it
+ * resolves to `NonArrayObject<T>`, branding it with the unique symbol that
+ * marks it as a valid non-array object.
+ *
+ * @category Objects
+ * @tags NonArrayObject, branded
+ * @experimental
+ */
+export type AsNonArrayObject<T> = IsAnyOrUnknownOrNever<
+  T,
+  never,
+  IsArray<
+    T,
+    never,
+    NonArrayObject<
+      // deno-lint-ignore no-explicit-any
+      IsExact<T, object, T, T extends (...args: any) => any ? never : T>
+    >
+  >
+>;
 
 /**
  * Check if the given value is a non-null object. This includes all non-null
@@ -57,7 +118,7 @@ export type ObjectLike<T = any> = Record<PropertyKey, T>;
  * ```
  * @category Objects
  */
-export function isNonArrayObject<T>(it: unknown): it is NonArrayObject<T>;
+export function isNonArrayObject<T>(it: T): it is NonArrayObject<T>;
 
 /**
  * Check if the given value is a non-null object. This includes all non-null
@@ -82,17 +143,12 @@ export function isNonArrayObject<T>(it: unknown): it is NonArrayObject<T>;
  * ```
  * @category Objects
  */
-export function isNonArrayObject<T>(it: unknown): it is Record<PropertyKey, T> {
-  return it != null && typeof it === "object" && !isArray(it);
+export function isNonArrayObject<T>(it: unknown): it is Record<PropertyKey, T>;
+
+/** @internal */
+export function isNonArrayObject(it: unknown): it is NonArrayObject {
+  return isObject(it) && !isArray(it);
 }
 
 /** @ignore */
 export default isNonArrayObject;
-
-/** */
-export type NonArrayObject<T = EmptyObject> = T extends object
-  ? T extends readonly unknown[] ? never
-    // deno-lint-ignore no-explicit-any ban-types
-  : T extends ((...args: any[]) => any) | Function ? never
-  : T
-  : never;

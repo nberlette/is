@@ -5,3 +5,5 @@ dist
 *.lock*
 .*.lock*
 test/.profile
+.coverage
+coverage

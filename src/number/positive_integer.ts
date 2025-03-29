@@ -6,6 +6,7 @@
 
 import type { Cast, INTEGER, POSITIVE } from "./types.ts";
 import { isInteger } from "./integer.ts";
+import isNegativeZero from "./negative_zero.ts";
 
 // #region PositiveInteger
 /**
@@ -60,7 +61,7 @@ export function isPositiveInteger(it: unknown): it is PositiveInteger;
 
 /** @ignore */
 export function isPositiveInteger(it: unknown): it is PositiveInteger {
-  return isInteger(it) && it >= 0;
+  return isInteger(it) && it >= 0 && !isNegativeZero(it);
 }
 
 /** @ignore */

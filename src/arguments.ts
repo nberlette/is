@@ -25,7 +25,7 @@
  */
 
 import { isTaggedNative } from "./_internal.ts";
-import { isArrayLikeObject } from "./array_like.ts";
+import { isArrayLikeObject } from "./array_like_object.ts";
 
 /**
  * Check if the given value is an instance of the native `Arguments` object,

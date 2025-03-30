@@ -25,10 +25,52 @@ export function computeModuleName(
     .join("/")
     .replace(/(?<=\w)_/g, "-");
   let path = modulePath.replace(/^(?:(?:\.{1,2}\/)+)?src\//, "");
-  path = path.replace(new RegExp(`^(?:${pkg.name}|${srcDir})\/?`, "ig"), "");
+  path = path.replace(new RegExp(`^(?:${pkg.name}|\\./src)/`, "ig"), "");
   path = path.replace(/[_.-](test|bench|spec)$/, "");
   if (slugOnly) return path === "mod" ? "" : path.replace(/.*?\//, "");
   return path === "mod" ? pkg.name : `${pkg.name}/${path}`;
+}
+
+/**
+ * Recursively interpolates template expressions.
+ *
+ * @param input The template text.
+ * @param context A record mapping keys to a tuple of [RegExp, replacement].
+ * @returns The interpolated text.
+ */
+export function interpolate<
+  const T extends Record<string, readonly [RegExp, string]>,
+>(
+  input: string,
+  context: T,
+): string {
+  let result = input;
+  let replaced = false;
+  let iteration = 0;
+  const MAX_ITERATIONS = 100;
+  if (typeof input !== "string") throw new TypeError("Input must be a string");
+  if (input.trim() === "" || Object.keys(context).length === 0) return result;
+  do {
+    replaced = false;
+    for (const [_, [regex, value]] of Object.entries(context)) {
+      result = result.replace(regex, (match, fallback) => {
+        let replacement = value;
+        if (
+          replacement === "" && typeof fallback === "string" &&
+          fallback.trim() !== ""
+        ) {
+          const fallbackValue = fallback.trim().replace(/^["']|["']$/g, "");
+          replacement = interpolate(fallbackValue, context);
+        }
+        if (replacement !== match) replaced = true;
+        return replacement;
+      });
+    }
+    iteration++;
+  } while (
+    replaced && iteration < MAX_ITERATIONS && /\{\{.*?\}\}/.test(result)
+  );
+  return result;
 }
 
 interface BaseDiagnostic<S extends string = string> {

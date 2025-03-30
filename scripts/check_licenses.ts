@@ -12,7 +12,7 @@
  * node:worker_threads) while the template is precompiled in a dedicated
  * worker.
  *
- * Usage: node ./check_license_header.ts [--dry-run]
+ * Usage: node ./check_licenses.ts [--dry-run]
  *   --template=path/to/template.txt [--exclude="pattern1,pattern2" ...]
  *
  * The external template supports these placeholders:
@@ -33,8 +33,15 @@ import process from "node:process";
 
 import { parseArgs } from "jsr:@std/cli@1/parse-args";
 import { expandGlob } from "jsr:@std/fs@1/expand-glob";
+import { colors } from "jsr:@can/si@0.1.0-rc.1/colors";
 
-import { AtomicMutex, type BaseArgs, printDiagnostics } from "./_utils.ts";
+import {
+  AtomicMutex,
+  type BaseArgs,
+  computeModuleName,
+  interpolate,
+  printDiagnostics,
+} from "./_utils.ts";
 import pkg from "../deno.json" with { type: "json" };
 
 /* ----------------------------- Configuration ----------------------------- */
@@ -55,6 +62,8 @@ const DEFAULT_EXCLUDE = [
 const SOURCE_EXT = ".ts";
 const SOURCE_DIR = ".";
 const DEFAULT_YEAR_INIT = 2024;
+
+const SCRIPT = `./${new URL(import.meta.url).pathname.split(/[\\\/]/).pop()}`;
 
 /* --------------------------- Shared Types --------------------------- */
 
@@ -107,68 +116,6 @@ interface CompiledTemplate {
 /* ------------------------- Utility Functions ------------------------- */
 
 /**
- * Recursively interpolates template expressions.
- *
- * @param input The template text.
- * @param context A record mapping keys to a tuple of [RegExp, replacement].
- * @returns The interpolated text.
- */
-function interpolate<const T extends Record<string, readonly [RegExp, string]>>(
-  input: string,
-  context: T,
-): string {
-  let result = input;
-  let replaced = false;
-  let iteration = 0;
-  const MAX_ITERATIONS = 100;
-  if (typeof input !== "string") throw new TypeError("Input must be a string");
-  if (input.trim() === "" || Object.keys(context).length === 0) return result;
-  do {
-    replaced = false;
-    for (const [_, [regex, value]] of Object.entries(context)) {
-      result = result.replace(regex, (match, fallback) => {
-        let replacement = value;
-        if (
-          replacement === "" && typeof fallback === "string" &&
-          fallback.trim() !== ""
-        ) {
-          const fallbackValue = fallback.trim().replace(/^["']|["']$/g, "");
-          replacement = interpolate(fallbackValue, context);
-        }
-        if (replacement !== match) replaced = true;
-        return replacement;
-      });
-    }
-    iteration++;
-  } while (
-    replaced && iteration < MAX_ITERATIONS && /\{\{.*?\}\}/.test(result)
-  );
-  return result;
-}
-
-/**
- * Computes the module name from a file path.
- *
- * @param filePath The file path.
- * @param slugOnly Whether to return a short module name.
- * @returns The computed module name.
- */
-function computeModuleName(filePath: string, slugOnly?: boolean): string {
-  if (!filePath) return "";
-  let rel = relative(SOURCE_DIR, filePath);
-  rel = rel.replace(new RegExp(`${extname(rel)}$`), "");
-  const modulePath = rel
-    .split(/[\\\/]/)
-    .filter((p) => p && p !== ".")
-    .join("/")
-    .replace(/(?<=\w)_/g, "-");
-  let pathStr = modulePath.replace(/^(?:(?:\.{1,2}\/)+)?src\//, "");
-  pathStr = pathStr.replace(/[_.-](test|bench|spec)$/, "");
-  if (slugOnly) return pathStr === "mod" ? "" : pathStr.replace(/.*\//, "");
-  return pathStr === "mod" ? pkg.name : `${pkg.name}/${pathStr}`;
-}
-
-/**
  * Generates the expected header text for a given module using the precompiled template.
  *
  * @param moduleName The module name.
@@ -196,11 +143,11 @@ function generateHeader(moduleName: string): string {
     end: [new RegExp(ct.patterns.end, "gi"), ct.constants.end] as const,
     short_module: [
       new RegExp(ct.patterns.short_module, "gi"),
-      computeModuleName(moduleName, true),
+      computeModuleName(moduleName, true, args.cwd, pkg),
     ] as const,
     full_module: [
       new RegExp(ct.patterns.full_module, "gi"),
-      computeModuleName(moduleName, false),
+      computeModuleName(moduleName, false, args.cwd, pkg),
     ] as const,
   };
   return interpolate(ct.templateText, patterns);
@@ -213,6 +160,7 @@ function generateHeader(moduleName: string): string {
 interface ParsedArgs extends BaseArgs {
   template: string;
   exclude: string[];
+  fix: boolean;
   dryRun: boolean;
   rest: Record<string, unknown>;
 
@@ -222,7 +170,8 @@ interface ParsedArgs extends BaseArgs {
 
 function getParsedArgs<
   T extends Omit<ParsedArgs, "dryRun" | "rest" | "files"> & {
-    "dry-run": boolean;
+    fix: boolean;
+    "dry-run"?: boolean;
     files?: string[];
     rest?: Record<string, unknown>;
     _?: (string | number)[];
@@ -237,17 +186,22 @@ function getParsedArgs<
     version,
     cwd,
     debug,
-    "dry-run": dryRun,
+    fix,
+    "dry-run": dryRun = !fix,
     _,
     ...rest
   } = args;
-  const files = [...args.files ?? [], ..._ ?? []].filter(Boolean).map(String);
+  const files = [...(args.files ?? []), ...(_ ?? [])].filter(Boolean).map(
+    String,
+  );
   return {
     version,
     help,
     cwd,
     template,
     exclude,
+    fix,
+    // Respect explicit dryRun flag; if not provided, default to !fix.
     dryRun,
     files,
     silent,
@@ -260,12 +214,13 @@ function getParsedArgs<
 const parsedArgs = parseArgs(process.argv.slice(2), {
   string: ["template", "exclude", "cwd"],
   collect: ["exclude"],
-  boolean: ["dry-run", "debug", "verbose", "help", "silent"],
+  boolean: ["fix", "dry-run", "debug", "verbose", "help", "silent", "version"],
   alias: {
-    template: ["t", "tpl", "file", "path", "f"],
+    template: ["t", "tpl", "file", "path"],
     exclude: ["e", "x", "ignore", "excluded"],
     cwd: ["C", "dir", "root"],
-    "dry-run": ["d", "n"],
+    fix: ["f"],
+    "dry-run": ["d"],
     debug: ["b", "dbg"],
     verbose: ["V"],
     version: ["v"],
@@ -276,6 +231,7 @@ const parsedArgs = parseArgs(process.argv.slice(2), {
     template: DEFAULT_TEMPLATE_PATH,
     exclude: DEFAULT_EXCLUDE,
     cwd: SOURCE_DIR,
+    fix: false,
     "dry-run": false,
     debug: false,
     verbose: false,
@@ -284,6 +240,7 @@ const parsedArgs = parseArgs(process.argv.slice(2), {
     help: false,
   },
 });
+
 const args = getParsedArgs(parsedArgs);
 if (args.version) {
   console.log(pkg.version);
@@ -291,23 +248,50 @@ if (args.version) {
 }
 if (args.help) {
   console.error(`
-Usage
+${colors.bold.underline.blue("Usage")}
 
-  ./check_license_header.ts [--template=<path>] [--exclude=<glob>...] [flags]
+  ${colors.gray.italic("Check if the license header is up-to-date:")}
+    ${colors.bold.brightWhite(SCRIPT)}  ${colors.bold.dim.cyan("[options]")}  ${
+    colors.gray("[files...]")
+  }
 
-  ./check_license_header.ts [--help] [--version]
+  ${colors.gray.italic("Fix the license header if outdated:")}
+    ${colors.bold.brightWhite(SCRIPT)}  ${colors.brightGreen("--fix")}  ${
+    colors.brightYellow("[--dry-run]")
+  }  ${colors.bold.dim.cyan("[options]")}  ${colors.gray("[files...]")}
 
-Flags
+${colors.bold.underline.blue("Options")}
 
-  -t, --template=<path>   Path to the license header template file.
-  -e, --exclude=<glob>    Exclude files matching the glob pattern.
-  -d, --dry-run           Perform a dry run without modifying files.
-  -V, --verbose           Enable verbose output.
-  -s, --silent            Suppress all output.
-  -b, --debug             Enable debug output.
-  -h, -?, --help          Show this help message.
-  -v, --version           Show the version of the script.
+  ${
+    colors.cyan(`-t, --template${colors.dim("=<path>")}`)
+  }   Path to the license header template file.
+  ${
+    colors.cyan(`-e, --exclude${colors.dim("=<glob>")}`)
+  }    Exclude files matching the glob pattern.
+  ${
+    colors.cyan(`-C, --cwd${colors.dim("=<path>")}`)
+  }        Path to the source directory.
+  ${colors.cyan("-f, --fix")}               Fix the license header in the files.
+  ${
+    colors.cyan("-d, --dry-run")
+  }           Perform a dry run without modifying files.
+  ${colors.cyan("-V, --verbose")}           Enable verbose output.
+  ${colors.cyan("-s, --silent")}            Suppress all output.
+  ${colors.cyan("-b, --debug")}             Enable debug output.
+  ${colors.cyan("-h, --help")}              Show this help message.
+  ${colors.cyan("-v, --version")}           Show the version of the script.
 
+${colors.dim.gray("┄".repeat(70))}
+
+  ${
+    colors.brightBlack(
+      `Copyright (c) \x1b]8;;https://github.com/nberlette\x07${
+        colors.bold.underline.blue(pkg.author.name)
+      }\x1b]8;;\x07. All rights reserved. \x1b]8;;https://nick.mit-license.org/\x07${
+        colors.bold.underline("MIT License")
+      }\x1b]8;;\x07.`,
+    )
+  }
 `);
   process.exit(0);
 }
@@ -346,51 +330,92 @@ if (isMainThread) {
   );
   templateWorker.terminate();
 
-  // 2. Gather file entries.
-  const fileEntries: string[] = [];
-  const pattern = `${SOURCE_DIR}/**/*${SOURCE_EXT}`;
-  for await (
-    const entry of expandGlob(pattern, {
-      exclude: args.exclude,
-      includeDirs: false,
-    })
-  ) {
-    if (!entry.isFile) continue;
-    if (args.exclude.some((p) => entry.path.includes(p))) continue;
-    if (entry.path.includes("node_modules")) continue;
-    if (entry.path === new URL(import.meta.url).pathname) continue;
-    if (entry.path === templatePath) continue;
-    fileEntries.push(entry.path);
+  // 2. Prepare file entries using async iterator from expandGlob.
+  let fileCount = 0;
+  const pattern = `${args.cwd}/**/*${SOURCE_EXT}`;
+  const filesIterator = (async function* () {
+    for await (
+      const entry of expandGlob(pattern, {
+        exclude: args.exclude,
+        includeDirs: false,
+      })
+    ) {
+      if (!entry.isFile) continue;
+      if (args.exclude.some((p) => entry.path.includes(p))) continue;
+      if (entry.path.includes("node_modules")) continue;
+      if (entry.path === new URL(import.meta.url).pathname) continue;
+      if (entry.path === templatePath) continue;
+      fileCount++;
+      yield entry.path;
+    }
+  })();
+
+  const iteratorMutex = new AtomicMutex();
+
+  async function assignTask(worker: Worker) {
+    const lock = await iteratorMutex.acquire();
+    await lock.runInAsyncScope(async () => {
+      const result = await filesIterator.next();
+      if (!result.done) {
+        worker.postMessage({
+          type: "task",
+          filePath: result.value,
+          dryRun: args.dryRun,
+        });
+      } else {
+        worker.postMessage({ type: "exit" });
+      }
+    }).finally(() => iteratorMutex.release());
   }
 
   // 3. Create a worker pool for file processing.
-  const concurrencyLimit = 8;
-  const taskQueue = fileEntries.slice();
-  const diagnosticsAggregate: Diagnostic[] = [];
+  const concurrencyLimit = navigator.hardwareConcurrency ?? 4;
   let finishedWorkers = 0;
   const workers: Worker[] = [];
-  function assignTask(worker: Worker) {
-    if (taskQueue.length > 0) {
-      const filePath = taskQueue.shift()!;
-      worker.postMessage({ type: "task", filePath, dryRun: args.dryRun });
-    } else {
-      worker.postMessage({ type: "exit" });
-    }
-  }
+  const diagnostics: Diagnostic[] = [];
 
   for (let i = 0; i < concurrencyLimit; i++) {
     const worker = new Worker(new URL(import.meta.url), {
       workerData: { type: "process", template },
     });
+
     worker.on("message", (msg) => {
       if (msg.type === "request") {
         assignTask(worker);
       } else if (msg.type === "result") {
-        diagnosticsAggregate.push(...msg.diagnostics);
+        if (!args.silent && msg.diagnostics.length) {
+          printDiagnostics(msg.diagnostics, args);
+        }
+        diagnostics.push(...msg.diagnostics);
       }
     });
+
     worker.on("exit", () => {
-      if (++finishedWorkers >= concurrencyLimit) process.exit(0);
+      if (++finishedWorkers >= concurrencyLimit) {
+        // Print diagnostics here before exiting.
+        if (diagnostics.length > 0) {
+          if (!args.silent) {
+            console.error(
+              `${colors.red("✘")} ${fileCount} file${
+                fileCount > 1 ? "s" : ""
+              } processed with ${
+                diagnostics.filter((d) =>
+                  d.severity === "error" || d.hasChanges
+                ).length
+              } issues.`,
+            );
+          }
+          if (diagnostics.some((d) => d.severity === "error")) {
+            process.exitCode = 1;
+          } else if (!args.fix && diagnostics.some((d) => d.hasChanges)) {
+            process.exitCode = 2;
+          }
+        }
+        if (args.verbose && !args.silent) {
+          console.error("✔︎ All workers finished processing.");
+        }
+        process.exit();
+      }
     });
     workers.push(worker);
   }
@@ -401,19 +426,28 @@ if (isMainThread) {
       worker.postMessage({ type: "exit" });
       worker.terminate();
     }
-    process.exit(0);
+    if (args.verbose && !args.silent) {
+      console.error("✔︎ All workers terminated.");
+    }
+    if (diagnostics.length > 0) {
+      if (!args.silent) {
+        printDiagnostics(diagnostics, args);
+      }
+      if (diagnostics.some((d) => d.severity === "error")) {
+        process.exitCode = 3;
+      } else if (!args.fix && diagnostics.some((d) => d.hasChanges)) {
+        process.exitCode = 4;
+      }
+    }
+    process.exit();
   });
-
-  process.on("beforeExit", () => printDiagnostics(diagnosticsAggregate, args));
 } else {
   // In a worker thread.
   if (workerData.type === "template") {
-    // Template precompilation worker.
     let templateText = DEFAULT_TEMPLATE_TEXT;
     try {
       templateText = await readFile(workerData.templatePath, "utf8");
     } catch { /* ignore */ }
-    // Build the compiled template.
     const compiled: CompiledTemplate = {
       templateText,
       patterns: {
@@ -444,7 +478,6 @@ if (isMainThread) {
       template: compiled,
     });
   } else if (workerData.type === "process") {
-    // File processor worker.
     globalThis.template = workerData.template;
     parentPort?.on("message", async (msg) => {
       if (msg.type === "task") {
@@ -469,20 +502,11 @@ if (isMainThread) {
     });
     parentPort?.postMessage({ type: "request" });
 
-    /* -------------------------- File Processing -------------------------- */
-
-    /**
-     * Processes a single file: checks for an existing header, updates or inserts it as needed.
-     *
-     * @param filePath The file path.
-     * @param dryRun Whether to perform a dry-run.
-     * @returns An array of diagnostics.
-     */
     async function processFile(
       filePath: string,
       dryRun: boolean,
     ): Promise<Diagnostic[]> {
-      const mutex = new AtomicMutex(); // one per file
+      const mutex = new AtomicMutex();
       const diagnostics: Diagnostic[] = [];
       let content = "";
       const lock = await mutex.acquire();
@@ -501,21 +525,18 @@ if (isMainThread) {
         }
         const lines = content.split("\n");
         const directiveRegex =
-          /^(#!.*|\/\/\s*(deno-(?:fmt|lint)-ignore(?:-file)?|(?:eslint|@ts|dprint|prettier)-ignore).*)$/;
+          /^(#!.*|\/\/\s*(?:eslint|@ts|dprint|prettier|deno-(?:fmt|lint))-(?:ignore(?:-file)?|nocheck|disable)).*$/;
         const headerStartRegex = /^\s*\/\*!/;
         const headerEndRegex = /\*\/\s*$/;
 
-        // Determine the insertion index (after any directive lines)
         let insertIndex = 0;
         while (
           insertIndex < lines.length && directiveRegex.test(lines[insertIndex])
         ) insertIndex++;
 
-        // Look for an existing header block.
         let headerStartIndex: number | null = null;
         let headerEndIndex: number | null = null;
         if (insertIndex < lines.length) {
-          // headerStartIndex = insertIndex;
           headerStartIndex = lines.findIndex((s) => headerStartRegex.test(s));
           if (headerStartIndex === -1) {
             headerStartIndex = headerEndIndex = null;
@@ -644,9 +665,7 @@ if (isMainThread) {
             severity: "warning",
             line: insertIndex + 1,
             snippet: lines.slice(Math.max(0, insertIndex - 1), insertIndex + 6)
-              .join(
-                "\n",
-              ),
+              .join("\n"),
             hasChanges: true,
             oldContent,
             newContent,

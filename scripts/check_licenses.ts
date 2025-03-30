@@ -39,9 +39,9 @@ import {
   AtomicMutex,
   type BaseArgs,
   computeModuleName,
+  type Diagnostic,
   interpolate,
   printDiagnostics,
-  type Diagnostic,
 } from "./_utils.ts";
 import pkg from "../deno.json" with { type: "json" };
 

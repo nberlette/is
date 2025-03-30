@@ -28,7 +28,7 @@ import {
   workerData,
 } from "node:worker_threads";
 import { readFile, writeFile } from "node:fs/promises";
-import { extname, relative, resolve } from "node:path";
+import { resolve } from "node:path";
 import process from "node:process";
 
 import { parseArgs } from "jsr:@std/cli@1/parse-args";
@@ -41,6 +41,7 @@ import {
   computeModuleName,
   interpolate,
   printDiagnostics,
+  type Diagnostic,
 } from "./_utils.ts";
 import pkg from "../deno.json" with { type: "json" };
 
@@ -66,30 +67,6 @@ const DEFAULT_YEAR_INIT = 2024;
 const SCRIPT = `./${new URL(import.meta.url).pathname.split(/[\\\/]/).pop()}`;
 
 /* --------------------------- Shared Types --------------------------- */
-
-interface BaseDiagnostic {
-  severity: string;
-  file: string;
-  message: string;
-  line?: number;
-  column?: number;
-  snippet?: string;
-  hasChanges?: boolean;
-}
-
-interface WithChanges {
-  hasChanges: true;
-  oldContent: string;
-  newContent: string;
-}
-
-type Diagnostic =
-  | (BaseDiagnostic & { severity: "info" })
-  | (BaseDiagnostic & { severity: "warning" })
-  | (BaseDiagnostic & { severity: "error" })
-  | (BaseDiagnostic & { severity: "debug" })
-  | (BaseDiagnostic & WithChanges & { severity: "info" | "warning" });
-
 /**
  * The structure of the precompiled template.
  */

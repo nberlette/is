@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.2/doc/missing
+ * @see https://jsr.io/@nick/is@0.2.0-rc.3/doc/missing
  */
 
 /**
@@ -38,7 +38,7 @@
  * @category Primitives
  */
 export function isMissing(it: unknown): it is null | undefined {
-  return it === null || it === undefined;
+  return it == null;
 }
 
 export default isMissing;

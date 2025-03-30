@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.2/doc/types
+ * @see https://jsr.io/@nick/is@0.2.0-rc.3/doc/types
  */
 
 /**
@@ -244,7 +244,7 @@ export type {
   PositiveNonZero,
 } from "./number/positive_nonzero.ts";
 export type { MaybeNonZero, NonZero } from "./number/nonzero.ts";
-export type { InRange, Range, Exclusivity } from "./number/in_range.ts";
+export type { Exclusivity, InRange, Range } from "./number/in_range.ts";
 export type { MaybeUint16, Uint16 } from "./number/uint16.ts";
 export type { MaybeUint32, Uint32 } from "./number/uint32.ts";
 export type { MaybeUint8, Uint8 } from "./number/uint8.ts";

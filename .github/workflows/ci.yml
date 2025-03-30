@@ -3,6 +3,13 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - .github/**
+      - .gitignore
+      - .vscode/**
+      - .**
+      - LICENSE
+      - "**/*.md"
   pull_request:
     branches:
       - main
@@ -55,14 +62,23 @@ jobs:
         if: |
           github.event_name != 'workflow_dispatch' ||
           github.event.inputs.run-deno-lint == 'true'
-        name: deno lint
-        run: deno lint
+        name: lint
+        run: |
+          deno lint
+          __license_check_output=$(deno task check:licenses 2>&1)
+          __license_check_status=$?
+          if [ $__license_check_status -ne 0 ]; then
+            echo "::error::License header check failed"
+            echo "$__license_check_output"
+            echo "::warning::Please run 'deno task fix:licenses' to fix the license headers in the files, then commit and push the changes to run this workflow again."
+            exit 1
+          fi
 
       - id: fmt
         if: |
           github.event_name != 'workflow_dispatch' ||
           github.event.inputs.run-deno-fmt == 'true'
-        name: deno fmt
+        name: fmt
         run: deno fmt --check
 
       - id: test
@@ -70,8 +86,8 @@ jobs:
           github.event_name != 'workflow_dispatch' ||
           github.event.inputs.run-deno-test == 'true'
         continue-on-error: true
-        name: deno test
-        run: deno test -A --no-check=remote --parallel --coverage=.coverage --permit-no-files
+        name: test
+        run: deno task test
 
       # Only run doc test if the workflow is triggered manually and
       # the doc-test input is set to true. this is temporary until
@@ -82,7 +98,7 @@ jobs:
           github.event_name == 'workflow_dispatch' &&
           github.event.inputs.run-doc-test == 'true'
         name: deno test --doc
-        run: deno test -A --no-check=remote --parallel --coverage=.coverage --doc
+        run: deno task test:doc
 
       - id: coverage
         if: |
@@ -94,11 +110,10 @@ jobs:
               github.event_name == 'workflow_dispatch' &&
               github.event.inputs.run-deno-coverage == 'true'
             ) || (
-              github.event_name != 'workflow_dispatch' &&
-              startsWith(github.ref, 'refs/tags/')
+              github.event_name == 'push' && github.ref_name == 'main'
             )
           )
-        name: deno coverage
+        name: coverage
         run: |
           deno coverage --detailed .coverage
           deno coverage --lcov --output=lcov.info .coverage
@@ -136,4 +151,4 @@ jobs:
           github.event_name == 'workflow_dispatch' &&
           github.event.inputs.run-doc-lint == 'true'
         name: deno doc
-        run: deno doc --lint mod.ts src/**/*.ts
+        run: deno task lint:doc

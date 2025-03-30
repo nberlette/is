@@ -1,3 +1,9 @@
+/*!
+ * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
+ * @license MIT (https://nick.mit-license.org/2024)
+ * @see https://jsr.io/@nick/is@0.2.0-rc.3/doc/array
+ */
+
 /**
  * Checks if the given value is an array. If the `Array.isArray` method is
  * available in the global scope, it will be used under the hood. Otherwise,
@@ -38,6 +44,7 @@
  */
 
 import { isTaggedNative } from "./_internal.ts";
+import type { Predicate } from "./type/predicate.ts";
 
 const ArrayIsArray: (x: unknown) => x is unknown[] = (() => {
   if (typeof globalThis.Array.isArray === "function") {
@@ -52,149 +59,46 @@ const ArrayIsArray: (x: unknown) => x is unknown[] = (() => {
 })();
 
 /**
- * Checks if the given value is an array.
+ * Checks if the given value is an array, optionally verifying that each of its
+ * elements are of a specific type.
  *
  * @param it The value to check.
- * @returns `true` if the value is an array, `false` otherwise.
- * @example
- * ```ts
- * import { isArray } from "jsr:@nick/is/array";
- *
- * isArray([]); // true
- * isArray([1, 2, 3]); // true
- * isArray({}); // false
- *
- * // Use with type guards to narrow down the type of the array elements:
- * import { isString, isNumber } from "jsr:@nick/is";
- *
- * const arr: unknown[] = ["a", "b", "c"];
- * if (isArray(arr, isString)) {
- *   console.log(arr, "is an array of strings");
- *   //           ^? const arr: readonly string[]
- * }
- * if (isArray(arr, isNumber)) {
- *   console.log(arr, "is an array of numbers");
- *   //           ^? const arr: readonly number[]
- * ```
- * @category Indexed Collections
- */
-export function isArray<T>(it: unknown): it is readonly T[];
-
-/**
- * Checks if the given value is an array of a specific type.
- *
- * @param it The value to check.
- * @param test The type guard to check the type of the array elements.
- * @returns `true` if it is an array of the specific type, `false` otherwise.
+ * @param [test] The type guard to check the type of the array elements.
+ * @returns `true` if it is an array, and the predicate (if provided) is
+ * satisfied by each of its values. Otherwise, returns `false`.
  * @example
  * ```ts
  * import { isArray, isString, isNumber } from "jsr:@nick/is";
+ * import { expectType } from "jsr:@nick/is/type/expect";
  *
  * const arr: unknown[] = ["a", "b", "c"];
  *
  * if (isArray(arr, isString)) {
  *   console.log(arr, "is an array of strings");
- *   //           ^? const arr: readonly string[]
+ *   //           ^? const arr: string[]
+ *   expectType<string[]>(arr);
  * } else if (isArray(arr, isNumber)) {
  *   console.log(arr, "is an array of numbers");
- *   //           ^? const arr: readonly number[]
+ *   //           ^? const arr: number[]
+ *   expectType<number[]>(arr);
  * } else {
  *   console.log(arr, "is not an array of strings or numbers");
- *   //           ^? const arr: readonly unknown[]
+ *   //           ^? const arr: unknown[]
+ *   expectType<unknown[]>(arr);
  * }
  * ```
  * @category Indexed Collections
  */
-export function isArray<T>(
-  it: unknown,
-  test: (x: unknown, ...args: unknown[]) => x is T,
-): it is readonly T[];
-
-/**
- * Checks if the given value is an array.
- *
- * @param it The value to check.
- * @returns `true` if the value is an array, `false` otherwise.
- * @category Indexed Collections
- */
-export function isArray<T>(
-  a: unknown,
-  test?: (x: unknown, ...args: unknown[]) => x is T,
-): a is T[];
-
-/** @internal */
-export function isArray<T>(
-  a: unknown,
-  test?: (x: unknown, ...args: unknown[]) => x is T,
-): a is T[] {
-  if (ArrayIsArray(a) && typeof test === "function") {
-    for (let i = 0; i < a.length; i++) {
-      if (!test(a[i])) return false;
+export function isArray<T>(a: unknown, test?: Predicate<T>): a is T[] {
+  if (ArrayIsArray(a)) {
+    if (typeof test === "function") {
+      for (let i = 0; i < a.length; i++) {
+        if (!test(a[i])) return false;
+      }
     }
     return true;
-  } else return ArrayIsArray(a);
+  }
+  return false;
 }
 
-/**
- * Checks if the given value is an array with at least one element.
- *
- * @param it The value to check.
- * @returns `true` if the value is an array with at least one element, `false` otherwise.
- * @example
- * ```ts
- * import { isNonEmptyArray } from "jsr:@nick/is/array";
- *
- * console.log(isNonEmptyArray([])); // false
- * console.log(isNonEmptyArray([1, 2, 3])); // true
- * console.log(isNonEmptyArray({})); // false
- * ```
- * @category Indexed Collections
- */
-export function isNonEmptyArray<T>(it: unknown): it is readonly [T, ...T[]];
-
-/**
- * Checks if the given value is an array with at least one element of a specific type.
- *
- * @param it The value to check.
- * @param test The type guard to check the type of the array elements.
- * @returns `true` if the value is an array with at least one element of the specific type, `false` otherwise.
- * @example
- * ```ts
- * import { isNonEmptyArray } from "jsr:@nick/is/array";
- * import { isString } from "jsr:@nick/is/string";
- * import { isNumber } from "jsr:@nick/is/number";
- *
- * const arr: unknown[] = ["a", "b", "c"];
- *
- * if (isNonEmptyArray(arr, isString)) {
- *   console.log(arr, "is an array of strings");
- *   //           ^? const arr: readonly [string, ...string[]]
- * } else if (isNonEmptyArray(arr, isNumber)) {
- *   console.log(arr, "is an array of numbers");
- *   //           ^? const arr: readonly [number, ...number[]]
- * } else {
- *   console.log(arr, "is not an array of strings or numbers");
- *   //           ^? const arr: readonly unknown[]
- * }
- * ```
- * @category Indexed Collections
- */
-export function isNonEmptyArray<T>(
-  it: unknown,
-  test: (x: unknown) => x is T,
-): it is NonEmptyArray<T>;
-export function isNonEmptyArray<T>(
-  a: unknown,
-  test?: (x: unknown) => x is T,
-): a is NonEmptyArray<T>;
-export function isNonEmptyArray<T>(
-  a: unknown,
-  test?: (x: unknown) => x is T,
-): a is NonEmptyArray<T> {
-  return isArray(a, test!) && a.length > 0;
-}
-
-export type NonEmptyArray<T = unknown> = readonly [T, ...T[]];
-
-/** @ignore */
 export default isArray;

@@ -1,11 +1,12 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.2/doc/positive-integer
+ * @see https://jsr.io/@nick/is@0.2.0-rc.3/doc/positive-integer
  */
 
 import type { Cast, INTEGER, POSITIVE } from "./types.ts";
 import { isInteger } from "./integer.ts";
+import isNegativeZero from "./negative_zero.ts";
 
 // #region PositiveInteger
 /**
@@ -60,7 +61,7 @@ export function isPositiveInteger(it: unknown): it is PositiveInteger;
 
 /** @ignore */
 export function isPositiveInteger(it: unknown): it is PositiveInteger {
-  return isInteger(it) && it >= 0;
+  return isInteger(it) && it >= 0 && !isNegativeZero(it);
 }
 
 /** @ignore */

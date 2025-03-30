@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.2/doc/positive-nonzero-integer
+ * @see https://jsr.io/@nick/is@0.2.0-rc.3/doc/positive-nonzero-integer
  */
 
 import type { Cast, INTEGER, NON_ZERO, POSITIVE } from "./types.ts";

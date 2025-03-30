@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.2/doc/arguments
+ * @see https://jsr.io/@nick/is@0.2.0-rc.3/doc/arguments
  */
 
 /**
@@ -25,7 +25,7 @@
  */
 
 import { isTaggedNative } from "./_internal.ts";
-import { isArrayLikeObject } from "./array_like.ts";
+import { isArrayLikeObject } from "./array_like_object.ts";
 
 /**
  * Check if the given value is an instance of the native `Arguments` object,

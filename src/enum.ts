@@ -4,6 +4,13 @@
  * @see https://jsr.io/@nick/is@0.2.0-rc.3/doc/enum
  */
 
+import type { unknowns } from "./_internal/types.ts";
+import {
+  ObjectGetPrototypeOf,
+  ObjectKeys,
+  ObjectPrototype,
+} from "./_internal/primordials.ts";
+
 /**
  * @module enum
  *
@@ -28,11 +35,6 @@
  * ```
  * @category Objects
  */
-const Object = globalThis.Object;
-const ObjectPrototype = Object.prototype;
-const ObjectKeys = Object.keys as <T>(o: T) => (string & keyof T)[];
-// const ObjectValues = Object.values;
-const ObjectGetPrototypeOf = Object.getPrototypeOf;
 
 /**
  * Check if the given value appears to be a TypeScript `enum` object, which is
@@ -62,10 +64,7 @@ const ObjectGetPrototypeOf = Object.getPrototypeOf;
  * ```
  * @category Objects
  */
-export function isEnum<T extends EnumLike = EnumLike>(
-  // deno-lint-ignore ban-types
-  it: T | {} | null | undefined,
-): it is Enum<T>;
+export function isEnum<T extends EnumLike>(it: T | unknowns): it is Enum<T>;
 export function isEnum<T extends EnumLike = EnumLike>(
   it: unknown,
 ): it is Enum<T>;

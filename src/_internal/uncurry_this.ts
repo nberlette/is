@@ -4,13 +4,8 @@
  * @see https://jsr.io/@nick/is@0.2.0-rc.3/doc/uncurry-this
  */
 
-export const { bind, call } = Function.prototype;
+import { FunctionPrototype, uncurryThis } from "./primordials.ts";
 
-export const uncurryThis = bind.bind(call) as <
-  T,
-  // deno-lint-ignore no-explicit-any
-  const A extends readonly unknown[] = any[],
-  R = unknown,
->(
-  fn: (this: T, ...args: A) => R,
-) => (target: T, ...args: Parameters<typeof fn>) => ReturnType<typeof fn>;
+export const { bind, call } = FunctionPrototype;
+
+export { uncurryThis };

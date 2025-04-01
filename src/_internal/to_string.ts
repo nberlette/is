@@ -5,6 +5,7 @@
  */
 
 import { uncurryThis } from "./uncurry_this.ts";
+import { Object } from "./primordials.ts";
 
 /**
  * An uncurried version of the `Object.prototype.toString` method, which allows

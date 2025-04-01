@@ -45,6 +45,11 @@ export type unknowns = {} | null | undefined;
 
 export type Expand<T, Fallback = never> = T extends infer T ? T : Fallback;
 
+export type ObjectEntry<T> = { [K in keyof T]: [K, T[K]] }[keyof T];
+export type ObjectEntries<T> = ObjectEntry<T>[];
+export type ObjectKeys<T> = (string & keyof T)[];
+export type ObjectValues<T> = T[keyof T][];
+
 export type Split<
   S extends string,
   C extends string = "",

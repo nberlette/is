@@ -5,6 +5,8 @@
  * @see https://jsr.io/@nick/is@0.2.0-rc.3/doc/has-methods
  */
 
+import { Object } from "./primordials.ts";
+
 /**
  * Composite type guard that checks if the given value {@linkcode it} contains
  * all the specified {@linkcode keys}, and also that each is a callable method.

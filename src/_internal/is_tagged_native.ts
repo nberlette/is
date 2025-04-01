@@ -5,6 +5,7 @@
  * @see https://jsr.io/@nick/is@0.2.0-rc.3/doc/is-tagged-native
  */
 
+import { Object, SymbolToStringTag } from "./primordials.ts";
 import { toString } from "./to_string.ts";
 
 /**
@@ -32,7 +33,7 @@ export function isTaggedNative<U extends {}, T extends string>(
   tag = tag.toString().replace(/^\[object (.+)\]$/, "$1") as T;
   return toString(it = Object(it)) === `[object ${tag}]` &&
     (allowCustom
-      ? Symbol.toStringTag in it && it[Symbol.toStringTag] === tag
-      : typeof (it as Record<symbol, unknown>)[Symbol.toStringTag] ===
-        "undefined");
+      ? SymbolToStringTag in it && it[SymbolToStringTag] === tag
+      // deno-lint-ignore no-explicit-any
+      : typeof (it as any)[SymbolToStringTag] === "undefined");
 }

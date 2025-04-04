@@ -1,18 +1,19 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.4/doc/set-like
+ * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/set-like
  */
 
-import { hasMethods } from "./_internal.ts";
+import { hasMethods } from "./has_methods.ts";
 import { isConstructor } from "./constructor.ts";
 import { isIterableObject } from "./iterable_object.ts";
 import { isObject } from "./object.ts";
 
 /**
  * Set-like objects are collections of unique values (each value may only occur
- * once). The `ReadonlyCollection` interface defines the bare minimum requirements for
- * an object to be considered "set-like" in JavaScript; that is, it must have:
+ * once). The `ReadonlyCollection` interface defines the bare minimum
+ * requirements for an object to be considered "set-like" in JavaScript; that
+ * is, it must have:
  *
  *  - a `has` method, which tests whether a given value is present in the set,
  *    returning a boolean value indicating the result.
@@ -33,14 +34,14 @@ import { isObject } from "./object.ts";
  * to the `Set` API, which necessitated the creation of the `ExtendedSetLike`
  * interface to represent the full API for set-like collections in JavaScript.
  *
- * Those methods require their arguments to implement the {@link ReadonlyCollection}
- * interface, rather than the full {@link SetLike} or {@link ExtendedSetLike}.
- * This means you can call `Set.prototype.union` with a `Set`, `Map`, or even
- * an `IterableWeakSet` object, since they all implement the `ReadonlyCollection` API.
+ * Those methods require their arguments to implement the
+ * {@linkcode ReadonlyCollection} interface, rather than the full
+ * {@linkcode SetLike} or {@linkcode ExtendedSetLike}. This means you can call
+ * `Set.prototype.union` with a `Set`, `Map`, or even an `IterableWeakSet`
+ * object, since they all implement the `ReadonlyCollection` API.
  *
  * @template T The type of elements in the set.
- * @see
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set#set-like_objects
+ * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set#set-like_objects
  */
 export interface ReadonlyCollection<T = unknown> {
   /** @returns The number of elements in the collection. */
@@ -50,29 +51,27 @@ export interface ReadonlyCollection<T = unknown> {
    * Tests whether a given value is present in the collection.
    * @param value The value to lookup.
    * @returns `true` if the value is in the collection; otherwise, `false`.
-   * @see
-   * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/has
+   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/has
    */
   has(value: T): boolean;
 
   /**
    * Gets an `IterableIterator` for the keys present in the collection.
    * @returns An iterator of the keys in the collection.
-   * @see
-   * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/keys
+   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/keys
    */
   keys(): IterableIterator<T>;
 }
 
 /**
- * Represents a constructor function for a {@link ReadonlyCollection} object, which
- * is the base implementation of a {@link ExtendedSetLike} object, without any
- * of the additional composition methods like `union` or `intersection`.
+ * Represents a constructor function for a {@linkcode ReadonlyCollection}
+ * object, which is the base implementation of a {@linkcode ExtendedSetLike}
+ * object, without any of the additional composition methods like `union` or
+ * `intersection`.
  *
  * @see {@linkcode ExtendedSetLike} for the full interface with composition
  * methods.
- * @see {@linkcode SetLike} for the core interface without composition
- * methods.
+ * @see {@linkcode SetLike} for the core interface without composition methods.
  */
 export interface ReadonlyCollectionConstructor {
   new <T>(iterable?: Iterable<T>): ReadonlyCollection<T>;
@@ -82,13 +81,13 @@ export interface ReadonlyCollectionConstructor {
 
 /**
  * Represents the core functionality of a `SetLike` object, which is the base
- * implementation of a {@link ExtendedSetLike} object, without any additional
- * composition methods (`union`, `intersection`, `difference`, etc). This was
- * the native `Set` API prior to the TC39 Set Methods Proposal's introduction.
+ * implementation of a {@linkcode ExtendedSetLike} object, without any
+ * additional composition methods (`union`, `intersection`, `difference`, etc).
+ * This was the native `Set` API prior to the TC39 Set Methods Proposal's
+ * introduction.
  *
  * @template T The type of elements in the set.
- * @see
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
+ * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
  * @see {@linkcode ExtendedSetLike} for the full interface with composition
  * methods.
  * @see {@linkcode SetLikeConstructor} for the constructor interface.
@@ -133,7 +132,7 @@ export interface SetLike<T = unknown>
    *
    * @param cb The callback to execute.
    * @param [thisArg] The value to use as `this` when executing the callback.
-   * @returns {void} Nothing.
+   * @returns Nothing.
    */
   forEach<This = void>(
     cb: (this: This, value: T, value2: T, set: this) => void,
@@ -166,14 +165,13 @@ export interface SetLike<T = unknown>
 }
 
 /**
- * Represents a constructor function for a {@link SetLike} object, which is
+ * Represents a constructor function for a {@linkcode SetLike} object, which is
  * the base implementation of a {@linkcode ExtendedSetLike} object, without any
  * of the additional composition methods like `union` or `intersection`.
  *
  * @see {@linkcode ExtendedSetLike} for the full interface with composition
  * methods.
- * @see {@linkcode SetLike} for the core interface without composition
- * methods.
+ * @see {@linkcode SetLike} for the core interface without composition methods.
  */
 export interface SetLikeConstructor {
   new <T>(iterable?: Iterable<T>): SetLike<T>;
@@ -247,9 +245,7 @@ export interface ExtendedSetLike<T = unknown> extends SetLike<T> {
 }
 
 /**
- * Represents a constructor function for a {@link ExtendedSetLike} object,
- * which is required for the composition methods of the `IterableWeakSet`
- * class.
+ * Represents a constructor function for an {@linkcode ExtendedSetLike} object.
  */
 export interface ExtendedSetLikeConstructor {
   new <T>(iterable?: Iterable<T>): ExtendedSetLike<T>;
@@ -259,17 +255,18 @@ export interface ExtendedSetLikeConstructor {
 }
 
 /**
- * This type represents either the full {@link ExtendedSetLike} interface, or
- * the {@link SetLike} interface, depending on whether the current environment
- * supports composition methods introduced by the TC39 Set Methods Proposal.
+ * This type represents either the full {@linkcode ExtendedSetLike} interface,
+ * or the {@linkcode SetLike} interface, depending on whether the current
+ * environment supports composition methods introduced by the TC39 Set Methods
+ * Proposal.
  *
  * If the current environment supports the composition methods, this type will
- * resolve to the {@link ExtendedSetLike} interface. Otherwise, it will resolve
- * to the {@link SetLike} interface.
+ * resolve to the {@linkcode ExtendedSetLike} interface. Otherwise, it will
+ * resolve to the {@linkcode SetLike} interface.
  *
  * @template T The type of elements in the set.
- * @see {@link SupportedSetLikeConstructor} for a similar type that represents
- * the constructor function for the supported set-like object.
+ * @see {@linkcode SupportedSetLikeConstructor} for a similar type that
+ * represents the constructor function for the supported set-like object.
  */
 export type SupportedSetLike<T = unknown> =
   Exclude<keyof ExtendedSetLike<T>, keyof SetLike<T>> extends
@@ -277,17 +274,17 @@ export type SupportedSetLike<T = unknown> =
     : SetLike<T>;
 
 /**
- * This type represents either the full {@link ExtendedSetLikeConstructor}
- * interface, or the {@link SetLikeConstructor} interface, depending on whether
- * the current environment supports composition methods introduced by the TC39
- * Set Methods Proposal.
+ * This type represents either the full {@linkcode ExtendedSetLikeConstructor}
+ * interface, or the {@linkcode SetLikeConstructor} interface, depending on
+ * whether the current environment supports composition methods introduced by
+ * the TC39 Set Methods Proposal.
  *
  * If the current environment supports the composition methods, this type will
- * resolve to the {@link ExtendedSetLikeConstructor} interface. Otherwise, it
- * will resolve to the {@link SetLikeConstructor} interface.
+ * resolve to the {@linkcode ExtendedSetLikeConstructor} interface. Otherwise,
+ * it will resolve to the {@linkcode SetLikeConstructor} interface.
  *
- * @see {@link SupportedSetLike} for a similar type that represents the full
- * set-like object.
+ * @see {@linkcode SupportedSetLike} for a similar type that represents the
+ * full set-like object.
  */
 export type SupportedSetLikeConstructor =
   Exclude<keyof ExtendedSetLikeConstructor, keyof SetLikeConstructor> extends
@@ -295,23 +292,24 @@ export type SupportedSetLikeConstructor =
     : SetLikeConstructor;
 
 /**
- * Checks whether the provided value is a {@link ReadonlyCollection} object. The
- * `ReadonlyCollection` interface is the minimum requirement for a value to be used
- * in the composition methods found in `ExtendedSetLike` implementations, such
- * as `union`, `intersection`, `difference`, and `symmetricDifference`.
+ * Checks whether the provided value is a {@linkcode ReadonlyCollection}
+ * object. The `ReadonlyCollection` interface is the minimum requirement for a
+ * value to be used in the composition methods found in `ExtendedSetLike`
+ * implementations, such as `union`, `intersection`, `difference`, and
+ * `symmetricDifference`.
  *
- * This type is the **bare minimal** requirement for a value to be considered
- * a "set-like" object in JavaScript, and only requires the `has`, `keys`, and
+ * This type is the **bare minimal** requirement for a value to be considered a
+ * "set-like" object in JavaScript, and only requires the `has`, `keys`, and
  * `size` members to be present. As such, native `Set` objects and also native
- * `Map` objects both qualify as `ReadonlyCollection` objects. For a more specific
- * check, see {@linkcode isSetLike} or {@linkcode isExtendedSetLike}, which
- * check for the full API of a Set object, with or without the composition
- * methods added by the TC39 proposal, respectively.
+ * `Map` objects both qualify as `ReadonlyCollection` objects. For a more
+ * specific check, see {@linkcode isSetLike} or {@linkcode isExtendedSetLike},
+ * which check for the full API of a Set object, with or without the
+ * composition methods added by the TC39 proposal, respectively.
  *
  * @template T The type of elements in the set.
  * @param it The value to check.
- * @returns {it is ReadonlyCollection<T>} `true` if the value is a
- * {@link ReadonlyCollection} object; otherwise, `false`.
+ * @returns `true` if the value is a {@linkcode ReadonlyCollection} object;
+ * otherwise, `false`.
  * @category Guards
  */
 export function isReadonlyCollection<T>(
@@ -321,19 +319,19 @@ export function isReadonlyCollection<T>(
 }
 
 /**
- * Checks whether the provided value is a {@link SetLike} object. The
+ * Checks whether the provided value is a {@linkcode SetLike} object. The
  * `SetLike` interface is the base implementation of a `ExtendedSetLike`
  * object, without any additional composition methods like `union` or
  * `intersection`.
  *
- * This type is the shape of the native `Set` object in JavaScript **prior**
- * to the introduction of the TC39 Proposal for Set Methods, which added the
+ * This type is the shape of the native `Set` object in JavaScript **prior** to
+ * the introduction of the TC39 Proposal for Set Methods, which added the
  * composition methods to the API.
  *
  * @template T The type of elements in the set.
  * @param it The value to check.
- * @returns {it is SetLike<T>} `true` if the value is a {@link SetLike}
- * object; otherwise, `false`.
+ * @returns `true` if the value is a {@linkcode SetLike} object; otherwise,
+ * `false`.
  * @category Guards
  */
 export function isSetLike<T>(it: unknown): it is SetLike<T> {
@@ -342,10 +340,10 @@ export function isSetLike<T>(it: unknown): it is SetLike<T> {
 }
 
 /**
- * Checks whether the provided value is a {@link ExtendedSetLike} object. The
- * `ExtendedSetLike` interface is the full implementation of a `ExtendedSetLike`
- * object, including all the composition methods like `union`, `intersection`,
- * `difference`, and `symmetricDifference`.
+ * Checks whether the provided value is a {@linkcode ExtendedSetLike} object.
+ * The `ExtendedSetLike` interface is the full implementation of a
+ * `ExtendedSetLike` object, including all the composition methods like
+ * `union`, `intersection`, `difference`, and `symmetricDifference`.
  *
  * The `ExtendedSetLike` type is the shape of the native `Set` object in
  * JavaScript **after** the introduction of the TC39 Proposal for Set Methods,
@@ -353,8 +351,8 @@ export function isSetLike<T>(it: unknown): it is SetLike<T> {
  *
  * @template T The type of elements in the set.
  * @param it The value to check.
- * @returns {it is ExtendedSetLike<T>} `true` if the value is a
- * {@link ExtendedSetLike} object; otherwise, `false`.
+ * @returns `true` if the value is a {@linkcode ExtendedSetLike} object;
+ * otherwise, `false`.
  * @category Guards
  */
 export function isExtendedSetLike<T>(it: unknown): it is ExtendedSetLike<T> {
@@ -372,13 +370,13 @@ export function isExtendedSetLike<T>(it: unknown): it is ExtendedSetLike<T> {
 }
 
 /**
- * Checks if a given value appears to be a {@link ReadonlyCollectionConstructor}
- * function, including a `prototype` property that appears to be a
- * {@link ReadonlyCollection} object.
+ * Checks if a given value appears to be a
+ * {@linkcode ReadonlyCollectionConstructor} function, including a `prototype`
+ * property that appears to be a {@linkcode ReadonlyCollection} object.
  *
  * @param it The value to check.
- * @returns {it is ReadonlyCollectionConstructor} `true` if the value appears to be a
- * {@link ReadonlyCollectionConstructor} function; otherwise, `false`.
+ * @returns `true` if the value appears to be a
+ * {@linkcode ReadonlyCollectionConstructor} function; otherwise, `false`.
  * @category Guards
  */
 export function isReadonlyCollectionConstructor(
@@ -388,13 +386,13 @@ export function isReadonlyCollectionConstructor(
 }
 
 /**
- * Checks if a given value appears to be a {@link SetLikeConstructor}
+ * Checks if a given value appears to be a {@linkcode SetLikeConstructor}
  * function, including a `prototype` property that appears to be a
- * {@link SetLike} object.
+ * {@linkcode SetLike} object.
  *
  * @param it The value to check.
- * @returns {it is SetLikeConstructor} `true` if the value is a
- * {@link SetLikeConstructor} function; otherwise, `false`.
+ * @returns `true` if the value is a {@linkcode SetLikeConstructor} function;
+ * otherwise, `false`.
  * @category Guards
  */
 export function isSetLikeConstructor(
@@ -404,13 +402,13 @@ export function isSetLikeConstructor(
 }
 
 /**
- * Checks if a given value appears to be a {@link ExtendedSetLikeConstructor}
- * function, including a `prototype` property that appears to be a
- * {@link ExtendedSetLike} object.
+ * Checks if a given value appears to be a
+ * {@linkcode ExtendedSetLikeConstructor} function, including a `prototype`
+ * property that appears to be a {@linkcode ExtendedSetLike} object.
  *
  * @param it The value to check.
- * @returns {it is ExtendedSetLikeConstructor} `true` if the value is a
- * {@link ExtendedSetLikeConstructor} function; otherwise, `false`.
+ * @returns `true` if the value is a {@linkcode ExtendedSetLikeConstructor}
+ * function; otherwise, `false`.
  * @category Guards
  */
 export function isExtendedSetLikeConstructor(

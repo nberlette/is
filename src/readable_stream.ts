@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.4/doc/readable-stream
+ * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/readable-stream
  */
 
 import { isObject } from "./object.ts";

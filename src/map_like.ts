@@ -1,11 +1,11 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.4/doc/map-like
+ * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/map-like
  */
 
 import { isReadonlyCollection } from "./set_like.ts";
-import { hasMethods } from "./_internal.ts";
+import { hasMethods } from "./has_methods.ts";
 import { isConstructor } from "./constructor.ts";
 import { isIterableObject } from "./iterable_object.ts";
 
@@ -24,7 +24,8 @@ export interface MapLike<K, V> extends Iterable<[K, V]> {
   /**
    * Tests whether a key is present in the collection.
    * @param key The key to lookup.
-   * @returns `true` if the key is present in the collection; otherwise, `false`.
+   * @returns `true` if the key is present in the collection; otherwise,
+   * `false`.
    */
   has(key: K): boolean;
 
@@ -54,25 +55,31 @@ export interface MapLike<K, V> extends Iterable<[K, V]> {
    */
   delete(key: K): boolean;
 
-  /** @returns an `IterableIterator` for the keys present in the collection. */
+  /**
+   * Returns an `IterableIterator` for the keys present in the collection.
+   */
   keys(): IterableIterator<K>;
 
-  /** @returns an `IterableIterator` for the values present in the collection. */
+  /**
+   * Returns an `IterableIterator` for the values present in the collection.
+   */
   values(): IterableIterator<V>;
 
   /**
-   * @returns an `IterableIterator` for the entries present in the collection.
+   * Returns an `IterableIterator` for the entries present in the collection.
    * Each entry is a tuple containing the key and value for each element.
    * @generator
    */
   entries(): IterableIterator<[K, V]>;
 
   /**
-   * Executes a provided function once per each key/value pair in the collection.
+   * Executes a provided function once per each key/value pair in the
+   * collection.
    *
    * @template [This=void] The type of `this` for the callback.
    * @param cb The callback to execute.
-   * @param {This} [thisArg] The value to use as `this` when executing the callback.
+   * @param [thisArg] The value to use as `this` when executing the
+   * callback.
    * @returns Nothing.
    */
   forEach<This = void>(
@@ -81,7 +88,7 @@ export interface MapLike<K, V> extends Iterable<[K, V]> {
   ): void;
 
   /**
-   * @returns an `IterableIterator` for the entries present in the collection.
+   * Returns an `IterableIterator` for the entries present in the collection.
    * @generator
    */
   [Symbol.iterator](): IterableIterator<[K, V]>;
@@ -130,9 +137,10 @@ export function isMapLike<K, V>(it: unknown): it is MapLike<K, V> {
 /**
  * Checks whether a given value is a {@linkcode MapLikeConstructor} function,
  * which is defined as a constructor function with a `prototype` property that
- * appears to be a {@link MapLike} object.
+ * appears to be a {@linkcode MapLike} object.
  * @param it The value to check.
- * @returns {it is MapLikeConstructor} `true` if the value is a {@link MapLikeConstructor}; otherwise, `false`.
+ * @returns `true` if the value is a {@linkcode MapLikeConstructor}; otherwise,
+ * `false`.
  * @category Guards
  */
 export function isMapLikeConstructor(it: unknown): it is MapLikeConstructor {

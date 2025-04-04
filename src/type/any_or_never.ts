@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.4/doc/any-or-never
+ * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/any-or-never
  */
 /**
  * @module any-or-never
@@ -11,8 +11,8 @@
  *
  * This type guard is useful when you need to check if a value can be of any
  * type _or_ if it is unreachable. If you only need to check for `any`, use the
- * {@linkcode IsAny} type guard instead. If you only need to check for `never`, use
- * the {@linkcode IsNever} type guard instead.
+ * {@linkcode IsAny} type guard instead. If you only need to check for `never`,
+ * use the {@linkcode IsNever} type guard instead.
  *
  * @example
  * ```ts

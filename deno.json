@@ -1,6 +1,6 @@
 {
   "name": "@nick/is",
-  "version": "0.2.0-rc.4",
+  "version": "0.2.0-rc.5",
   "license": "MIT",
   "author": {
     "name": "Nicholas Berlette",
@@ -350,11 +350,20 @@
     "prepublish": "deno lint --fix && deno fmt --check && deno task test && deno task check:licenses && deno publish --dry-run",
     "publish": "deno task prepublish && deno publish"
   },
-  "exclude": ["docs", "node_modules", ".coverage"],
-  "unstable": ["node-globals", "temporal"],
+  "exclude": [
+    "docs",
+    "node_modules",
+    ".coverage"
+  ],
   "publish": {
-    "include": ["mod.ts", "deno.json", "README.md", "src/**/*", "LICENSE"],
+    "include": [
+      "**/*.ts",
+      "deno.json",
+      "README.md",
+      "LICENSE"
+    ],
     "exclude": [
+      "scripts",
       "**/.*",
       "**/*.test.*",
       "**/*.bench.*"

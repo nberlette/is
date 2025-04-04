@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.3/doc/positive-zero
+ * @see https://jsr.io/@nick/is@0.2.0-rc.4/doc/positive-zero
  */
 
 import type { Cast, MAYBE_POSITIVE_ZERO, POSITIVE_ZERO } from "./types.ts";

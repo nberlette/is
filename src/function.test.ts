@@ -1,3 +1,4 @@
+// deno-lint-ignore-file ban-types
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
@@ -9,7 +10,12 @@ import { assertEquals } from "@std/assert";
 
 Deno.test("isFunction should return true for function", () => {
   assertEquals(isFunction(() => {}), true);
-  assertEquals(isFunction(function () {}), true);
+  assertEquals(
+    isFunction(function (this: Function, a: number): bigint {
+      return BigInt(a);
+    }),
+    true,
+  );
   assertEquals(isFunction(class {}), true);
   assertEquals(isFunction(new Function()), true);
 });

@@ -137,6 +137,7 @@ function generateHeader(moduleName: string): string {
 interface ParsedArgs extends BaseArgs {
   template: string;
   exclude: string[];
+  context: number;
   fix: boolean;
   dryRun: boolean;
   rest: Record<string, unknown>;
@@ -161,6 +162,7 @@ function getParsedArgs<
     silent,
     verbose,
     version,
+    context = 5,
     cwd,
     debug,
     fix,
@@ -175,6 +177,7 @@ function getParsedArgs<
     version,
     help,
     cwd,
+    context,
     template,
     exclude,
     fix,
@@ -194,11 +197,12 @@ const parsedArgs = parseArgs(process.argv.slice(2), {
   boolean: ["fix", "dry-run", "debug", "verbose", "help", "silent", "version"],
   alias: {
     template: ["t", "tpl", "file", "path"],
-    exclude: ["e", "x", "ignore", "excluded"],
+    exclude: ["e", "ignore", "excluded"],
     cwd: ["C", "dir", "root"],
+    context: ["c", "l"],
     fix: ["f"],
-    "dry-run": ["d"],
-    debug: ["b", "dbg"],
+    "dry-run": ["D"],
+    debug: ["d", "dbg"],
     verbose: ["V"],
     version: ["v"],
     silent: ["s", "S", "quiet", "q"],
@@ -208,6 +212,7 @@ const parsedArgs = parseArgs(process.argv.slice(2), {
     template: DEFAULT_TEMPLATE_PATH,
     exclude: DEFAULT_EXCLUDE,
     cwd: SOURCE_DIR,
+    context: 5,
     fix: false,
     "dry-run": false,
     debug: false,
@@ -240,23 +245,35 @@ ${colors.bold.underline.blue("Usage")}
 ${colors.bold.underline.blue("Options")}
 
   ${
-    colors.cyan(`-t, --template${colors.dim("=<path>")}`)
-  }   Path to the license header template file.
+    colors.cyan(`-C, --cwd${colors.dim("=<path>")}`)
+  }        Path to the source directory.
   ${
     colors.cyan(`-e, --exclude${colors.dim("=<glob>")}`)
   }    Exclude files matching the glob pattern.
   ${
-    colors.cyan(`-C, --cwd${colors.dim("=<path>")}`)
-  }        Path to the source directory.
-  ${colors.cyan("-f, --fix")}               Fix the license header in the files.
+    colors.cyan(`-l, --context${colors.dim("=<lines>")}`)
+  }        Number of lines to print in diffs/snippets.
   ${
-    colors.cyan("-d, --dry-run")
+    colors.cyan(`-t, --template${colors.dim("=<path>")}`)
+  }   Path to the license header template file.
+
+${colors.bold.underline.blue("Flags")}
+
+  ${
+    colors.cyan("-f, --fix")
+  }               Auto-fix outdated headers in source files.
+  ${
+    colors.cyan("-D, --dry-run")
   }           Perform a dry run without modifying files.
-  ${colors.cyan("-V, --verbose")}           Enable verbose output.
+
+  ${colors.cyan("-d, --debug")}             Enable debug output.
   ${colors.cyan("-s, --silent")}            Suppress all output.
-  ${colors.cyan("-b, --debug")}             Enable debug output.
-  ${colors.cyan("-h, --help")}              Show this help message.
-  ${colors.cyan("-v, --version")}           Show the version of the script.
+  ${colors.cyan("-V, --verbose")}           Enable verbose output.
+
+  ${colors.cyan("-h, --help")}              Print this help message and exit.
+  ${
+    colors.cyan("-v, --version")
+  }           Print the version of the script and exit.
 
 ${colors.dim.gray("┄".repeat(70))}
 
@@ -361,7 +378,7 @@ if (isMainThread) {
         assignTask(worker);
       } else if (msg.type === "result") {
         if (!args.silent && msg.diagnostics.length) {
-          printDiagnostics(msg.diagnostics, args);
+          printDiagnostics(msg.diagnostics, args, args.context);
         }
         diagnostics.push(...msg.diagnostics);
       }
@@ -408,7 +425,7 @@ if (isMainThread) {
     }
     if (diagnostics.length > 0) {
       if (!args.silent) {
-        printDiagnostics(diagnostics, args);
+        printDiagnostics(diagnostics, args, args.context);
       }
       if (diagnostics.some((d) => d.severity === "error")) {
         process.exitCode = 3;
@@ -528,7 +545,11 @@ if (isMainThread) {
               diagnostics.push({
                 file: filePath,
                 message:
-                  "Header block start detected but no closing '*/' found.",
+                  `Copyright header block detected at line ${
+                    headerStartIndex + 1
+                  }, but no closing ` +
+                  `delimiter was found (\`*/\`).\n\n` +
+                  `There is likely a syntax error in ${filePath}, please review the file manually.`,
                 severity: "error",
                 line: headerStartIndex + 1,
               });
@@ -548,12 +569,12 @@ if (isMainThread) {
             diagnostics.push({
               file: filePath,
               message:
-                `Invalid header location! Expected at line ${
+                `Invalid header location! Expected copyright header to begin at line ${
                   insertIndex + 1
-                }, but found on ${headerStartIndex + 1}.\n\n` +
-                `\x1b[1;4;95mhelp\x1b[0m Header blocks can only be preceded by directive comments or a shebang, such\n` +
-                `     as \x1b[92m${"`"}// deno-lint-ignore-file${"`"}\x1b[39m or \x1b[92m${"`"}#!/usr/bin/env -S deno run -A${"`"}\x1b[0m. All other\n` +
-                `     lines must be placed \x1b[4mafter\x1b[0m the header comment.\n`,
+                }, but it was found on ${headerStartIndex + 1}.\n\n` +
+                `\x1b[1;4;95mhelp\x1b[0m Copyright headers can be only preceded by directives or shebang lines, such\n` +
+                `     as \x1b[92m${"`"}// deno-lint-ignore-file${"`"}\x1b[39m or \x1b[92m${"`"}#!/usr/bin/env -S deno run -A${"`"}\x1b[0m. Any other\n` +
+                `     lines of text \x1b[1;3;4mmust\x1b[0m come \x1b[4mafter\x1b[0m the copyright header comment ends.\n`,
               severity: "error",
               line: headerStartIndex + 1,
               snippet: [
@@ -577,11 +598,13 @@ if (isMainThread) {
             ].join("\n");
             diagnostics.push({
               file: filePath,
-              message:
-                "Updating outdated header block with latest copyright info.",
+              message: `Outdated copyright header found on line ${
+                headerStartIndex + 1
+              }. Updating with the latest text.`,
               severity: "warning",
               line: headerStartIndex + 1,
-              snippet: existingHeader.split("\n").slice(0, 5).join("\n"),
+              snippet: existingHeader,
+              newSnippet: expectedHeader,
               hasChanges: true,
               oldContent,
               newContent,
@@ -591,7 +614,7 @@ if (isMainThread) {
               if (dryRun) {
                 diagnostics.push({
                   file: filePath,
-                  message: "Dry run mode. No changes made.",
+                  message: "Dry run mode enabled - no changes made.",
                   severity: "debug",
                 });
                 return diagnostics;
@@ -602,7 +625,7 @@ if (isMainThread) {
                   });
                   diagnostics.push({
                     file: filePath,
-                    message: "File updated successfully.",
+                    message: "File successfully updated and saved to disk!",
                     severity: "info",
                     hasChanges: true,
                     oldContent,
@@ -611,9 +634,10 @@ if (isMainThread) {
                 } catch (e) {
                   diagnostics.push({
                     file: filePath,
-                    message: `Failed to write updated file: ${
-                      (e as Error).message
-                    }`,
+                    message:
+                      `Failed to write updated file contents. Caused by: ${
+                        (e as Error).message
+                      }`,
                     severity: "error",
                   });
                 }
@@ -622,7 +646,7 @@ if (isMainThread) {
           } else {
             diagnostics.push({
               file: filePath,
-              message: "Header is up-to-date, no changes needed.",
+              message: "Existing header is up-to-date, no changes needed.",
               severity: "debug",
               line: headerStartIndex + 1,
             });

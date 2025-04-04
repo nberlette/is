@@ -1,7 +1,21 @@
 // deno-lint-ignore-file no-explicit-any
 import { AsyncResource } from "node:async_hooks";
 import { extname, relative } from "node:path";
+
+import { diffStr } from "jsr:@std/internal@1.0.6/diff-str";
+import { buildMessage } from "jsr:@std/internal@1.0.6/build-message";
+
 import denoJson from "../deno.json" with { type: "json" };
+
+export function diff(a: string, b: string): string {
+  return buildMessage(diffStr(a, b)).join("").replace(/\\n/g, "").replace(
+    /\\(r|t|v|f)/g,
+    (m, c) =>
+      ({ r: "\r", t: "\t", v: "\v", f: "\f" })[
+        c as "r" | "t" | "v" | "f"
+      ] ?? m,
+  );
+}
 
 /**
  * Computes the module name from a file path.
@@ -68,7 +82,7 @@ export function interpolate<
     }
     iteration++;
   } while (
-    replaced && iteration < MAX_ITERATIONS && /\{\{.*?\}\}/.test(result)
+    replaced && iteration < MAX_ITERATIONS && /\{(\{(.*?)\}|.*?)\}/.test(result)
   );
   return result;
 }
@@ -80,6 +94,7 @@ interface BaseDiagnostic<S extends string = string> {
   line?: number;
   column?: number;
   snippet?: string;
+  newSnippet?: string;
   hasChanges?: boolean;
 }
 
@@ -114,7 +129,11 @@ export interface BaseArgs {
  *
  * @param diags Array of diagnostics.
  */
-export function printDiagnostics(diags: Diagnostic[], args: BaseArgs): void {
+export function printDiagnostics(
+  diags: Diagnostic[],
+  args: BaseArgs,
+  maxSnippetLines = 20,
+): void {
   if (diags.length === 0) {
     if (!args.silent) {
       console.error("All files checked successfully with no issues.");
@@ -137,18 +156,24 @@ export function printDiagnostics(diags: Diagnostic[], args: BaseArgs): void {
     if (items.length === 0 && !args.verbose) continue;
     if (nonDebugItems.length === 0 && !args.debug) continue;
     if (args.silent) continue;
+
     console.error(
       `\n\x1b[94m ╓╴\x1b[96m${file}\x1b[39;94m╶${
         "─".repeat(Math.max(0, 100 - file.length - 2))
       }╮\x1b[0m`,
     );
-    console.error(`\x1b[94m ║\x1b[0m`);
-    const divider = `\x1b[94m ╟\x1b[2m${"╌".repeat(100)}\x1b[0m`;
+
+    const spacer = `\x1b[94m ║\x1b[0m`;
+    const divider = `\x1b[94m ╟\x1b[2m${"╴".repeat(100)}\x1b[0m`;
+
+    console.error(spacer);
+
     for (let i = 0; i < items.length; i++) {
       const d = items[i];
       if (d.severity === "debug" && !args.debug) continue;
+
       const colors = { info: 35, warning: 33, error: 31, debug: 2 } as const;
-      if (i > 0) console.error(divider);
+
       console.error(
         `\x1b[94m ╟╴\x1b[0m \x1b[${colors[d.severity] ?? "31"}m[${
           d.severity ?? "error"
@@ -158,17 +183,49 @@ export function printDiagnostics(diags: Diagnostic[], args: BaseArgs): void {
           ).join("\n")
         }`,
       );
-      console.error(divider);
-      if (d.snippet) {
-        console.error(
-          d.snippet
-            .trim()
-            .split(/\r?\n/)
-            .map((s) => `\x1b[94m ║\x1b[2m  ${s}\x1b[0m`)
-            .join("\n"), //+ `\n\x1b[94m │\x1b[0m`,
-        );
+
+      if ((args.debug || args.verbose) && +maxSnippetLines > 0) {
+        if (i < items.length - 1) console.error(divider);
+
+        let text = "";
+        if (d.snippet && d.newSnippet) {
+          // show a diff if newSnippet is provided too
+          text = diff("\n" + d.snippet, "\n" + d.newSnippet);
+          text = "\n" + text.split(/\r?\n/).slice(1).join("\n");
+        } else if ("oldContent" in d && d.oldContent && d.newContent) {
+          text &&= text + "\n" + divider;
+          let diffText = diff("\n" + d.oldContent, "\n" + d.newContent);
+          // get rid of the "actual / expected" diff header
+          diffText = diffText.split(/\r?\n/).slice(1).join("\n");
+          text += "\n" + diffText;
+        } else if (d.snippet) {
+          text = d.snippet;
+        }
+
+        if (text.trim().length > 0) {
+          const lines = text.split(/\r?\n/);
+
+          if (lines.length > maxSnippetLines) {
+            text = lines.slice(0, maxSnippetLines + 1).join("\n");
+            const remaining = lines.length - maxSnippetLines;
+            if (remaining > 3) {
+              text +=
+                `\n\x1b[94m ║ \x1b[0;2;3m  ... ${remaining} additional lines omitted ... \x1b[0m`;
+            }
+          }
+          console.error(
+            text.trim().split(/\r?\n/).map(
+              (s) =>
+                s.startsWith("\x1b[94m ")
+                  ? s
+                  : `\x1b[94m ║\x1b[2m  ${s}\x1b[0m`,
+            ).join("\n"), //+ `\n\x1b[94m │\x1b[0m`,
+          );
+        }
       }
+      if (i < items.length - 1) console.error(divider);
     }
+
     console.error(`\x1b[94m ╙${"─".repeat(100)}╯\x1b[0m`);
   }
 }

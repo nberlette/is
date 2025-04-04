@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.4/doc/positive-integer
+ * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/positive-integer
  */
 import { describe, it } from "@std/testing/bdd";
 import { expect } from "@std/expect";

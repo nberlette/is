@@ -133,6 +133,8 @@ export function printDiagnostics(
   diags: Diagnostic[],
   args: BaseArgs,
   maxSnippetLines = 20,
+  maxLineLength = 100,
+  colors = { info: 35, warning: 33, error: 31, debug: 2 },
 ): void {
   if (diags.length === 0) {
     if (!args.silent) {
@@ -140,6 +142,7 @@ export function printDiagnostics(
     }
     return;
   }
+  const width = maxLineLength - 4;
 
   const grouped = Map.groupBy(diags, ({ file }) => file);
   const sorted = [...grouped].sort(([a, va], [b, vb]) => {
@@ -157,22 +160,23 @@ export function printDiagnostics(
     if (nonDebugItems.length === 0 && !args.debug) continue;
     if (args.silent) continue;
 
+    const specifier = import.meta.resolve(file);
     console.error(
-      `\n\x1b[94m ╓╴\x1b[96m${file}\x1b[39;94m╶${
-        "─".repeat(Math.max(0, 100 - file.length - 2))
+      `\n\x1b[94m ╓╴\x1b[0m \x1b[96m${specifier}\x1b[0m \x1b[94m╶${
+        "─".repeat(Math.max(0, width - specifier.length - 4))
       }╮\x1b[0m`,
     );
 
     const spacer = `\x1b[94m ║\x1b[0m`;
-    const divider = `\x1b[94m ╟\x1b[2m${"╴".repeat(100)}\x1b[0m`;
+    const divider = `\x1b[94m ╟\x1b[2m${"╴".repeat(width)}\x1b[0m`;
 
     console.error(spacer);
+
+    let diffSeen = false;
 
     for (let i = 0; i < items.length; i++) {
       const d = items[i];
       if (d.severity === "debug" && !args.debug) continue;
-
-      const colors = { info: 35, warning: 33, error: 31, debug: 2 } as const;
 
       console.error(
         `\x1b[94m ╟╴\x1b[0m \x1b[${colors[d.severity] ?? "31"}m[${
@@ -188,11 +192,13 @@ export function printDiagnostics(
         if (i < items.length - 1) console.error(divider);
 
         let text = "";
-        if (d.snippet && d.newSnippet) {
+        if (d.snippet && d.newSnippet && !diffSeen) {
           // show a diff if newSnippet is provided too
           text = diff("\n" + d.snippet, "\n" + d.newSnippet);
           text = "\n" + text.split(/\r?\n/).slice(1).join("\n");
-        } else if ("oldContent" in d && d.oldContent && d.newContent) {
+        } else if (
+          "oldContent" in d && d.oldContent && d.newContent && !diffSeen
+        ) {
           text &&= text + "\n" + divider;
           let diffText = diff("\n" + d.oldContent, "\n" + d.newContent);
           // get rid of the "actual / expected" diff header
@@ -202,7 +208,10 @@ export function printDiagnostics(
           text = d.snippet;
         }
 
-        if (text.trim().length > 0) {
+        if (
+          text.trim().length > 0 &&
+          (!diffSeen || text === d.snippet || args.verbose)
+        ) {
           const lines = text.split(/\r?\n/);
 
           if (lines.length > maxSnippetLines) {
@@ -213,6 +222,7 @@ export function printDiagnostics(
                 `\n\x1b[94m ║ \x1b[0;2;3m  ... ${remaining} additional lines omitted ... \x1b[0m`;
             }
           }
+
           console.error(
             text.trim().split(/\r?\n/).map(
               (s) =>
@@ -221,12 +231,17 @@ export function printDiagnostics(
                   : `\x1b[94m ║\x1b[2m  ${s}\x1b[0m`,
             ).join("\n"), //+ `\n\x1b[94m │\x1b[0m`,
           );
+
+          if (text !== d.snippet) diffSeen = true;
         }
       }
-      if (i < items.length - 1) console.error(divider);
+      if (
+        i < items.length - 1 && items.slice(i + 1)
+          .some(({ severity }) => severity !== "debug" || args.debug)
+      ) console.error(divider);
     }
 
-    console.error(`\x1b[94m ╙${"─".repeat(100)}╯\x1b[0m`);
+    console.error(`\x1b[94m ╙${"─".repeat(width)}╯\x1b[0m`);
   }
 }
 

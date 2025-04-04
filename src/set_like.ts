@@ -4,7 +4,7 @@
  * @see https://jsr.io/@nick/is@0.2.0-rc.4/doc/set-like
  */
 
-import { hasMethods } from "./_internal.ts";
+import { hasMethods } from "./has_methods.ts";
 import { isConstructor } from "./constructor.ts";
 import { isIterableObject } from "./iterable_object.ts";
 import { isObject } from "./object.ts";

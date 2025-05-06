@@ -1,9 +1,3 @@
-/*!
- * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
- * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/falsy
- */
-
 import { assert, assertEquals } from "@std/assert";
 import { type Falsy, isFalsy } from "./falsy.ts";
 import { expectType } from "./_internal.ts";

@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/weak-ref
+ * @see https://jsr.io/@nick/is/doc/weak-ref
  */
 
 /**
@@ -12,6 +12,7 @@
  * @module weak-ref
  */
 import type { WeakKey } from "./weak_key.ts";
+import { WeakRefPrototypeDeref } from "./_internal/primordials.ts";
 
 /**
  * Checks if {@linkcode obj} is a WeakRef. For more information on this type of
@@ -46,9 +47,9 @@ export function isWeakRef<T extends WeakKey>(
 export function isWeakRef<T extends WeakKey>(obj: unknown): obj is WeakRef<T>;
 /** @internal */
 export function isWeakRef<T extends WeakKey>(obj: unknown): obj is WeakRef<T> {
-  if (typeof globalThis.WeakRef !== "function") return false;
+  if (typeof WeakRef !== "function") return false;
   try {
-    globalThis.WeakRef.prototype.deref.call(obj);
+    WeakRefPrototypeDeref?.(obj);
     return true;
   } catch {
     return false;

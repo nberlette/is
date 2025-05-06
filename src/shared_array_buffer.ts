@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/shared-array-buffer
+ * @see https://jsr.io/@nick/is/doc/shared-array-buffer
  */
 
 import { uncurryGetter } from "./_internal.ts";

@@ -1,0 +1,55 @@
+{
+  "name": "Deno",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "runArgs": ["--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined"],
+  "postCreateCommand": "git submodule update --init --recursive",
+  "containerUser": "vscode",
+  "remoteUser": "vscode",
+  // container features to add during the build step
+  "features": {
+    "git": "latest",
+    "sshd": "latest",
+    "node": "latest",
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/meaningful-ooo/devcontainer-features/homebrew:2": {}
+  },
+  // settings for the vscode editor
+  "customizations": {
+    "codespaces": {
+      // "disableAutomaticConfiguration": true,
+      "openFiles": [
+        "README.md",
+        "deno.json"
+      ]
+    },
+    "vscode": {
+      "settings": {
+        "deno.enable": true,
+        "deno.lint": true,
+        "deno.codeLens.test": true,
+        "deno.cacheOnSave": true,
+        "editor.tabSize": 2,
+        "editor.stickyTabStops": true,
+        "editor.linkedEditing": true,
+        "editor.minimap.enabled": false,
+        "editor.defaultFormatter": "denoland.vscode-deno",
+        "editor.formatOnSave": true,
+        "files.watcherExclude": {
+          "**/.coverage/**": true,
+          "**/docs/**": true,
+          "**/wiki/**": true
+        }
+      },
+      "extensions": [
+        "github.copilot",
+        "github.vscode-github-actions",
+        "denoland.vscode-deno",
+        "editorconfig.editorconfig",
+        "bierner.markdown-preview-github-styles",
+        "mutantdino.resourcemonitor"
+      ]
+    }
+  }
+}

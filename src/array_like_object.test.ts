@@ -1,9 +1,3 @@
-/*!
- * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
- * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/array-like-object
- */
-
 import { describe, it } from "@std/testing/bdd";
 import { expect } from "@std/expect";
 import { isArrayLikeObject } from "./array_like_object.ts";

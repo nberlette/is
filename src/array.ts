@@ -1,13 +1,13 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/array
+ * @see https://jsr.io/@nick/is/doc/array
  */
 
 /**
  * Checks if the given value is an array. If the `Array.isArray` method is
  * available in the global scope, it will be used under the hood. Otherwise,
- * a custom implementation will be used.
+ * a custom implementation is used.
  *
  * To constrain the types of each eleemnt in the array, a custom type guard
  * can be provided for the second argument, `test`, which will be used to
@@ -46,17 +46,17 @@
 import { isTaggedNative } from "./_internal.ts";
 import type { Predicate } from "./type/predicate.ts";
 
-const ArrayIsArray: (x: unknown) => x is unknown[] = (() => {
+const ArrayIsArray: <T>(x: unknown) => x is T[] = (() => {
   if (typeof globalThis.Array.isArray === "function") {
     return globalThis.Array.isArray.bind(globalThis.Array);
   }
   // fallback checks for the native `Array` tag (e.g. it _appears_ to have a
   // Symbol.toStringTag when passed to Object.prototype.toString, but does not
   // actually have that property anywhere in its prototype chain)
-  return (x): x is unknown[] => (
+  return (x) => (
     typeof x === "object" && x !== null && isTaggedNative(x, "Array")
   );
-})();
+})() as <T>(x: unknown) => x is T[];
 
 /**
  * Checks if the given value is an array, optionally verifying that each of its
@@ -89,11 +89,11 @@ const ArrayIsArray: (x: unknown) => x is unknown[] = (() => {
  * ```
  * @category Indexed Collections
  */
-export function isArray<T>(a: unknown, test?: Predicate<T>): a is T[] {
-  if (ArrayIsArray(a)) {
+export function isArray<T>(it: unknown, test?: Predicate<T>): it is T[] {
+  if (ArrayIsArray(it)) {
     if (typeof test === "function") {
-      for (let i = 0; i < a.length; i++) {
-        if (!test(a[i])) return false;
+      for (let i = 0; i < it.length; i++) {
+        if (!test(it[i])) return false;
       }
     }
     return true;

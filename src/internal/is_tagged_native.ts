@@ -2,10 +2,14 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/is-tagged-native
+ * @see https://jsr.io/@nick/is/doc/internal/is-tagged-native
  */
 
-import { Object, SymbolToStringTag } from "./primordials.ts";
+import {
+  Object,
+  StringPrototypeReplace,
+  SymbolToStringTag,
+} from "./primordials.ts";
 import { toString } from "./to_string.ts";
 
 /**
@@ -30,7 +34,11 @@ export function isTaggedNative<U extends {}, T extends string>(
   tag: T,
   allowCustom?: boolean,
 ): boolean {
-  tag = tag.toString().replace(/^\[object (.+)\]$/, "$1") as T;
+  tag = StringPrototypeReplace(
+    (tag ?? "") + "",
+    /^\[object (.+)\]$/,
+    (_, t) => t,
+  ) as T;
   return toString(it = Object(it)) === `[object ${tag}]` &&
     (allowCustom
       ? SymbolToStringTag in it && it[SymbolToStringTag] === tag

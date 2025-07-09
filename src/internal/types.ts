@@ -1,8 +1,8 @@
-// deno-lint-ignore-file ban-types
+// deno-lint-ignore-file ban-types no-explicit-any
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/types
+ * @see https://jsr.io/@nick/is/doc/internal/types
  */
 
 const BRAND: unique symbol = Symbol("BRAND");
@@ -45,10 +45,23 @@ export type unknowns = {} | null | undefined;
 
 export type Expand<T, Fallback = never> = T extends infer T ? T : Fallback;
 
-export type ObjectEntry<T> = { [K in keyof T]: [K, T[K]] }[keyof T];
-export type ObjectEntries<T> = ObjectEntry<T>[];
 export type ObjectKeys<T> = (string & keyof T)[];
+
 export type ObjectValues<T> = T[keyof T][];
+
+export type ObjectEntry<T> = { [K in keyof T]: [K, T[K]] }[keyof T];
+
+export type ObjectEntries<T> = ObjectEntry<T>[];
+
+export type ObjectFromEntries<
+  T extends readonly (readonly [PropertyKey, any])[],
+> = {
+  [
+    K in keyof T as K extends number | `${number}`
+      ? T[K] extends [PropertyKey, any] ? T[K][0] : never
+      : never
+  ]: T[K] extends [PropertyKey, any] ? T[K][1] : never;
+};
 
 export type Split<
   S extends string,

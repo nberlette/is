@@ -1,8 +1,9 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/global-this
+ * @see https://jsr.io/@nick/is/doc/internal/global-this
  */
+
 declare const root: typeof globalThis | undefined;
 declare const self: typeof globalThis | undefined;
 declare const window: typeof globalThis | undefined;

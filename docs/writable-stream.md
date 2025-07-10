@@ -28,7 +28,7 @@ Checks if [it](#it "Jump to symbol: 'it'") is a `WritableStream` object.
 
 ```ts
 import { isWritableStream } from "jsr:@nick/is/writable-stream";
-a;
+
 const stream = new WritableStream();
 isWritableStream(stream); // true
 

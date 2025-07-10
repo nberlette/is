@@ -34,9 +34,10 @@ is the type of object returned by `String.prototype[Symbol.iterator]`.
 import { isStringIterator } from "jsr:@nick/is/string-iterator";
 
 const str = "foo";
-const iter = str[Symbol.iterator]();
-console.log(isStringIterator(iterator)); // true
 console.log(isStringIterator(str)); // false
+
+const iter = str[Symbol.iterator]();
+console.log(isStringIterator(iter)); // true
 ```
 
 ## `StringIterator`

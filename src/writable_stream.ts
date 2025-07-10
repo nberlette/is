@@ -14,7 +14,7 @@ import { isObject } from "./object.ts";
  * @example
  * ```ts
  * import { isWritableStream } from "jsr:@nick/is/writable-stream";
- * a
+ *
  * const stream = new WritableStream();
  * isWritableStream(stream); // true
  *

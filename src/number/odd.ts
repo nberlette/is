@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/odd
+ * @see https://jsr.io/@nick/is/doc/number/odd
  */
 
 /**
@@ -13,7 +13,7 @@
  *
  * @example
  * ```ts
- * import { isOdd } from "@nick/is/odd";
+ * import { isOdd } from "jsr:@nick/is/odd";
  *
  * isOdd(1); // true
  * isOdd(2); // false
@@ -64,7 +64,7 @@ export type Odd<T = number> = Cast<
  * @returns `true` if the value is odd, `false` otherwise.
  * @example
  * ```ts
- * import { isOdd } from "@nick/is/odd";
+ * import { isOdd } from "jsr:@nick/is/odd";
  *
  * isOdd(1); // true
  * isOdd(2); // false
@@ -84,7 +84,7 @@ export function isOdd<const T = Numeric>(it: T): it is Odd<T>;
  * @returns `true` if the value is odd, `false` otherwise.
  * @example
  * ```ts
- * import { isOdd } from "@nick/is/odd";
+ * import { isOdd } from "jsr:@nick/is/odd";
  *
  * isOdd(1); // true
  * isOdd(2); // false
@@ -104,7 +104,7 @@ export function isOdd(it: number | `${number}`): it is Odd<number>;
  * @returns `true` if the value is odd, `false` otherwise.
  * @example
  * ```ts
- * import { isOdd } from "@nick/is/odd";
+ * import { isOdd } from "jsr:@nick/is/odd";
  *
  * isOdd(1); // true
  * isOdd(2); // false
@@ -124,7 +124,7 @@ export function isOdd(it: bigint | `${bigint}`): it is Odd<bigint>;
  * @returns `true` if the value is an odd finite integer, `false` otherwise.
  * @example
  * ```ts
- * import { isOdd } from "@nick/is/odd";
+ * import { isOdd } from "jsr:@nick/is/odd";
  *
  * isOdd(1); // true
  * isOdd(2); // false

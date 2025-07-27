@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/positive-nonzero-finite
+ * @see https://jsr.io/@nick/is/doc/number/positive-nonzero-finite
  */
 
 import { isNonZeroFiniteNumber } from "./nonzero_finite.ts";
@@ -17,7 +17,7 @@ import type {
  * Casts a value into a positive nonzero finite type. If the value is not a
  * number, it will resolve to `never`.
  *
- * @category Numbers
+ * @category Numeric
  */
 export type PositiveNonZeroFinite<N = number> = Cast<
   N,
@@ -27,7 +27,7 @@ export type PositiveNonZeroFinite<N = number> = Cast<
  * Casts a value into a partial positive nonzero finite type. If the value is
  * not a number, it will resolve to `never`.
  *
- * @category Numbers
+ * @category Numeric
  */
 export type MaybePositiveNonZeroFinite<N = number> = Cast<
   N,
@@ -50,7 +50,7 @@ export type MaybePositiveNonZeroFinite<N = number> = Cast<
  * console.log(isPositiveNonZeroFiniteNumber(NaN)); // false
  * console.log(isPositiveNonZeroFiniteNumber(Infinity)); // true
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isPositiveNonZeroFiniteNumber<const N = number>(
   it: N,
@@ -73,7 +73,7 @@ export function isPositiveNonZeroFiniteNumber<const N = number>(
  * console.log(isPositiveNonZeroFiniteNumber(NaN)); // false
  * console.log(isPositiveNonZeroFiniteNumber(Infinity)); // true
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isPositiveNonZeroFiniteNumber(
   it: unknown,

@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/in-range
+ * @see https://jsr.io/@nick/is/doc/number/in-range
  */
 
 /**
@@ -16,7 +16,7 @@
  * inRange(1, 0, 2); // true
  * inRange(1, 2, 0); // false
  * ```
- * @category Numbers
+ * @category Numeric
  */
 import { isNumber } from "./number.ts";
 // import type { Brand, Flavor } from "../_internal.ts";
@@ -148,7 +148,7 @@ type Either<A, B> = [A & {}] extends [never] ? B : A & {};
  * console.log(isExclusivity("[")); // false
  * console.log(isExclusivity("]")); // false
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isExclusivity(it: unknown): it is Exclusivity {
   return it === "[]" || it === "(]" || it === "[)" || it === "()";
@@ -176,7 +176,7 @@ export function isExclusivity(it: unknown): it is Exclusivity {
  * console.log(inRange(1, 2)); // true
  * console.log(inRange(1, 2, "(]")); // true
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function inRange<
   const V extends number,
@@ -219,7 +219,7 @@ export function inRange<
  * console.log(inRange(1, 2)); // true
  * console.log(inRange(1, 2, "(]")); // true
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function inRange(
   value: number,

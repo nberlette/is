@@ -18,7 +18,7 @@ describe("isPositiveInteger: functionality", () => {
     [-1.5, false],
     [Number.MAX_SAFE_INTEGER, true],
     [Number.MIN_SAFE_INTEGER, false],
-    [Number.MAX_VALUE, false],
+    [Number.MAX_VALUE, true],
   ];
 
   for (const [input, output] of testCases) {

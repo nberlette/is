@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/integer
+ * @see https://jsr.io/@nick/is/doc/number/integer
  */
 
 /**
@@ -49,7 +49,7 @@
  *   //           ^? const value: 1
  * }
  * ```
- * @category Numbers
+ * @category Numeric
  * @tags integer
  * @module integer
  */
@@ -70,7 +70,7 @@ export type { Cast, Unwrap } from "./types.ts";
  * Casts a value into a big integer type (which is really just a bigint). If
  * the value is not a bigint or a string containing a valid integer, it will
  * resolve to `never`.
- * @category Numbers
+ * @category Numeric
  */
 export type BigInteger<N = bigint> = CastInt<N, INTEGER>;
 // #endregion BigInteger
@@ -79,7 +79,7 @@ export type BigInteger<N = bigint> = CastInt<N, INTEGER>;
 /**
  * Casts a value into a positive big integer type. If the value is not a
  * bigint or a string containing a valid integer, it will resolve to `never`.
- * @category Numbers
+ * @category Numeric
  */
 export type PositiveBigInteger<N = bigint> = CastInt<N, POSITIVE & INTEGER>;
 // #endregion PositiveBigInteger
@@ -88,7 +88,7 @@ export type PositiveBigInteger<N = bigint> = CastInt<N, POSITIVE & INTEGER>;
 /**
  * Casts a value into a negative big integer type. If the value is not a
  * bigint or a string containing a valid integer, it will resolve to `never`.
- * @category Numbers
+ * @category Numeric
  */
 export type NegativeBigInteger<N = bigint> = CastInt<N, NEGATIVE & INTEGER>;
 // #endregion NegativeBigInteger
@@ -105,7 +105,7 @@ export type NegativeBigInteger<N = bigint> = CastInt<N, NEGATIVE & INTEGER>;
  *
  * @example
  * ```ts
- * import { isInteger, type Integer } from "jsr:@type/number";
+ * import { isInteger, type Integer } from "jsr:@nick/is/number";
  *
  * function add(a: Integer, b: Integer) {
  *   return (a + b) as Integer;
@@ -126,7 +126,7 @@ export type NegativeBigInteger<N = bigint> = CastInt<N, NEGATIVE & INTEGER>;
  * // This level of strictness can be a bit silly in the wrong application:
  * x = 1; // <- TS4321 (`MaybeInteger` would be a better choice here)
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export type Integer<N = number> = N extends bigint
   ? `${N}` extends `${infer I extends number}` ? N & Integer<I>
@@ -149,7 +149,7 @@ export type Integer<N = number> = N extends bigint
  *
  * @example
  * ```ts
- * import { isInteger, type MaybeInteger, type MaybeFloat } from "jsr:@type/number";
+ * import { isInteger, type MaybeInteger, type MaybeFloat } from "jsr:@nick/is/number";
  *
  * function add(a: MaybeInteger, b: MaybeInteger) {
  *  return (a + b) as MaybeInteger;
@@ -170,7 +170,7 @@ export type Integer<N = number> = N extends bigint
  *
  * y = 2; // <- No error! (this is the main difference from `Integer`)
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export type MaybeInteger<N = number> = N extends bigint
   ? `${N}` extends `${infer I extends number}` ? N & MaybeInteger<I>
@@ -196,7 +196,7 @@ export type MaybeInteger<N = number> = N extends bigint
  * console.log(isInteger(NaN)); // false
  * console.log(isInteger(Infinity)); // false
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isInteger<const N = number>(it: N): it is Integer<N>;
 
@@ -216,7 +216,7 @@ export function isInteger<const N = number>(it: N): it is Integer<N>;
  * console.log(isInteger(NaN)); // false
  * console.log(isInteger(Infinity)); // false
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isInteger(it: unknown): it is Integer;
 

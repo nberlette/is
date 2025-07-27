@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/positive-finite
+ * @see https://jsr.io/@nick/is/doc/number/positive-finite
  */
 
 import { isFinite } from "./finite.ts";
@@ -11,7 +11,7 @@ import type { Cast, MAYBE_POSITIVE_FINITE, POSITIVE_FINITE } from "./types.ts";
  * Casts a value into a positive finite type. If the value is not a number, it
  * will resolve to `never`.
  *
- * @category Numbers
+ * @category Numeric
  */
 export type PositiveFinite<N = number> = Cast<N, POSITIVE_FINITE>;
 
@@ -19,7 +19,7 @@ export type PositiveFinite<N = number> = Cast<N, POSITIVE_FINITE>;
  * Casts a value into a partial positive finite type. If the value is not a
  * number, it will resolve to `never`.
  *
- * @category Numbers
+ * @category Numeric
  */
 export type MaybePositiveFinite<N = number> = Cast<N, MAYBE_POSITIVE_FINITE>;
 
@@ -40,7 +40,7 @@ export type MaybePositiveFinite<N = number> = Cast<N, MAYBE_POSITIVE_FINITE>;
  * console.log(isPositiveFiniteNumber(NaN)); // false
  * console.log(isPositiveFiniteNumber(Infinity)); // false
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isPositiveFiniteNumber<const N = number>(
   it: N,
@@ -63,7 +63,7 @@ export function isPositiveFiniteNumber<const N = number>(
  * console.log(isPositiveFiniteNumber(NaN)); // false
  * console.log(isPositiveFiniteNumber(Infinity)); // false
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isPositiveFiniteNumber(it: unknown): it is PositiveFinite;
 

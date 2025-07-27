@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/nonzero-finite
+ * @see https://jsr.io/@nick/is/doc/number/nonzero-finite
  */
 
 import { isFinite } from "./finite.ts";
@@ -13,7 +13,7 @@ import type { Cast, MAYBE_NON_ZERO_FINITE, NON_ZERO_FINITE } from "./types.ts";
  * Casts a value into a nonzero finite type. If the value is not a number, it
  * will resolve to `never`.
  *
- * @category Numbers
+ * @category Numeric
  */
 export type NonZeroFinite<N = number> = Cast<N, NON_ZERO_FINITE>;
 
@@ -40,7 +40,7 @@ export type MaybeNonZeroFinite<N = number> = Cast<N, MAYBE_NON_ZERO_FINITE>;
  * console.log(isNonZeroFiniteNumber(NaN)); // false
  * console.log(isNonZeroFiniteNumber(Infinity)); // true
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isNonZeroFiniteNumber<const N = number>(
   it: N,
@@ -63,7 +63,7 @@ export function isNonZeroFiniteNumber<const N = number>(
  * console.log(isNonZeroFiniteNumber(NaN)); // false
  * console.log(isNonZeroFiniteNumber(Infinity)); // true
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isNonZeroFiniteNumber(it: unknown): it is NonZeroFinite;
 

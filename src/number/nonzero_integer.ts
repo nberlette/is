@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/nonzero-integer
+ * @see https://jsr.io/@nick/is/doc/number/nonzero-integer
  */
 
 import type { Cast, INTEGER, NON_ZERO } from "./types.ts";
@@ -11,7 +11,7 @@ import { isInteger } from "./integer.ts";
  * Casts a value into a nonzero integer type. If the value is not a number,
  * it will resolve to `never`.
  *
- * @category Numbers
+ * @category Numeric
  */
 export type NonZeroInteger<N = number> = Cast<N, NON_ZERO & INTEGER>;
 
@@ -31,7 +31,7 @@ export type NonZeroInteger<N = number> = Cast<N, NON_ZERO & INTEGER>;
  * console.log(isNonZeroInteger(NaN)); // false
  * console.log(isNonZeroInteger(Infinity)); // true
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isNonZeroInteger<const N = number>(
   it: N,
@@ -53,7 +53,7 @@ export function isNonZeroInteger<const N = number>(
  * console.log(isNonZeroInteger(NaN)); // false
  * console.log(isNonZeroInteger(Infinity)); // true
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isNonZeroInteger(it: unknown): it is NonZeroInteger;
 

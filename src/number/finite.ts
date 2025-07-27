@@ -1,9 +1,25 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/finite
+ * @see https://jsr.io/@nick/is/doc/number/finite
  */
 
+/**
+ * Checks if a given value is a finite number.
+ *
+ * @example
+ * ```ts
+ * import { isFinite } from "jsr:@nick/is/finite";
+ *
+ * console.log(isFinite(0)); // true
+ * console.log(isFinite(1)); // true
+ * console.log(isFinite(-1)); // true
+ * console.log(isFinite(1.5)); // true
+ * console.log(isFinite(NaN)); // false
+ * console.log(isFinite(Infinity)); // false
+ * ```
+ * @module finite
+ */
 import { isNumber } from "./number.ts";
 import type { Cast, FINITE, MAYBE_FINITE } from "./types.ts";
 
@@ -12,7 +28,7 @@ import type { Cast, FINITE, MAYBE_FINITE } from "./types.ts";
  * Casts a value into a finite type. If the value is not a number, it will
  * resolve to `never`.
  *
- * @category Numbers
+ * @category Numeric
  */
 export type Finite<N = number> = Cast<N, FINITE>;
 
@@ -20,7 +36,7 @@ export type Finite<N = number> = Cast<N, FINITE>;
  * Casts a value into a partial finite type. If the value is not a number, it
  * will resolve to `never`.
  *
- * @category Numbers
+ * @category Numeric
  */
 export type MaybeFinite<N = number> = Cast<N, MAYBE_FINITE>;
 
@@ -40,7 +56,7 @@ export type MaybeFinite<N = number> = Cast<N, MAYBE_FINITE>;
  * console.log(isFinite(NaN)); // false
  * console.log(isFinite(Infinity)); // false
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isFinite<const N = number>(
   it: N,
@@ -62,7 +78,7 @@ export function isFinite<const N = number>(
  * console.log(isFinite(NaN)); // false
  * console.log(isFinite(Infinity)); // false
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isFinite(it: unknown): it is Finite;
 

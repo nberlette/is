@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/mod
+ * @see https://jsr.io/@nick/is/doc/number
  */
 
 /**
@@ -15,7 +15,7 @@
  *
  * @example
  * ```ts
- * import { isNumber, isNegative, type Negative } from "jsr:@type/number";
+ * import { isNumber, isNegative, type Negative } from "jsr:@nick/is/number";
  *
  * let x = -1, y = 0;
  *

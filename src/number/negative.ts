@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/negative
+ * @see https://jsr.io/@nick/is/doc/number/negative
  */
 
 import type { Cast, MAYBE_NEGATIVE, NEGATIVE } from "./types.ts";
@@ -12,7 +12,7 @@ import type { Cast, MAYBE_NEGATIVE, NEGATIVE } from "./types.ts";
  *
  * @example
  * ```ts
- * import { isNegative, type Negative } from "jsr:@type/number";
+ * import { isNegative, type Negative } from "jsr:@nick/is/number";
  *
  * let x = -1 as Negative, y = 0;
  *
@@ -25,7 +25,7 @@ import type { Cast, MAYBE_NEGATIVE, NEGATIVE } from "./types.ts";
  * // This will raise a TypeScript compiler error:
  * x = 0; // <- TS2322 Type '0' is not assignable to type 'Negative'.
  * ```
- * @category Numbers
+ * @category Numeric
  * @category Types
  * @tags negative, number
  * @module negative
@@ -38,7 +38,7 @@ export type Negative<N = number> = Cast<N, NEGATIVE>;
  *
  * @example
  * ```ts
- * import { isNegative, type MaybeNegative } from "jsr:@type/number";
+ * import { isNegative, type MaybeNegative } from "jsr:@nick/is/number";
  *
  * let x = -1 as MaybeNegative, y = 0;
  *
@@ -51,7 +51,7 @@ export type Negative<N = number> = Cast<N, NEGATIVE>;
  * y = -1; // <- No error! (this is the main difference from `Negative`)
  * ```
  * @category Types
- * @category Numbers
+ * @category Numeric
  * @tags maybe, negative, number
  */
 export type MaybeNegative<N = number> = Cast<N, MAYBE_NEGATIVE>;
@@ -75,7 +75,7 @@ export type MaybeNegative<N = number> = Cast<N, MAYBE_NEGATIVE>;
  * console.log(isNegative(-1)); // true
  * console.log(isNegative(-Infinity)); // true
  * ```
- * @category Numbers
+ * @category Numeric
  * @tags negative
  */
 export function isNegative<const N = number>(
@@ -101,7 +101,7 @@ export function isNegative<const N = number>(
  * console.log(isNegative(-1)); // true
  * console.log(isNegative(-Infinity)); // true
  * ```
- * @category Numbers
+ * @category Numeric
  * @tags negative
  */
 export function isNegative(it: unknown): it is Negative<number>;

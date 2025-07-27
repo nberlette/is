@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/nonzero
+ * @see https://jsr.io/@nick/is/doc/number/nonzero
  */
 
 /**
@@ -10,7 +10,7 @@
  *
  * @example
  * ```ts
- * import { isNonZero, type NonZero } from "jsr:@type/number";
+ * import { isNonZero, type NonZero } from "jsr:@nick/is/number";
  *
  * let x = 1 as NonZero, y = 0;
  *
@@ -34,7 +34,7 @@ import { isNumber } from "./number.ts";
  *
  * @example
  * ```ts
- * import { isNonZero, type NonZero } from "jsr:@type/number";
+ * import { isNonZero, type NonZero } from "jsr:@nick/is/number";
  *
  * let x = 1 as NonZero, y = 0;
  *
@@ -47,7 +47,7 @@ import { isNumber } from "./number.ts";
  * // This will raise a TypeScript compiler error:
  * x = 0; // <- TS2322 Type '0' is not assignable to type 'NonZero'.
  * ```
- * @category Numbers
+ * @category Numeric
  * @module nonzero
  */
 export type NonZero<N = number> = Cast<N, NON_ZERO>;
@@ -58,7 +58,7 @@ export type NonZero<N = number> = Cast<N, NON_ZERO>;
  *
  * @example
  * ```ts
- * import { isNonZero, type MaybeNonZero } from "jsr:@type/number";
+ * import { isNonZero, type MaybeNonZero } from "jsr:@nick/is/number";
  *
  * let x = 1 as MaybeNonZero, y = 0;
  *
@@ -70,7 +70,7 @@ export type NonZero<N = number> = Cast<N, NON_ZERO>;
  *
  * y = 1; // <- No error! (this is the main difference from `NonZero`)
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export type MaybeNonZero<N = number> = Cast<N, MAYBE_NON_ZERO>;
 
@@ -92,7 +92,7 @@ export type MaybeNonZero<N = number> = Cast<N, MAYBE_NON_ZERO>;
  * console.log(isNonZero(NaN)); // false
  * console.log(isNonZero(Infinity)); // true
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isNonZero<const N = number>(
   it: N,
@@ -116,7 +116,7 @@ export function isNonZero<const N = number>(
  * console.log(isNonZero(NaN)); // false
  * console.log(isNonZero(Infinity)); // true
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isNonZero(it: unknown): it is NonZero;
 

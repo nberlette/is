@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/negative-finite
+ * @see https://jsr.io/@nick/is/doc/number/negative-finite
  */
 
 import { isFinite } from "./finite.ts";
@@ -13,7 +13,7 @@ import type { Cast, MAYBE_NEGATIVE_FINITE, NEGATIVE_FINITE } from "./types.ts";
  * Casts a value into a negative finite type. If the value is not a number, it
  * will resolve to `never`.
  *
- * @category Numbers
+ * @category Numeric
  */
 export type NegativeFinite<N = number> = Cast<N, NEGATIVE_FINITE>;
 
@@ -21,7 +21,7 @@ export type NegativeFinite<N = number> = Cast<N, NEGATIVE_FINITE>;
  * Casts a value into a partial negative finite type. If the value is not a
  * number, it will resolve to `never`.
  *
- * @category Numbers
+ * @category Numeric
  */
 export type MaybeNegativeFinite<N = number> = Cast<N, MAYBE_NEGATIVE_FINITE>;
 
@@ -42,7 +42,7 @@ export type MaybeNegativeFinite<N = number> = Cast<N, MAYBE_NEGATIVE_FINITE>;
  * console.log(isNegativeFiniteNumber(NaN)); // false
  * console.log(isNegativeFiniteNumber(Infinity)); // false
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isNegativeFiniteNumber<const N = number>(
   it: N,
@@ -65,7 +65,7 @@ export function isNegativeFiniteNumber<const N = number>(
  * console.log(isNegativeFiniteNumber(NaN)); // false
  * console.log(isNegativeFiniteNumber(Infinity)); // false
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isNegativeFiniteNumber(it: unknown): it is NegativeFinite;
 

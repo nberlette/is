@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/types
+ * @see https://jsr.io/@nick/is/doc/number/types
  */
 
 /**
@@ -28,7 +28,7 @@
  * // This will raise a TypeScript compiler error:
  * x = 1; // <- TS2322 Type '1' is not assignable to type 'DOUBLE'.
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export type Cast<N, T> = Extract<N, number> & T;
 
@@ -54,7 +54,7 @@ export type Cast<N, T> = Extract<N, number> & T;
  *
  * console.log(x + y); // 8n
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export type CastInt<N, T> = Extract<N, bigint | `${bigint}`> & T;
 
@@ -74,7 +74,7 @@ export type CastInt<N, T> = Extract<N, bigint | `${bigint}`> & T;
  *   return value as Unwrap<T>[0];
  * }
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export type Unwrap<U> = U extends Cast<infer N, infer T> ? [N, T] : [U, never];
 

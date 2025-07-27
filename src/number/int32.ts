@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/int32
+ * @see https://jsr.io/@nick/is/doc/number/int32
  */
 
 /**
@@ -14,7 +14,7 @@
  *
  * @example
  * ```ts
- * import { isInt32, type Int32, type MaybeInt32 } from "jsr:@type/number/int32";
+ * import { isInt32, type Int32, type MaybeInt32 } from "jsr:@nick/is/number/int32";
  *
  * let value = 1 as Int32;
  *
@@ -36,7 +36,7 @@
  * // 32-bit signed integer range:
  * setValue(0x80000000); // <- RangeError: Expected a 32-bit signed integer.
  * ```
- * @category Numbers
+ * @category Numeric
  * @tags int32, number
  */
 import { isInteger } from "./integer.ts";
@@ -48,7 +48,7 @@ import type { Cast, INT32, MAYBE_INT32 } from "./types.ts";
  * @template [N=number] The type of the value to cast.
  * @example
  * ```ts
- * import { isInt32, type Int32 } from "jsr:@type/number/int32";
+ * import { isInt32, type Int32 } from "jsr:@nick/is/number/int32";
  *
  * let value = 1 as Int32;
  *
@@ -61,7 +61,7 @@ import type { Cast, INT32, MAYBE_INT32 } from "./types.ts";
  * // This will raise a TypeScript compiler error:
  * value = -2147483649; // <- TS2322 Type '-2147483649' is not assignable to type 'Int32'.
  * ```
- * @category Numbers
+ * @category Numeric
  * @category Types
  * @tags int32, number
  */
@@ -73,7 +73,7 @@ export type Int32<N = number> = Cast<N, INT32>;
  * @template [N=number] The type of the value to cast.
  * @example
  * ```ts
- * import { isInt32, type MaybeInt32 } from "jsr:@type/number/int32";
+ * import { isInt32, type MaybeInt32 } from "jsr:@nick/is/number/int32";
  *
  * let value = 1 as MaybeInt32;
  *
@@ -84,7 +84,7 @@ export type Int32<N = number> = Cast<N, INT32>;
  * setValue(0x7FFFFFFF); // <- No error!
  * value = -2147483649; // <- No error! (this is the main difference from `Int32`)
  * ```
- * @category Numbers
+ * @category Numeric
  * @category Types
  * @tags maybe, int32, number
  */
@@ -97,7 +97,7 @@ export type MaybeInt32<N = number> = Cast<N, MAYBE_INT32>;
  * @returns `true` if `it` is a signed 32-bit integer, `false` otherwise.
  * @example
  * ```ts
- * import { isInt32, type Int32, type MaybeInt32 } from "jsr:@type/number/int32";
+ * import { isInt32, type Int32, type MaybeInt32 } from "jsr:@nick/is/number/int32";
  *
  * let value = 1 as Int32;
  *
@@ -110,7 +110,7 @@ export type MaybeInt32<N = number> = Cast<N, MAYBE_INT32>;
  * // This will raise a TypeScript compiler error:
  * value = -2147483649; // <- TS2322 Type '-2147483649' is not assignable to type 'Int32'.
  * ```
- * @category Numbers
+ * @category Numeric
  * @tags int32, number
  */
 export function isInt32<const N = number>(it: N): it is Int32<N>;
@@ -122,12 +122,12 @@ export function isInt32<const N = number>(it: N): it is Int32<N>;
  * @returns `true` if `it` is a signed 32-bit integer, `false` otherwise.
  * @example
  * ```ts
- * import { isInt32 } from "jsr:@type/number/int32";
+ * import { isInt32 } from "jsr:@nick/is/number/int32";
  *
  * console.log(isInt32(0x7FFFFFFF)); // <- true
  * console.log(isInt32(-2147483649)); // <- false
  * ```
- * @category Numbers
+ * @category Numeric
  * @tags int32, number
  */
 export function isInt32(it: unknown): it is Int32;

@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/positive-nonzero-finite-integer
+ * @see https://jsr.io/@nick/is/doc/number/positive-nonzero-finite-integer
  */
 
 import type { Cast, FINITE, INTEGER, NON_ZERO, POSITIVE } from "./types.ts";
@@ -11,7 +11,7 @@ import { isNonZeroFiniteInteger } from "./nonzero_finite_integer.ts";
  * Casts a value into a positive nonzero finite integer type. If the value is
  * not a number, it will resolve to `never`.s
  *
- * @category Numbers
+ * @category Numeric
  */
 export type PositiveNonZeroFiniteInteger<N = number> = Cast<
   N,
@@ -35,7 +35,7 @@ export type PositiveNonZeroFiniteInteger<N = number> = Cast<
  * console.log(isPositiveNonZeroFiniteInteger(NaN)); // false
  * console.log(isPositiveNonZeroFiniteInteger(Infinity)); // true
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isPositiveNonZeroFiniteInteger<const N = number>(
   it: N,
@@ -58,7 +58,7 @@ export function isPositiveNonZeroFiniteInteger<const N = number>(
  * console.log(isPositiveNonZeroFiniteInteger(NaN)); // false
  * console.log(isPositiveNonZeroFiniteInteger(Infinity)); // true
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isPositiveNonZeroFiniteInteger(
   it: unknown,

@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/int16
+ * @see https://jsr.io/@nick/is/doc/number/int16
  */
 
 /**
@@ -15,7 +15,7 @@
  * @returns `true` if `it` is a 16-bit integer, `false` otherwise.
  * @example
  * ```ts
- * import { isInt16, type Int16, type MaybeInt16 } from "@nick/is/number";
+ * import { isInt16, type Int16, type MaybeInt16 } from "jsr:@nick/is/number";
  *
  * let value = 1 as Int16;
  *
@@ -28,7 +28,7 @@
  * // This will raise a TypeScript compiler error:
  * value = -32769; // <- TS2322 Type '-32769' is not assignable to type 'Int16'.
  * ```
- * @category Numbers
+ * @category Numeric
  * @tags int16, number
  */
 
@@ -40,7 +40,7 @@ import type { Cast, INT16, MAYBE_INT16 } from "./types.ts";
  *
  * @example
  * ```ts
- * import { isInt16, type Int16, type MaybeInt16 } from "@nick/is/int16";
+ * import { isInt16, type Int16, type MaybeInt16 } from "jsr:@nick/is/int16";
  *
  * let value = 1 as Int16;
  *
@@ -53,7 +53,7 @@ import type { Cast, INT16, MAYBE_INT16 } from "./types.ts";
  * // This will raise a TypeScript compiler error:
  * value = -32769; // <- TS2322 Type '-32769' is not assignable to type 'Int16'.
  * ```
- * @category Numbers
+ * @category Numeric
  * @category Types
  * @tags int16, number
  */
@@ -64,7 +64,7 @@ export type Int16<N = number> = Cast<N, INT16>;
  *
  * @example
  * ```ts
- * import { isInt16, type Int16, type MaybeInt16 } from "@nick/is/int16";
+ * import { isInt16, type Int16, type MaybeInt16 } from "jsr:@nick/is/int16";
  *
  * let value = 1 as Int16;
  *
@@ -76,7 +76,7 @@ export type Int16<N = number> = Cast<N, INT16>;
  *
  * value = -32769;  // Error: Type '-32769' is not assignable to type 'Int16'.
  * ```
- * @category Numbers
+ * @category Numeric
  * @category Types
  * @tags maybe, int16, number
  */
@@ -91,7 +91,7 @@ export type MaybeInt16<N = number> = Cast<N, MAYBE_INT16>;
  * @returns `true` if `it` is a 16-bit integer, `false` otherwise.
  * @example
  * ```ts
- * import { isInt16, type Int16, type MaybeInt16 } from "@nick/is/number";
+ * import { isInt16, type Int16, type MaybeInt16 } from "jsr:@nick/is/number";
  *
  * let value = 1 as Int16;
  *
@@ -104,7 +104,7 @@ export type MaybeInt16<N = number> = Cast<N, MAYBE_INT16>;
  * // This will raise a TypeScript compiler error:
  * value = -32769; // <- TS2322 Type '-32769' is not assignable to type 'Int16'.
  * ```
- * @category Numbers
+ * @category Numeric
  * @tags int16, number
  */
 export function isInt16<const N = number>(it: unknown): it is Int16<N>;
@@ -118,7 +118,7 @@ export function isInt16<const N = number>(it: unknown): it is Int16<N>;
  * @returns `true` if `it` is a 16-bit integer, `false` otherwise.
  * @example
  * ```ts
- * import { isInt16 } from "@nick/is/number";
+ * import { isInt16 } from "jsr:@nick/is/number";
  *
  * isInt16(32768); // false
  * isInt16(-32769); // false
@@ -126,7 +126,7 @@ export function isInt16<const N = number>(it: unknown): it is Int16<N>;
  * isInt16(32767); // true
  * isInt16(-32768); // true
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isInt16(it: unknown): it is Int16;
 

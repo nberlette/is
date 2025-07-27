@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/positive-nonzero
+ * @see https://jsr.io/@nick/is/doc/number/positive-nonzero
  */
 
 import type {
@@ -18,7 +18,7 @@ import { isPositive } from "./positive.ts";
  * Casts a value into a positive nonzero type. If the value is not a number,
  * it will resolve to `never`.
  *
- * @category Numbers
+ * @category Numeric
  */
 
 export type PositiveNonZero<N = number> = Cast<N, POSITIVE & NON_ZERO>;
@@ -26,7 +26,7 @@ export type PositiveNonZero<N = number> = Cast<N, POSITIVE & NON_ZERO>;
  * Casts a value into a partial positive nonzero type. If the value is not a
  * number, it will resolve to `never`.
  *
- * @category Numbers
+ * @category Numeric
  */
 export type MaybePositiveNonZero<N = number> = Cast<
   N,
@@ -50,7 +50,7 @@ export type MaybePositiveNonZero<N = number> = Cast<
  * console.log(isPositiveNonZeroNumber(NaN)); // false
  * console.log(isPositiveNonZeroNumber(Infinity)); // true
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isPositiveNonZeroNumber<const N = number>(
   it: N,
@@ -73,7 +73,7 @@ export function isPositiveNonZeroNumber<const N = number>(
  * console.log(isPositiveNonZeroNumber(NaN)); // false
  * console.log(isPositiveNonZeroNumber(Infinity)); // true
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isPositiveNonZeroNumber(it: unknown): it is PositiveNonZero;
 export function isPositiveNonZeroNumber(it: unknown): it is PositiveNonZero {

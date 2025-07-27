@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/negative-nonzero
+ * @see https://jsr.io/@nick/is/doc/number/negative-nonzero
  */
 
 import { isNegative } from "./negative.ts";
@@ -19,7 +19,7 @@ import type {
  * Casts a value into a negative nonzero type. If the value is not a number,
  * it will resolve to `never`.
  *
- * @category Numbers
+ * @category Numeric
  */
 export type NegativeNonZero<N = number> = Cast<N, NEGATIVE & NON_ZERO>;
 
@@ -27,7 +27,7 @@ export type NegativeNonZero<N = number> = Cast<N, NEGATIVE & NON_ZERO>;
  * Casts a value into a partial negative nonzero type. If the value is not a
  * number, it will resolve to `never`.
  *
- * @category Numbers
+ * @category Numeric
  */
 export type MaybeNegativeNonZero<N = number> = Cast<
   N,

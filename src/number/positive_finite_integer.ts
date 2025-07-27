@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/positive-finite-integer
+ * @see https://jsr.io/@nick/is/doc/number/positive-finite-integer
  */
 
 import { isFiniteInteger } from "./finite_integer.ts";
@@ -11,7 +11,7 @@ import type { Cast, FINITE, INTEGER, POSITIVE } from "./types.ts";
  * Casts a value into a positive finite integer type. If the value is not a
  * number, it will resolve to `never`.
  *
- * @category Numbers
+ * @category Numeric
  */
 export type PositiveFiniteInteger<N = number> = Cast<
   N,
@@ -35,7 +35,7 @@ export type PositiveFiniteInteger<N = number> = Cast<
  * console.log(isPositiveFiniteInteger(NaN)); // false
  * console.log(isPositiveFiniteInteger(Infinity)); // false
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isPositiveFiniteInteger<const N = number>(
   it: N,
@@ -58,7 +58,7 @@ export function isPositiveFiniteInteger<const N = number>(
  * console.log(isPositiveFiniteInteger(NaN)); // false
  * console.log(isPositiveFiniteInteger(Infinity)); // false
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isPositiveFiniteInteger(
   it: unknown,

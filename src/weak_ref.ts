@@ -12,7 +12,7 @@
  * @module weak-ref
  */
 import type { WeakKey } from "./weak_key.ts";
-import { WeakRefPrototypeDeref } from "./_internal/primordials.ts";
+import { WeakRefPrototypeDeref } from "./internal/primordials.ts";
 
 /**
  * Checks if {@linkcode obj} is a WeakRef. For more information on this type of
@@ -49,7 +49,7 @@ export function isWeakRef<T extends WeakKey>(obj: unknown): obj is WeakRef<T>;
 export function isWeakRef<T extends WeakKey>(obj: unknown): obj is WeakRef<T> {
   if (typeof WeakRef !== "function") return false;
   try {
-    WeakRefPrototypeDeref?.(obj);
+    WeakRefPrototypeDeref?.(obj as WeakRef<T>);
     return true;
   } catch {
     return false;

@@ -116,3 +116,5 @@ export function isNegative(it: unknown): it is Negative {
 
 /** @ignore */
 export default isNegative;
+
+export { isNegative as isNegativeNumber };

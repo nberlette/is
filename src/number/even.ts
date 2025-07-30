@@ -155,3 +155,5 @@ export function isEven(it: unknown): it is Even {
 
 /** @ignore */
 export default isEven;
+
+export { isEven as isEvenNumber };

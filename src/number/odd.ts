@@ -150,3 +150,5 @@ export function isOdd(it: any): it is Odd {
 
 /** @ignore */
 export default isOdd;
+
+export { isOdd as isOddNumber };

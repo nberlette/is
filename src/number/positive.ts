@@ -107,3 +107,5 @@ export function isPositive(it: unknown): it is Positive {
 
 /** @ignore */
 export default isPositive;
+
+export { isPositive as isPositiveNumber };

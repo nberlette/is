@@ -127,3 +127,5 @@ export function isNonZero(it: unknown): it is NonZero {
 
 /** @ignore */
 export default isNonZero;
+
+export { isNonZero as isNonZeroNumber };

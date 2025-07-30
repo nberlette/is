@@ -1,8 +1,9 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/
+ * @see https://jsr.io/@nick/is/doc
  */
+
 export * as is from "./src/namespace.ts";
 export * as default from "./src/namespace.ts";
 export * from "./src/types.ts";
@@ -43,6 +44,7 @@ export * from "./src/disposable.ts";
 export * from "./src/either.ts";
 export * from "./src/error.ts";
 export * from "./src/empty.ts";
+export * from "./src/empty_object.ts";
 export * from "./src/falsy.ts";
 export * from "./src/enum.ts";
 export * from "./src/float16_array.ts";
@@ -141,44 +143,36 @@ export * from "./src/number/negative_integer.ts";
 export * from "./src/number/positive_integer.ts";
 export * from "./src/number/positive_zero.ts";
 export * from "./src/number/negative_zero.ts";
-export {
-  isNegative,
-  isNegative as isNegativeNumber,
-} from "./src/number/negative.ts";
-export {
-  isPositive,
-  isPositive as isPositiveNumber,
-} from "./src/number/positive.ts";
-export {
-  isNegativeNonZeroFiniteNumber,
-  isNegativeNonZeroFiniteNumber as isNegativeNonZeroFinite,
-} from "./src/number/negative_nonzero_finite.ts";
-export {
-  isPositiveNonZeroFiniteNumber,
-  isPositiveNonZeroFiniteNumber as isPositiveNonZeroFinite,
-} from "./src/number/positive_nonzero_finite.ts";
-export {
-  isNonZeroFiniteNumber,
-  isNonZeroFiniteNumber as isNonZeroFinite,
-} from "./src/number/nonzero_finite.ts";
-export {
-  isNegativeFiniteNumber,
-  isNegativeFiniteNumber as isNegativeFinite,
-} from "./src/number/negative_finite.ts";
-export {
-  isPositiveFiniteNumber,
-  isPositiveFiniteNumber as isPositiveFinite,
-} from "./src/number/positive_finite.ts";
-export {
-  isPositiveNonZeroNumber,
-  isPositiveNonZeroNumber as isPositiveNonZero,
-} from "./src/number/positive_nonzero.ts";
-export {
-  isNonZero,
-  isNonZero as isNonZeroNumber,
-} from "./src/number/nonzero.ts";
 export * from "./src/number/number.ts";
 export * from "./src/number/in_range.ts";
 export * from "./src/number/uint16.ts";
 export * from "./src/number/uint32.ts";
 export * from "./src/number/uint8.ts";
+export * from "./src/number/negative.ts";
+export * from "./src/number/positive.ts";
+export * from "./src/number/negative_nonzero_finite.ts";
+export * from "./src/number/positive_nonzero_finite.ts";
+export * from "./src/number/nonzero_finite.ts";
+export * from "./src/number/negative_finite.ts";
+export * from "./src/number/positive_finite.ts";
+export * from "./src/number/positive_nonzero.ts";
+export * from "./src/number/nonzero.ts";
+
+export {
+  isNegativeNonZeroFiniteNumber as isNegativeNonZeroFinite,
+} from "./src/number/negative_nonzero_finite.ts";
+export {
+  isPositiveNonZeroFiniteNumber as isPositiveNonZeroFinite,
+} from "./src/number/positive_nonzero_finite.ts";
+export {
+  isNonZeroFiniteNumber as isNonZeroFinite,
+} from "./src/number/nonzero_finite.ts";
+export {
+  isNegativeFiniteNumber as isNegativeFinite,
+} from "./src/number/negative_finite.ts";
+export {
+  isPositiveFiniteNumber as isPositiveFinite,
+} from "./src/number/positive_finite.ts";
+export {
+  isPositiveNonZeroNumber as isPositiveNonZero,
+} from "./src/number/positive_nonzero.ts";

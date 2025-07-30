@@ -89,3 +89,5 @@ export function isFinite(it: unknown): it is Finite {
 
 /** @ignore */
 export default isFinite;
+
+export { isFinite as isFiniteNumber };

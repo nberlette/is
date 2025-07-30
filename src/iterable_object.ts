@@ -37,7 +37,7 @@ import { isIterable } from "./iterable.ts";
  * console.log(isIterableObject({ [Symbol.iterator]: () => {} })); // true
  * console.log(isIterableObject("foo")); // false
  * ```
- * @category Iterables
+ * @category Iteration
  * @module iterable-object
  */
 export function isIterableObject<T>(it: unknown): it is IterableObject<T> {
@@ -52,7 +52,7 @@ export function isIterableObject<T>(it: unknown): it is IterableObject<T> {
  * both `Iterable` and `object`. This is also the type that the function
  * {@link isIterableObject} narrows its inputs to.
  *
- * @category Iterables
+ * @category Iteration
  */
 export type IterableObject<T = unknown> = Iterable<T> & object;
 

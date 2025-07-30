@@ -24,7 +24,7 @@ import { isTagged } from "./tagged.ts";
  * console.log(isSetIterator(iterator)); // true
  * console.log(isSetIterator(set)); // false
  * ```
- * @category Iterables
+ * @category Iteration
  * @module set-iterator
  */
 export function isSetIterator<T>(it: unknown): it is SetIterator<T> {

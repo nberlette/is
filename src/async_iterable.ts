@@ -16,7 +16,7 @@
  * const iter = (async function*() { yield 1; })();
  * console.log(isAsyncIterable(iter)); // true
  * ```
- * @category Iterables
+ * @category Iteration
  * @module async-iterable
  */
 export function isAsyncIterable<T>(it: unknown): it is AsyncIterable<T> {

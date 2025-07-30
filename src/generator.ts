@@ -27,7 +27,7 @@ import { isTagged } from "./tagged.ts";
  * console.log(isGenerator(iter)); // true
  * console.log(isGenerator(gen)); // false
  * ```
- * @category Generators
+ * @category Iteration
  * @module generator
  */
 // deno-lint-ignore no-explicit-any

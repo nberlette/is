@@ -42,7 +42,7 @@
  * console.log(isIterator(iterator)); // true
  * console.log(isIterator(iterable)); // false
  * ```
- * @category Iterables
+ * @category Iteration
  */
 export function isIterator<T>(it: unknown): it is Iterator<T> {
   if (typeof it === "object" && it !== null || typeof it === "function") {

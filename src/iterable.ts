@@ -22,7 +22,7 @@
  * console.log(isIterable({ [Symbol.iterator]: () => {} })); // true
  * console.log(isIterable({})); // false
  * ```
- * @category Iterables
+ * @category Iteration
  * @module iterable
  */
 const SymbolIterator: typeof globalThis.Symbol.iterator =
@@ -48,7 +48,7 @@ const SymbolIterator: typeof globalThis.Symbol.iterator =
  * console.log(isIterable({ [Symbol.iterator]: () => {} })); // true
  * console.log(isIterable({})); // false
  * ```
- * @category Iterables
+ * @category Iteration
  * @module iterable
  */
 export function isIterable<T>(it: unknown): it is Iterable<T> {

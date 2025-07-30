@@ -21,7 +21,7 @@ import { isAsyncIterator } from "./async_iterator.ts";
  * console.log(isAsyncIterableIterator(iter)); // true
  * console.log(isAsyncIterableIterator(iter[Symbol.asyncIterator]())); // true
  * ```
- * @category Iterables
+ * @category Iteration
  * @module async-iterable-iterator
  */
 export function isAsyncIterableIterator<T>(

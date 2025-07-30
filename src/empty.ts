@@ -3,6 +3,8 @@
  * @license MIT (https://nick.mit-license.org/2024)
  * @see https://jsr.io/@nick/is/doc/empty
  */
+import { type EmptyObject, isEmptyObject } from "./empty_object.ts";
+import { isArrayLike } from "./array_like.ts";
 
 /**
  * @module empty
@@ -21,14 +23,8 @@
  * isEmpty([1]); // false
  * isEmpty("a"); // false
  * ```
- * @category
+ * @category Indexed Collections
  */
-
-const Never: unique symbol = Symbol("never");
-interface IsNever {
-  readonly [Never]: never;
-}
-type Never = PropertyKey & IsNever;
 
 // string comes first as its the most specific array-like we're checking
 /**
@@ -36,7 +32,7 @@ type Never = PropertyKey & IsNever;
  *
  * @param it The value to check.
  * @returns `true` if the value is an empty string, `false` otherwise.
- * @category Chain
+ * @category Indexed Collections
  * @example
  * ```ts
  * import { isEmpty } from "@nick/is/empty";
@@ -53,7 +49,7 @@ export function isEmpty(it: string): it is "";
  *
  * @param it The value to check.
  * @returns `true` if the value is an empty Array object, `false` otherwise.
- * @category Chain
+ * @category Indexed Collections
  * @example
  * ```ts
  * import { isEmpty } from "@nick/is/empty";
@@ -62,7 +58,9 @@ export function isEmpty(it: string): it is "";
  * isEmpty([1]); // false
  * ```
  */
-export function isEmpty(it: readonly unknown[]): it is readonly [];
+export function isEmpty(
+  it: readonly [] | readonly [unknown, ...unknown[]],
+): it is readonly [];
 
 // and finally comes a generic array-like object. if this came before the other
 // two, those two overloads would never be reached as this would always match.
@@ -71,13 +69,19 @@ export function isEmpty(it: readonly unknown[]): it is readonly [];
  *
  * @param it The value to check.
  * @returns `true` if the value is an empty ArrayLike object, `false` otherwise.
- * @category Chain
+ * @category Indexed Collections
  * @example
  * ```ts
- * import { isEmpty } from "@nick/is/empty";
+ * import { isEmpty } from "jsr:@nick/is/empty";
+ * import assert from "node:assert";
  *
- * isEmpty([]); // true
- * isEmpty([1]); // false
+ * assert(isEmpty([]));
+ * assert(isEmpty(""));
+ * assert(isEmpty(new Uint8Array(0)));
+ *
+ * assert.false(isEmpty("foo"));
+ * assert.false(isEmpty([123456]));
+ * assert.false(isEmpty(new Uint8Array(1)));
  * ```
  */
 // deno-lint-ignore no-explicit-any
@@ -90,48 +94,33 @@ export function isEmpty<const U extends ArrayLike<any>>(
  *
  * @param it The value to check.
  * @returns `true` if the value is an empty object, `false` otherwise.
- * @category Chain
+ * @category Indexed Collections
  * @example
  * ```ts
- * import { isEmpty } from "@nick/is/empty";
+ * import { isEmpty } from "jsr:@nick/is/empty";
  *
  * isEmpty({}); // true
  * isEmpty({ a: 1 }); // false
  * ```
  */
-export function isEmpty(it: unknown): it is { [K in Never]: never };
+export function isEmpty(it: unknown): it is EmptyObject;
 
 /**
  * Checks if a given value is an empty object, array, or string.
  *
  * @param it The value to check.
  * @returns `true` if the value is an empty object, array, or string, `false` otherwise.
- * @category Chain
- * @example
- * ```ts
- * import { isEmpty } from "@nick/is/empty";
- *
- * isEmpty({}); // true
- * isEmpty([]); // true
- * isEmpty(""); // true
- *
- * isEmpty({ a: 1 }); // false
- * isEmpty([1]); // false
- * isEmpty("a"); // false
- * ```
+ * @category Indexed Collections
  */
 export function isEmpty(
   it: unknown,
-): it is "" | { length: 0 } | { [K in Never]: never };
+): it is "" | { length: 0 } | EmptyObject;
 
 /** @ignore */
 export function isEmpty(
   it: unknown,
-): it is "" | { length: 0 } | { [K in Never]: never } {
-  return it != null && ("length" in Object(it) && Object(it).length === 0) || (
-    Object.keys(Object(it)).length === 0 &&
-    Object.getOwnPropertyNames(Object(it)).length === 0
-  );
+): it is "" | { length: 0 } | EmptyObject {
+  return (isArrayLike(it) && it.length === 0) || isEmptyObject(it);
 }
 
 /** @ignore */

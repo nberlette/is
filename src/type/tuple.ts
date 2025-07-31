@@ -13,7 +13,7 @@
  *
  * @example
  * ```ts
- * import type { IsTuple } from "@nick/is/type";
+ * import type { IsTuple } from "jsr:@nick/is/type";
  *
  * type A = IsTuple<[1, 2, 3]>; // true
  * type B = IsTuple<string[]>; // false
@@ -21,7 +21,7 @@
  * ```
  * @example
  * ```ts
- * import type { IsTuple } from "@nick/is/type";
+ * import type { IsTuple } from "jsr:@nick/is/type";
  *
  * // using the conditional type parameters in a custom type
  * type EnsureTuple<T> = IsTuple<T, T, never>;

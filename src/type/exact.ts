@@ -132,7 +132,7 @@ type Any = {
  * @template [False=false] The type to return if the check fails.
  * @example
  * ```ts
- * import type { IsExact } from "@nick/is/type/exact";
+ * import type { IsExact } from "jsr:@nick/is/type/exact";
  *
  * type A = IsExact<"hello", "hello">; // true
  * type B = IsExact<{ a: string | null }, { a: string | null }>; // true

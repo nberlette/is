@@ -88,7 +88,7 @@ export type IsIndexSignature<
  *
  * @example
  * ```ts
- * import type { OmitIndexSignature } from "@nick/is/type";
+ * import type { OmitIndexSignature } from "jsr:@nick/is/type";
  *
  * type A = { 0: "foo"; length: 1; [y: number]: string };
  * type B = OmitIndexSignature<A>;

@@ -81,14 +81,14 @@
  *
  * @example
  * ```ts
- * import type { IsUnknownOrNever } from "@nick/is/type";
+ * import type { IsUnknownOrNever } from "jsr:@nick/is/type";
  *
  * type A = IsUnknown<unknown>; // true
  * type B = IsUnknown<any, "unknown", "not unknown">; // "not unknown"
  * ```
  * @example
  * ```ts
- * import type { IsUnknown } from "@nick/is/type";
+ * import type { IsUnknown } from "jsr:@nick/is/type";
  *
  * type IsNotUnknown<T> = IsUnknown<T, never, T>;
  *
@@ -100,7 +100,7 @@
  * ```
  * @example
  * ```ts
- * import type { IsUnknown } from "@nick/is/type";
+ * import type { IsUnknown } from "jsr:@nick/is/type";
  *
  * type OmitUnknown<U, Deep extends boolean = false> =
  *  | U extends infer T extends object ? {
@@ -131,7 +131,7 @@ import type { IsUnknown } from "./unknown.ts";
  *
  * @example
  * ```ts
- * import type { IsUnknownOrNever } from "@nick/is/type";
+ * import type { IsUnknownOrNever } from "jsr:@nick/is/type";
  *
  * type A = IsUnknownOrNever<unknown>; // true
  * type B = IsUnknownOrNever<never>; // true
@@ -151,7 +151,7 @@ export type IsUnknownOrNever<A, True = true, False = false> =
  *
  * @example
  * ```ts
- * import type { OmitUnknownOrNever } from "@nick/is/type";
+ * import type { OmitUnknownOrNever } from "jsr:@nick/is/type";
  *
  * type A = { a: string; b: unknown; c: number };
  * type B = OmitUnknownOrNever<A>;

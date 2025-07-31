@@ -17,7 +17,7 @@
  * @tags Assertion
  * @module assertion
  */
-import type { Expand } from "../_internal/types.ts";
+import type { Expand } from "../internal/types.ts";
 
 /**
  * Represents an assertion function that checks if a given value of the base
@@ -28,12 +28,15 @@ import type { Expand } from "../_internal/types.ts";
  * @template [Base=unknown] The base type to check against.
  * @example
  * ```ts
- * const assertString: Assertion<string> = (it: unknown): asserts it is string => {
- *   if (typeof it !== "string") {
- *     throw new TypeError("Expected a string");
- *   }
+ * import type { Assertion } from "jsr:@nick/is/type/assertion";
+ *
+ * const assertString: Assertion<string> = (it) => {
+ *   if (typeof it !== "string") throw new TypeError("Expected a string");
+ *   // do nothing when the type is correct; the compiler does the rest here.
  * };
  * ```
+ * @category Types
+ * @tags Assertion
  */
 export type Assertion<
   // deno-lint-ignore no-explicit-any

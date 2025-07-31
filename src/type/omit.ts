@@ -1,8 +1,9 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/omit
+ * @see https://jsr.io/@nick/is/doc/type/omit
  */
+
 import type { IsNever } from "./mod.ts";
 import type { IsAny } from "./any.ts";
 import type { IsAnyOrNever } from "./any_or_never.ts";
@@ -16,7 +17,7 @@ import type { IsIndexSignature } from "./index_signature.ts";
  *
  * @example
  * ```ts
- * import type { OmitNever } from "@nick/is/type";
+ * import type { OmitNever } from "jsr:@nick/is/type";
  *
  * type A = Required<{ a: string; b: number } & { b: bigint; c: number }>;
  * //   ^? type A = { a: string; b: never; c: number }
@@ -40,7 +41,7 @@ export type OmitNever<T, Deep extends boolean = false> =
  *
  * @example
  * ```ts
- * import type { OmitAny } from "@nick/is/type";
+ * import type { OmitAny } from "jsr:@nick/is/type";
  *
  * type A = { a: string; b: any; c: number };
  * type B = OmitAny<A>;
@@ -62,7 +63,7 @@ export type OmitAny<T, Deep extends boolean = false> =
  *
  * @example
  * ```ts
- * import type { OmitUnknown } from "@nick/is/type";
+ * import type { OmitUnknown } from "jsr:@nick/is/type";
  *
  * type A = { a: string; b: unknown; c: number };
  * type B = OmitUnknown<A>;
@@ -84,7 +85,7 @@ export type OmitUnknown<U, Deep extends boolean = false> =
  *
  * @example
  * ```ts
- * import type { OmitAnyOrNever } from "@nick/is/type";
+ * import type { OmitAnyOrNever } from "jsr:@nick/is/type";
  *
  * type A = { a: string; b: any; c: number; d: never };
  * type B = OmitAnyOrNever<A>;
@@ -106,7 +107,7 @@ export type OmitAnyOrNever<T, Deep extends boolean = false> =
  *
  * @example
  * ```ts
- * import type { OmitUndefined } from "@nick/is/type";
+ * import type { OmitUndefined } from "jsr:@nick/is/type";
  *
  * type A = { a: string; b: undefined; c: number };
  * type B = OmitUndefined<A>;
@@ -128,7 +129,7 @@ export type OmitUndefined<T, Deep extends boolean = false> =
  *
  * @example
  * ```ts
- * import type { OmitNullable } from "@nick/is/type";
+ * import type { OmitNullable } from "jsr:@nick/is/type";
  *
  * type A = { a: string; b: null; c: number; d: undefined };
  * type B = OmitNullable<A>;
@@ -152,7 +153,7 @@ export type OmitNullable<T, Deep extends boolean = false> =
  *
  * @example
  * ```ts
- * import type { OmitIndexSignature } from "@nick/is/type";
+ * import type { OmitIndexSignature } from "jsr:@nick/is/type";
  *
  * type A = { 0: "foo"; length: 1; [y: number]: string };
  * type B = OmitIndexSignature<A>;

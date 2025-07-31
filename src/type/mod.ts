@@ -19,7 +19,7 @@
  *
  * @example
  * ```ts
- * import type { IsNever } from "@nick/is/type";
+ * import type { IsNever } from "jsr:@nick/is/type";
  *
  * // using the `IsNever` guard to filter out `never` types
  * type OmitNever<T> = { [K in keyof T as IsNever<T[K], never, K>]: T[K] };
@@ -27,7 +27,7 @@
  *
  * @example
  * ```ts
- * import type { IsUnknown } from "@nick/is/type";
+ * import type { IsUnknown } from "jsr:@nick/is/type";
  *
  * // using the `IsUnknown` guard to filter out `unknown` types
  * type OmitUnknown<T> = {

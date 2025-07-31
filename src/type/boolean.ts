@@ -31,7 +31,7 @@
  * @template [False=false] The type to return if the check fails.
  * @example
  * ```ts
- * import type { IsBoolean } from "@nick/is/type/boolean";
+ * import type { IsBoolean } from "jsr:@nick/is/type/boolean";
  *
  * type A = IsBoolean<true>; // false
  * type B = IsBoolean<false>; // false
@@ -56,7 +56,7 @@ export type IsBoolean<T, True = true, False = false> = [T] extends [boolean]
  * @template [False=false] The type to return if the check fails.
  * @example
  * ```ts
- * import type { IsTrue } from "@nick/is/type/boolean";
+ * import type { IsTrue } from "jsr:@nick/is/type/boolean";
  *
  * type A = IsTrue<true>; // true
  * type B = IsTrue<false>; // false
@@ -78,7 +78,7 @@ export type IsTrue<T, True = true, False = false> = [T, true] extends [true, T]
  * @template [False=false] The type to return if the check fails.
  * @example
  * ```ts
- * import type { IsFalse } from "@nick/is/type/boolean";
+ * import type { IsFalse } from "jsr:@nick/is/type/boolean";
  *
  * type A = IsFalse<true>; // false
  * type B = IsFalse<false>; // true

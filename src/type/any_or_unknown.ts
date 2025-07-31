@@ -19,7 +19,7 @@ import type { IsUnknownOrNever } from "./unknown_or_never.ts";
  *
  * @example
  * ```ts
- * import type { IsAnyOrUnknownOrNever } from "@nick/is/type";
+ * import type { IsAnyOrUnknownOrNever } from "jsr:@nick/is/type";
  *
  * type A = IsAnyOrUnknownOrNever<unknown>; // true
  * type B = IsAnyOrUnknownOrNever<never>; // true
@@ -42,7 +42,7 @@ export type IsAnyOrUnknownOrNever<T, True = true, False = false> = IsAny<
  *
  * @example
  * ```ts
- * import type { OmitAnyUnknownNever } from "@nick/is/type";
+ * import type { OmitAnyUnknownNever } from "jsr:@nick/is/type";
  *
  * type A = { a: string; b: any; c: number; d: unknown; e: ""; f: never };
  * type B = OmitAnyUnknownNever<A>;

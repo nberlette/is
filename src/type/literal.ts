@@ -15,7 +15,7 @@ import type { IsBoolean } from "./boolean.ts";
  *
  * @example
  * ```ts
- * import type { IsLiteral } from "@nick/is/type";
+ * import type { IsLiteral } from "jsr:@nick/is/type";
  *
  * type A1 = IsLiteral<"foo">; // true
  * type A2 = IsLiteral<string | 420>; // false

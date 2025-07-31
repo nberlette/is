@@ -13,7 +13,7 @@
  *
  * @example
  * ```ts
- * import type { IsNull } from "@nick/is/type";
+ * import type { IsNull } from "jsr:@nick/is/type";
  *
  * type A = IsNull<null>; // true
  * type B = IsNull<undefined>; // false
@@ -32,7 +32,7 @@
  * @template [False=false] The type to return if the check fails.
  * @example
  * ```ts
- * import type { IsNull } from "@nick/is/type";
+ * import type { IsNull } from "jsr:@nick/is/type";
  *
  * type A = IsNull<null>; // true
  * type B = IsNull<undefined>; // false
@@ -52,7 +52,7 @@ export type IsNull<T, True = true, False = false> = [T] extends [never] ? False
  * @template [Deep=false] Whether to perform a deep omit operation.
  * @example
  * ```ts
- * import type { OmitNull } from "@nick/is/type";
+ * import type { OmitNull } from "jsr:@nick/is/type";
  *
  * type A = { a: string; b: null; c: number };
  * type B = OmitNull<A>;

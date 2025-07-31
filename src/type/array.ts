@@ -19,7 +19,7 @@ import type { IsTuple } from "./tuple.ts";
  *
  * @example
  * ```ts
- * import type { IsArray } from "@nick/is/type";
+ * import type { IsArray } from "jsr:@nick/is/type";
  *
  * type A = IsArray<[1, 2, 3]>; // true
  * type B = IsArray<[unknown, unkown, unknown, unknown, unknown]>; // true
@@ -46,7 +46,7 @@ export type IsArray<T, True = true, False = false> = IsAnyOrUnknownOrNever<
  *
  * @example
  * ```ts
- * import type { IsNonTupleArray } from "@nick/is/type";
+ * import type { IsNonTupleArray } from "jsr:@nick/is/type";
  *
  * type A = IsNonTupleArray<[1, 2, 3]>; // false
  * type B = IsNonTupleArray<[unknown, unkown, unknown]>; // false

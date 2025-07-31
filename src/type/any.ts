@@ -29,7 +29,7 @@
  *
  * @example
  * ```ts
- * import type { IsAny } from "@nick/is/type/any";
+ * import type { IsAny } from "jsr:@nick/is/type/any";
  *
  * type A = IsAny<any>; // true
  * type B = IsAny<never, 1, 0>; // 0
@@ -66,14 +66,14 @@ import type { IsBoolean } from "./boolean.ts";
  *
  * @example
  * ```ts
- * import type { IsAny } from "@nick/is/type";
+ * import type { IsAny } from "jsr:@nick/is/type";
  *
  * type A = IsAny<any>; // true
  * type B = IsAny<unknown, "any", "not any">; // "not any"
  * ```
  * @example
  * ```ts
- * import type { IsAny } from "@nick/is/type";
+ * import type { IsAny } from "jsr:@nick/is/type";
  *
  * type IsNotAny<T> = IsAny<T, never, T>;
  *
@@ -85,7 +85,7 @@ import type { IsBoolean } from "./boolean.ts";
  * ```
  * @example
  * ```ts
- * import type { IsAny } from "@nick/is/type";
+ * import type { IsAny } from "jsr:@nick/is/type";
  *
  * type OmitAny<U, Deep extends boolean = false> =
  *   | U extends infer T extends U & object ? {
@@ -115,7 +115,7 @@ export type IsAny<A, True = true, False = false> =
  *
  * @example
  * ```ts
- * import type { OmitAny } from "@nick/is/type";
+ * import type { OmitAny } from "jsr:@nick/is/type";
  *
  * type A = { a: string; b: any; c: number };
  * type B = OmitAny<A>;

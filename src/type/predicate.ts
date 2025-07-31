@@ -3,7 +3,17 @@
  * @license MIT (https://nick.mit-license.org/2024)
  * @see https://jsr.io/@nick/is/doc/type/predicate
  */
-import type { Expand } from "../_internal/types.ts";
+
+/**
+ * This module provides the {@linkcode Predicate} type definition, which is a
+ * type alias that represents a type predicate (guard) function that narrows
+ * a value's base type to a derived type of higher specificity.
+ *
+ * @category Types
+ * @module type/predicate
+ */
+
+import type { Expand } from "../internal/types.ts";
 
 /**
  * Represents a type guard (predicate function) that checks if a given value
@@ -13,15 +23,17 @@ import type { Expand } from "../_internal/types.ts";
  * @template [Base=unknown] The base type to check against.
  * @example
  * ```ts
- * const isString: Predicate<string> = (it: unknown): it is string => (
- *   typeof it === "string"
- * );
+ * import type { Predicate } from "jsr:@nick/is/type/predicate";
+ *
+ * const isString: Predicate<string> = (it) => typeof it === "string";
  * ```
+ * @category Types
  */
 export type Predicate<
   // deno-lint-ignore no-explicit-any
   Type extends Base = any,
   Base = unknown,
-  // deno-lint-ignore no-explicit-any
-  Args extends readonly unknown[] = any[],
+  Args extends readonly unknown[] = [],
 > = Expand<(it: Base, ...args: Args) => it is Type>;
+
+const isString: Predicate<string> = (x) => typeof x === "string";

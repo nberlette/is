@@ -1,8 +1,9 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/unknown
+ * @see https://jsr.io/@nick/is/doc/type/unknown
  */
+
 /**
  * Checks if a given type is the `unknown` type, returning {@linkcode True} if
  * it is, and {@linkcode False} if not. The `unknown` type, introduced in the

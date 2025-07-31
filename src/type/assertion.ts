@@ -1,9 +1,20 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/assertion
+ * @see https://jsr.io/@nick/is/doc/type/assertion
  */
+
 /**
+ * This module provides the {@linkcode Assertion} type, which is a type alias
+ * for a function that asserts a value is of a specific type. It is used to
+ * create custom type assertions that throw an error if the value does not
+ * match the expected type.
+ *
+ * This is useful for performing runtime type checks with support for stricter
+ * type narrowing than a standard type guard.
+ *
+ * @category Types
+ * @tags Assertion
  * @module assertion
  */
 import type { Expand } from "../_internal/types.ts";

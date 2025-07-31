@@ -1,8 +1,9 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/any
+ * @see https://jsr.io/@nick/is/doc/type/any
  */
+
 /**
  * Checks if the type {@linkcode A} is the `any` type, and nothing else. This
  * is useful for creating your own type guards, conditional types, and other

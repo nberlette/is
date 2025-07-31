@@ -1,8 +1,9 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/any-or-unknown-or-never
+ * @see https://jsr.io/@nick/is/doc/type/any-or-unknown-or-never
  */
+
 /**
  * @module any-or-unknown-or-never
  */

@@ -336,7 +336,7 @@
     "./writer": "./src/writer.ts"
   },
   "imports": {
-    "@nick/math": "jsr:@nick/math@0.4.2",
+    "@nick/math": "jsr:@nick/math@0.5.0",
     "@std/assert": "jsr:@std/assert@1",
     "@std/testing": "jsr:@std/testing@1",
     "@std/expect": "jsr:@std/expect@1"
@@ -355,6 +355,11 @@
     "node_modules",
     ".coverage"
   ],
+  "lint": {
+    "rules": {
+      "exclude": ["no-import-prefix", "no-explicit-any", "ban-types"]
+    }
+  },
   "publish": {
     "include": [
       "**/*.ts",

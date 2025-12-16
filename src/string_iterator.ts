@@ -16,12 +16,11 @@
  * import { isStringIterator } from "jsr:@nick/is/string-iterator";
  *
  * const str = "foo";
- * console.log(isStringIterator(str)); // false
- *
  * const iter = str[Symbol.iterator]();
- * console.log(isStringIterator(iter)); // true
+ * console.log(isStringIterator(iterator)); // true
+ * console.log(isStringIterator(str)); // false
  * ```
- * @category Iteration
+ * @category Iterables
  * @module string-iterator
  */
 

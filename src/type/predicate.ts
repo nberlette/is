@@ -35,5 +35,3 @@ export type Predicate<
   Base = unknown,
   Args extends readonly unknown[] = [],
 > = Expand<(it: Base, ...args: Args) => it is Type>;
-
-const isString: Predicate<string> = (x) => typeof x === "string";

@@ -1,8 +1,9 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/mod
+ * @see https://jsr.io/@nick/is/doc/type
  */
+
 /**
  * Collection of purely type-level guards for TypeScript.
  *
@@ -18,7 +19,7 @@
  *
  * @example
  * ```ts
- * import type { IsNever } from "@nick/is/type";
+ * import type { IsNever } from "jsr:@nick/is/type";
  *
  * // using the `IsNever` guard to filter out `never` types
  * type OmitNever<T> = { [K in keyof T as IsNever<T[K], never, K>]: T[K] };
@@ -26,7 +27,7 @@
  *
  * @example
  * ```ts
- * import type { IsUnknown } from "@nick/is/type";
+ * import type { IsUnknown } from "jsr:@nick/is/type";
  *
  * // using the `IsUnknown` guard to filter out `unknown` types
  * type OmitUnknown<T> = {

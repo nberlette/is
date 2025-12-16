@@ -33,7 +33,8 @@ import { isTagged } from "./tagged.ts";
  * const genObj = genFn();
  * isAsyncGeneratorFunction(genObj); // false
  * ```
- * @category Generators
+ * @category Iteration
+ * @tags Async
  * @module async-generator-function
  */
 export function isAsyncGeneratorFunction(

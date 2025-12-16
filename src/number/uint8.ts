@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/uint8
+ * @see https://jsr.io/@nick/is/doc/number/uint8
  */
 
 /**
@@ -19,7 +19,7 @@
  * isUint8(-1); // false
  * isUint8(420); // false
  * ```
- * @category Numbers
+ * @category Numeric
  * @tags uint8, number
  * @module uint8
  */
@@ -32,7 +32,7 @@ import type { Cast, MAYBE_UINT8, UINT8 } from "./types.ts";
  * @template [N=number] The type of the value to cast.
  * @example
  * ```ts
- * import { isUint8, type Uint8 } from "@nick/is/uint8";
+ * import { isUint8, type Uint8 } from "jsr:@nick/is/uint8";
  *
  * let i = 1 as Uint8, y = 0;
  *
@@ -45,7 +45,7 @@ import type { Cast, MAYBE_UINT8, UINT8 } from "./types.ts";
  * // This will raise a TypeScript compiler error:
  * i = -1; // <- TS2322 Type '-1' is not assignable to type 'Uint8'.
  * ```
- * @category Numbers
+ * @category Numeric
  * @category Types
  * @tags unsigned, integer
  */
@@ -57,7 +57,7 @@ export type Uint8<N = number> = Cast<N, UINT8>;
  * @template [N=number] The type of the value to cast.
  * @example
  * ```ts
- * import { isUint8, type MaybeUint8 } from "@nick/is/uint8";
+ * import { isUint8, type MaybeUint8 } from "jsr:@nick/is/uint8";
  *
  * let i = 1 as MaybeUint8, y = 0;
  *
@@ -69,7 +69,7 @@ export type Uint8<N = number> = Cast<N, UINT8>;
  *
  * y = 1; // <- No error! (this is the main difference from `Uint8`)
  * ```
- * @category Numbers
+ * @category Numeric
  * @category Types
  * @tags maybe, unsigned, integer
  */
@@ -91,7 +91,7 @@ export type MaybeUint8<N = number> = Cast<N, MAYBE_UINT8>;
  * isUint8(-1); // false
  * isUint8(420); // false
  * ```
- * @category Numbers
+ * @category Numeric
  * @tags number, unsigned, integer
  */
 export function isUint8<const N = number>(it: N): it is Uint8<N>;
@@ -111,7 +111,7 @@ export function isUint8<const N = number>(it: N): it is Uint8<N>;
  * isUint8(-1); // false
  * isUint8(420); // false
  * ```
- * @category Numbers
+ * @category Numeric
  * @tags number, unsigned, integer
  */
 export function isUint8(it: unknown): it is Uint8<number>;

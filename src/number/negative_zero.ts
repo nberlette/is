@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/negative-zero
+ * @see https://jsr.io/@nick/is/doc/number/negative-zero
  */
 
 import type { Cast, MAYBE_NEGATIVE_ZERO, NEGATIVE_ZERO } from "./types.ts";
@@ -12,7 +12,7 @@ import type { Cast, MAYBE_NEGATIVE_ZERO, NEGATIVE_ZERO } from "./types.ts";
  *
  * @example
  * ```ts
- * import { isNegativeZero, type NegativeZero } from "jsr:@type/number";
+ * import { isNegativeZero, type NegativeZero } from "jsr:@nick/is/number";
  *
  * let x = -0 as NegativeZero, y = 0;
  *
@@ -25,7 +25,7 @@ import type { Cast, MAYBE_NEGATIVE_ZERO, NEGATIVE_ZERO } from "./types.ts";
  * // This will raise a TypeScript compiler error:
  * x = 0; // <- TS2322 Type '0' is not assignable to type 'NegativeZero'.
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export type NegativeZero<N = number> = Cast<N, NEGATIVE_ZERO>;
 
@@ -35,7 +35,7 @@ export type NegativeZero<N = number> = Cast<N, NEGATIVE_ZERO>;
  *
  * @example
  * ```ts
- * import { isNegativeZero, type MaybeNegativeZero } from "jsr:@type/number";
+ * import { isNegativeZero, type MaybeNegativeZero } from "jsr:@nick/is/number";
  *
  * let x = -0 as MaybeNegativeZero, y = 0;
  *
@@ -47,7 +47,7 @@ export type NegativeZero<N = number> = Cast<N, NEGATIVE_ZERO>;
  *
  * y = -0; // <- No error! (this is the main difference from `NegativeZero`)
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export type MaybeNegativeZero<N = number> = Cast<N, MAYBE_NEGATIVE_ZERO>;
 
@@ -74,7 +74,7 @@ export type MaybeNegativeZero<N = number> = Cast<N, MAYBE_NEGATIVE_ZERO>;
  * console.log(isNegativeZero(-1)); // false
  * console.log(isNegativeZero(1)); // false
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isNegativeZero<const N = number>(it: N): it is NegativeZero<N>;
 
@@ -101,7 +101,7 @@ export function isNegativeZero<const N = number>(it: N): it is NegativeZero<N>;
  * console.log(isNegativeZero(-1)); // false
  * console.log(isNegativeZero(1)); // false
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isNegativeZero(it: unknown): it is NegativeZero;
 

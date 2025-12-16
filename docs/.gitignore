@@ -1,0 +1,11 @@
+cache
+dist
+.cache
+.env*
+Thumbs.db
+.DS_Store
+.Spotlight-V100
+.Trashes
+node_modules
+.deno
+.npm

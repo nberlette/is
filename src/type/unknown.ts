@@ -1,8 +1,9 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/unknown
+ * @see https://jsr.io/@nick/is/doc/type/unknown
  */
+
 /**
  * Checks if a given type is the `unknown` type, returning {@linkcode True} if
  * it is, and {@linkcode False} if not. The `unknown` type, introduced in the
@@ -15,14 +16,14 @@
  *
  * @example
  * ```ts
- * import type { IsUnknown } from "@nick/is/type";
+ * import type { IsUnknown } from "jsr:@nick/is/type";
  *
  * type A = IsUnknown<unknown>; // true
  * type B = IsUnknown<any, "unknown", "not unknown">; // "not unknown"
  * ```
  * @example
  * ```ts
- * import type { IsUnknown } from "@nick/is/type";
+ * import type { IsUnknown } from "jsr:@nick/is/type";
  *
  * type IsNotUnknown<T> = IsUnknown<T, never, T>;
  *
@@ -34,7 +35,7 @@
  * ```
  * @example
  * ```ts
- * import type { IsUnknown } from "@nick/is/type";
+ * import type { IsUnknown } from "jsr:@nick/is/type";
  *
  * type OmitUnknown<U, Deep extends boolean = false> =
  *  | U extends infer T extends object ? {
@@ -84,7 +85,7 @@ export type { unknowns as unknown };
  *
  * @example
  * ```ts
- * import type { IsUnknown } from "@nick/is/type";
+ * import type { IsUnknown } from "jsr:@nick/is/type";
  *
  * type A = IsUnknown<unknown>; // true
  * type B = IsUnknown<any, "unknown", "not unknown">; // "not unknown"
@@ -92,7 +93,7 @@ export type { unknowns as unknown };
  *
  * @example
  * ```ts
- * import type { IsUnknown } from "@nick/is/type";
+ * import type { IsUnknown } from "jsr:@nick/is/type";
  *
  * type IsNotUnknown<T> = IsUnknown<T, never, T>;
  *
@@ -105,7 +106,7 @@ export type { unknowns as unknown };
  *
  * @example
  * ```ts
- * import type { IsUnknown } from "@nick/is/type";
+ * import type { IsUnknown } from "jsr:@nick/is/type";
  *
  * type OmitUnknown<U, Deep extends boolean = false> =
  *  | U extends infer T extends object ? {
@@ -138,7 +139,7 @@ export type IsUnknown<A, True = true, False = false> = IsAny<
  *
  * @example
  * ```ts
- * import type { OmitUnknown } from "@nick/is/type";
+ * import type { OmitUnknown } from "jsr:@nick/is/type";
  *
  * type A = { a: string; b: unknown; c: number };
  * type B = OmitUnknown<A>;

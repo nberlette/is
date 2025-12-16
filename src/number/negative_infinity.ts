@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/negative-infinity
+ * @see https://jsr.io/@nick/is/doc/number/negative-infinity
  */
 
 import { isNumber } from "./number.ts";
@@ -14,7 +14,7 @@ import { isNumber } from "./number.ts";
  * @returns `true` if the value is negative infinity, `false` otherwise.
  * @example
  * ```ts
- * import { isNegativeInfinity } from "@nick/is/number/infinity";
+ * import { isNegativeInfinity } from "jsr:@nick/is/number/infinity";
  *
  * console.log(isNegativeInfinity(Infinity)); // false
  * console.log(isNegativeInfinity(-Infinity)); // true
@@ -22,7 +22,7 @@ import { isNumber } from "./number.ts";
  * console.log(isNegativeInfinity(-1)); // false
  * console.log(isNegativeInfinity(NaN)); // false
  * ```
- * @category Numbers
+ * @category Numeric
  * @tags number, negative, infinity
  */
 export function isNegativeInfinity(it: unknown): it is NegativeInfinity {
@@ -32,7 +32,7 @@ export function isNegativeInfinity(it: unknown): it is NegativeInfinity {
 /**
  * Special type representing negative infinity (`Number.NEGATIVE_INFINITY`).
  *
- * @category Numbers
+ * @category Numeric
  * @tags types, number, infinity, negative
  */
 export type NegativeInfinity = -1e313;

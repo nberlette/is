@@ -1,8 +1,9 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/any-or-never
+ * @see https://jsr.io/@nick/is/doc/type/any-or-never
  */
+
 /**
  * @module any-or-never
  *
@@ -16,7 +17,7 @@
  *
  * @example
  * ```ts
- * import type { IsAnyOrNever } from "@nick/is/type/any-or-never";
+ * import type { IsAnyOrNever } from "jsr:@nick/is/type/any-or-never";
  *
  * type A = IsAnyOrNever<never>; // true
  * type B = IsAnyOrNever<any>; // true
@@ -40,7 +41,7 @@ import type { IsNever } from "./never.ts";
  * @template [False=false] The type to return if the check fails.
  * @example
  * ```ts
- * import type { IsAnyOrNever } from "@nick/is/type/any-or-never";
+ * import type { IsAnyOrNever } from "jsr:@nick/is/type/any-or-never";
  *
  * type A = IsAnyOrNever<never>; // true
  * type B = IsAnyOrNever<any>; // true
@@ -60,7 +61,7 @@ export type IsAnyOrNever<T, True = true, False = false> = IsNever<
  *
  * @example
  * ```ts
- * import type { OmitAnyOrNever } from "@nick/is/type";
+ * import type { OmitAnyOrNever } from "jsr:@nick/is/type";
  *
  * type A = { a: string; b: any; c: number; d: never };
  * type B = OmitAnyOrNever<A>;

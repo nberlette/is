@@ -2,7 +2,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/exact
+ * @see https://jsr.io/@nick/is/doc/type/exact
  */
 
 /**
@@ -132,7 +132,7 @@ type Any = {
  * @template [False=false] The type to return if the check fails.
  * @example
  * ```ts
- * import type { IsExact } from "@nick/is/type/exact";
+ * import type { IsExact } from "jsr:@nick/is/type/exact";
  *
  * type A = IsExact<"hello", "hello">; // true
  * type B = IsExact<{ a: string | null }, { a: string | null }>; // true

@@ -103,7 +103,6 @@ export function isDateString(it: unknown): it is DateString {
  *
  * @param it The value to check.
  * @returns `true` if the value is a valid date string; otherwise, `false`.
- * @category Guards
  * @example
  * ```ts
  * import isDateString from "@nick/is/date_string";
@@ -112,5 +111,7 @@ export function isDateString(it: unknown): it is DateString {
  * console.assert(isDateString("2024-04-20"), "it works!");
  * console.assert(isDateString("02.32.2025"), "wtf lol");
  * ```
+ * @category Strings
+ * @tags Date
  */
 export default isDateString;

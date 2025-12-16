@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/positive-integer
+ * @see https://jsr.io/@nick/is/doc/number/positive-integer
  */
 
 import type { Cast, INTEGER, POSITIVE } from "./types.ts";
@@ -13,7 +13,7 @@ import isNegativeZero from "./negative_zero.ts";
  * Casts a value into a positive finite type. If the value is not a number, it
  * will resolve to `never`.
  *
- * @category Numbers
+ * @category Numeric
  */
 
 export type PositiveInteger<N = number> = Cast<N, POSITIVE & INTEGER>;
@@ -33,7 +33,7 @@ export type PositiveInteger<N = number> = Cast<N, POSITIVE & INTEGER>;
  * console.log(isPositiveInteger(NaN)); // false
  * console.log(isPositiveInteger(Infinity)); // false
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isPositiveInteger<const N = number>(
   it: N,
@@ -55,7 +55,7 @@ export function isPositiveInteger<const N = number>(
  * console.log(isPositiveInteger(NaN)); // false
  * console.log(isPositiveInteger(Infinity)); // false
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isPositiveInteger(it: unknown): it is PositiveInteger;
 

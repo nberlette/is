@@ -1,10 +1,12 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/nan
+ * @see https://jsr.io/@nick/is/doc/number/nan
  */
-
-import type { Cast, MAYBE_NAN, NAN } from "./mod.ts";
+/**
+ * @module number/nan
+ */
+import type { Cast, MAYBE_NAN, NAN } from "./types.ts";
 
 /**
  * Casts a value into a branded type that represents the special numeric value
@@ -14,7 +16,7 @@ import type { Cast, MAYBE_NAN, NAN } from "./mod.ts";
  *
  * @example
  * ```ts
- * import { isNan, type NaN } from "jsr:@type/number";
+ * import { isNan, type NaN } from "jsr:@nick/is/number";
  *
  * let x = NaN as NaN, y = 0;
  *
@@ -27,7 +29,7 @@ import type { Cast, MAYBE_NAN, NAN } from "./mod.ts";
  * // This will raise a TypeScript compiler error:
  * x = 0; // <- TS2322 Type '0' is not assignable to type 'NaN'.
  * ```
- * @category Numbers
+ * @category Numeric
  * @tags number, NaN
  */
 export type NaN<N = number> = Cast<N, NAN>;
@@ -41,7 +43,7 @@ export type NaN<N = number> = Cast<N, NAN>;
  *
  * @example
  * ```ts
- * import { isNaN, type MaybeNaN } from "jsr:@type/number";
+ * import { isNaN, type MaybeNaN } from "jsr:@nick/is/number";
  *
  * let x = NaN as MaybeNaN, y = 0;
  *
@@ -53,7 +55,7 @@ export type NaN<N = number> = Cast<N, NAN>;
  *
  * y = NaN; // <- No error! (this is the main difference from `NaN`)
  * ```
- * @category Numbers
+ * @category Numeric
  * @tags number, NaN
  */
 export type MaybeNaN<N = number> = Cast<N, MAYBE_NAN>;
@@ -66,7 +68,7 @@ export type MaybeNaN<N = number> = Cast<N, MAYBE_NAN>;
  * @returns `true` if the value is `NaN`, `false` otherwise.
  * @example
  * ```ts
- * import { isNaN } from "jsr:@type/number";
+ * import { isNaN } from "jsr:@nick/is/number";
  *
  * console.log(isNaN(0)); // false
  * console.log(isNaN(1)); // false
@@ -74,7 +76,7 @@ export type MaybeNaN<N = number> = Cast<N, MAYBE_NAN>;
  * console.log(isNaN(NaN)); // true
  * console.log(isNaN(Infinity)); // false
  * ```
- * @category Numbers
+ * @category Numeric
  * @tags number, NaN
  */
 export function isNaN<const N = number>(
@@ -89,7 +91,7 @@ export function isNaN<const N = number>(
  * @returns `true` if the value is `NaN`, `false` otherwise.
  * @example
  * ```ts
- * import { isNaN } from "jsr:@type/number";
+ * import { isNaN } from "jsr:@nick/is/number";
  *
  * console.log(isNaN(0)); // false
  * console.log(isNaN(1)); // false
@@ -97,7 +99,7 @@ export function isNaN<const N = number>(
  * console.log(isNaN(NaN)); // true
  * console.log(isNaN(Infinity)); // false
  * ```
- * @category Numbers
+ * @category Numeric
  * @tags number, NaN
  */
 export function isNaN(it: unknown): it is NaN;

@@ -1,12 +1,23 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/assertion
+ * @see https://jsr.io/@nick/is/doc/type/assertion
  */
+
 /**
+ * This module provides the {@linkcode Assertion} type, which is a type alias
+ * for a function that asserts a value is of a specific type. It is used to
+ * create custom type assertions that throw an error if the value does not
+ * match the expected type.
+ *
+ * This is useful for performing runtime type checks with support for stricter
+ * type narrowing than a standard type guard.
+ *
+ * @category Types
+ * @tags Assertion
  * @module assertion
  */
-import type { Expand } from "../_internal/types.ts";
+import type { Expand } from "../internal/types.ts";
 
 /**
  * Represents an assertion function that checks if a given value of the base
@@ -17,12 +28,15 @@ import type { Expand } from "../_internal/types.ts";
  * @template [Base=unknown] The base type to check against.
  * @example
  * ```ts
- * const assertString: Assertion<string> = (it: unknown): asserts it is string => {
- *   if (typeof it !== "string") {
- *     throw new TypeError("Expected a string");
- *   }
+ * import type { Assertion } from "jsr:@nick/is/type/assertion";
+ *
+ * const assertString: Assertion<string> = (it) => {
+ *   if (typeof it !== "string") throw new TypeError("Expected a string");
+ *   // do nothing when the type is correct; the compiler does the rest here.
  * };
  * ```
+ * @category Types
+ * @tags Assertion
  */
 export type Assertion<
   // deno-lint-ignore no-explicit-any

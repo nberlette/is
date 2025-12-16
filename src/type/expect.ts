@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/expect
+ * @see https://jsr.io/@nick/is/doc/type/expect
  */
 
 /**
@@ -42,7 +42,7 @@
  *
  * @example
  * ```ts
- * import { expectType } from "@nick/is/type/expect";
+ * import { expectType } from "jsr:@nick/is/type/expect";
  *
  * let result: string | number = "hello world";
  *
@@ -67,17 +67,16 @@
  * @category Testing
  * @example
  * ```ts
- * import { expectType } from "@nick/is/type/expect";
+ * import { expectType } from "jsr:@nick/is/type/expect";
  *
- * let result: string | number = "hello world".toString();
+ * let result: string | number = "hello world";
  *
- * // This will raise a type error if `result` is not a `string`
+ * // no error here, since `result` is a `string`
  * expectType<string>(result);
  *
- * const literal = "hello world";
- *
- * // This will raise a type error if `literal` is not a string literal
- * expectType<"hello world">(literal);
+ * // @ts-expect-error -- Argument of type 'number' is not assignable to
+ * // parameter of type 'string'. deno-ts(2345)
+ * expectType<number>(result);
  * ```
  */
 export function expectType<T>(value: T): void {

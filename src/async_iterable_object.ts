@@ -11,7 +11,7 @@ import { isAsyncIterable } from "./async_iterable.ts";
  * An object that implements the `AsyncIterable` interface. This is the type
  * that the {@link isAsyncIterableObject} function checks for and (narrows to).
  * @template T The type of elements yielded by the async iterable.
- * @category Iterables
+ * @category Iteration
  */
 export type AsyncIterableObject<T> = AsyncIterable<T> & object;
 
@@ -56,7 +56,7 @@ export type AsyncIterableObject<T> = AsyncIterable<T> & object;
  *
  * kv.close();
  * ```
- * @category Iterables
+ * @category Iteration
  * @module async-iterable-object
  */
 export function isAsyncIterableObject<T>(

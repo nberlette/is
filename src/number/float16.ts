@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/float16
+ * @see https://jsr.io/@nick/is/doc/number/float16
  */
 
 /**
@@ -23,15 +23,15 @@
  * @module float16
  */
 import { isFloat } from "./float.ts";
-import { f16round } from "@nick/math/f16round";
-import type { Cast, FLOAT16, MAYBE_FLOAT16 } from "./types.ts";
+import type { Float16 } from "@nick/math/types";
+import { roundFloat16 } from "@nick/math/float16";
 
 /**
  * Casts a value into a 16-bit floating-point type (half-precision).
  *
  * @example
  * ```ts
- * import { isFloat16, type Float16 } from "@nick/is/float16";
+ * import { isFloat16, type Float16 } from "jsr:@nick/is/float16";
  *
  * let i = 1.5 as Float16, y = 0;
  *
@@ -44,21 +44,18 @@ import type { Cast, FLOAT16, MAYBE_FLOAT16 } from "./types.ts";
  * // This will raise a TypeScript compiler error:
  * i = 1; // <- TS2322 Type '1' is not assignable to type 'Float16'.
  * ```
- * @category Numbers
- * @category Types
+ * @category Numeric
  * @tags float16, number
- * @module float16
  */
-export type Float16<N = number> = Cast<N, FLOAT16>;
+export type { Float16 } from "@nick/math/types";
 
 /**
  * Casts a value into a partial 16-bit floating-point type (half-precision).
  *
- * @category Numbers
- * @category Types
+ * @category Numeric
  * @tags maybe, float16, number
  */
-export type MaybeFloat16<N = number> = Cast<N, MAYBE_FLOAT16>;
+export type MaybeFloat16<N extends number = number> = N & Partial<Float16<N>>;
 
 /**
  * Checks if a value is a 16-bit half-precision floating-point number, also
@@ -69,7 +66,7 @@ export type MaybeFloat16<N = number> = Cast<N, MAYBE_FLOAT16>;
  * Otherwise `false`.
  * @example
  * ```ts
- * import { isFloat16 } from "@nick/is/float16";
+ * import { isFloat16 } from "jsr:@nick/is/float16";
  *
  * isFloat16(1); // true
  * isFloat16(1.5); // true
@@ -79,9 +76,11 @@ export type MaybeFloat16<N = number> = Cast<N, MAYBE_FLOAT16>;
  * isFloat16(Math.PI); // false
  * isFloat16(Infinity); // false
  * ```
- * @category Numbers
+ * @category Numeric
  */
-export function isFloat16<const N = number>(it: N): it is Float16<N>;
+export function isFloat16<const N extends number = number>(
+  it: N,
+): it is Float16<N>;
 
 /**
  * Checks if a value is a 16-bit half-precision floating-point number, also
@@ -90,14 +89,14 @@ export function isFloat16<const N = number>(it: N): it is Float16<N>;
  * @param it The value to check.
  * @returns `true` if the value is a half-precision floating-point number.
  * Otherwise `false`.
- * @category Numbers
+ * @category Numeric
  */
 export function isFloat16(it: unknown): it is Float16;
 
 /** @internal */
 // deno-lint-ignore no-explicit-any
 export function isFloat16(it: any): it is Float16 {
-  return isFloat(it) && +it === f16round(+it);
+  return isFloat(it) && +it === roundFloat16(+it);
 }
 
 // /**

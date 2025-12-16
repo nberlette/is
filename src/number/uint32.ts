@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/uint32
+ * @see https://jsr.io/@nick/is/doc/number/uint32
  */
 
 /**
@@ -12,7 +12,7 @@
  *
  * @example
  * ```ts
- * import { isUint32, type Uint32, type MaybeUint32 } from "@nick/is/number";
+ * import { isUint32, type Uint32, type MaybeUint32 } from "jsr:@nick/is/number";
  *
  * let value = 1 as Uint32;
  *
@@ -25,7 +25,7 @@
  * // This will raise a TypeScript compiler error:
  * value = -1; // <- TS2322 Type '-1' is not assignable to type 'Uint32'.
  * ```
- * @category Numbers
+ * @category Numeric
  * @tags uint32, number
  * @module uint32
  */
@@ -38,7 +38,7 @@ import type { Cast, MAYBE_UINT32, UINT32 } from "./types.ts";
  * @template [N=number] The type of the value to cast.
  * @example
  * ```ts
- * import { isUint32, type Uint32, type MaybeUint32 } from "@nick/is/number";
+ * import { isUint32, type Uint32, type MaybeUint32 } from "jsr:@nick/is/number";
  *
  * let value = 1 as Uint32;
  *
@@ -51,7 +51,7 @@ import type { Cast, MAYBE_UINT32, UINT32 } from "./types.ts";
  * // This will raise a TypeScript compiler error:
  * value = -1; // <- TS2322 Type '-1' is not assignable to type 'Uint32'.
  * ```
- * @category Numbers
+ * @category Numeric
  * @category Types
  * @tags unsigned, integer
  */
@@ -63,7 +63,7 @@ export type Uint32<N = number> = Cast<N, UINT32>;
  * @template [N=number] The type of the value to cast.
  * @example
  * ```ts
- * import { isUint32, type Uint32, type MaybeUint32 } from "@nick/is/number";
+ * import { isUint32, type Uint32, type MaybeUint32 } from "jsr:@nick/is/number";
  *
  * let value = 1 as Uint32;
  *
@@ -76,7 +76,7 @@ export type Uint32<N = number> = Cast<N, UINT32>;
  * // This will raise a TypeScript compiler error:
  * value = -1; // <- TS2322 Type '-1' is not assignable to type 'Uint32'.
  * ```
- * @category Numbers
+ * @category Numeric
  * @category Types
  * @tags maybe, unsigned, integer
  */
@@ -90,7 +90,7 @@ export type MaybeUint32<N = number> = Cast<N, MAYBE_UINT32>;
  * @returns {it is Uint32<N>} `true` if `it` is an unsigned 32-bit integer, `false` otherwise.
  * @example
  * ```ts
- * import { isUint32, type Uint32, type MaybeUint32 } from "@nick/is/number";
+ * import { isUint32, type Uint32, type MaybeUint32 } from "jsr:@nick/is/number";
  *
  * let value = 1 as Uint32;
  *
@@ -103,7 +103,7 @@ export type MaybeUint32<N = number> = Cast<N, MAYBE_UINT32>;
  * // This will raise a TypeScript compiler error:
  * value = -1; // <- TS2322 Type '-1' is not assignable to type 'Uint32'.
  * ```
- * @category Numbers
+ * @category Numeric
  * @tags number, unsigned, integer
  */
 export function isUint32<const N = number>(it: N): it is Uint32<N>;
@@ -115,7 +115,7 @@ export function isUint32<const N = number>(it: N): it is Uint32<N>;
  * @returns `true` if `it` is an unsigned 32-bit integer, `false` otherwise.
  * @example
  * ```ts
- * import { isUint32, type Uint32, type MaybeUint32 } from "@nick/is/number";
+ * import { isUint32, type Uint32, type MaybeUint32 } from "jsr:@nick/is/number";
  *
  * let value = 1 as Uint32;
  *
@@ -128,7 +128,7 @@ export function isUint32<const N = number>(it: N): it is Uint32<N>;
  * // This will raise a TypeScript compiler error:
  * value = -1; // <- TS2322 Type '-1' is not assignable to type 'Uint32'.
  * ```
- * @category Numbers
+ * @category Numeric
  * @tags number, unsigned, integer
  */
 export function isUint32(it: unknown): it is Uint32<number>;

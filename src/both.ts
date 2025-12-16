@@ -3,6 +3,7 @@
  * @license MIT (https://nick.mit-license.org/2024)
  * @see https://jsr.io/@nick/is/doc/both
  */
+import type { Predicate } from "./type/predicate.ts";
 
 /**
  * @module both
@@ -47,7 +48,7 @@
 
 /**
  * Combine two different predicates into one, such that the resulting function
- * returns `true` if a given input satisfies **both** of the two predicates.
+ * returns `true` if a given input satisfies **both** predicates.
  *
  * This creates a logical AND between the two predicates, narrowing types to an
  * intersection of the two original predicates' return types. This helps you
@@ -59,13 +60,12 @@
  * narrow to will probably be `never`. For this reason, don't use this function
  * to combine mutually exclusive predicates like `isString` and `isNumber`.
  *
- * @param left The first predicate to check.
- * @param right The second predicate to check.
- * @returns A new predicate that returns `true` if both {@link left} and
- * {@link right} are satisfies by a given input.
+ * @param l The first predicate to check.
+ * @param r The second predicate to check.
+ * @returns a new predicate that ensures both `l` and `r` guards are satisfied.
  * @example
  * ```ts
- * import { isBoth, is } from "@nick/is";
+ * import { isBoth, isString } from "@nick/is";
  *
  * // creating a custom type guard by hand
  * const isEmpty = <T>(
@@ -75,7 +75,7 @@
  * );
  *
  * // composing a custom type guard with `isBoth`
- * const isEmptyString = isBoth(is.string, isEmpty);
+ * const isEmptyString = isBoth(isString, isEmpty);
  * //    ^? const isEmptyString: (it: unknown) => it is string & { readonly length: 0 }
  *
  * // using the custom type guard
@@ -86,20 +86,18 @@
  * @category Composition
  */
 export function isBoth<L, R>(
-  // deno-lint-ignore no-explicit-any
-  left: (it: any, ...args: any[]) => it is L,
-  // deno-lint-ignore no-explicit-any
-  right: (it: any, ...args: any[]) => it is R,
-): (it: unknown) => it is L & R {
-  if (typeof left !== "function" || typeof right !== "function") {
-    const typeL = left === null ? "null" : typeof left;
-    const typeR = right === null ? "null" : typeof right;
+  l: Predicate<L>,
+  r: Predicate<R>,
+): Predicate<L & R> {
+  if (typeof l !== "function" || typeof r !== "function") {
+    const typeL = l === null ? "null" : typeof l;
+    const typeR = r === null ? "null" : typeof r;
     throw new TypeError(
       `'isBoth' expected predicate functions for its first and second` +
         `arguments, but received a ${typeL} and ${typeR}, respectively.`,
     );
   }
-  return (it): it is L & R => left(it) && right(it);
+  return (x): x is L & R => l(x) && r(x);
 }
 
 /** @ignore */

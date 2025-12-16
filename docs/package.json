@@ -1,0 +1,22 @@
+{
+  "name": "@nick/is-docs",
+  "version": "0.2.0-rc.6",
+  "license": "MIT",
+  "private": true,
+  "description": "API documentation for the @nick/is library. Frontend powered by VitePress, documentation generated with deno doc and @nick/dg, a soon-to-be-released utility for generating highly configurable markdown docs and README files from deno doc's structured output.",
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview",
+    "docs:fmt": "deno fmt --no-config .",
+    "clean:all": "rm -rf .vitepress/dist .vitepress/cache node_modules",
+    "clean": "rm -rf .vitepress/dist .vitepress/cache",
+    "prepare": "deno task -A docs:fmt && deno task -A clean && deno task -A docs:build",
+    "postinstall": "deno task -A prepare",
+    "deploy": "deno task -A prepare && deno run -Aq npm:gh-pages -d .vitepress/dist -e . --nojekyll -f -t -o origin -b gh-pages -r \"https://github.com/nberlette/is.git\" -m \"chore: deploy docs to gh-pages [skip ci]\" -u \"Nicholas Berlette <11234104+nberlette@users.noreply.github.com>\""
+  },
+  "dependencies": {
+    "@shikijs/vitepress-twoslash": "2.5.0",
+    "vitepress": "^1.6.3"
+  }
+}

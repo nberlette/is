@@ -77,7 +77,7 @@ import { isTagged } from "./tagged.ts";
  * type of object. Use {@link isAsyncGeneratorFunction} to check for an async
  * generator function instead.
  *
- * @category Generators
+ * @category Iteration
  * @module generator-function
  */
 export function isGeneratorFunction(it: unknown): it is GeneratorFunction {

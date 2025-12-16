@@ -28,7 +28,8 @@ import { isTagged } from "./tagged.ts";
  * console.log(isAsyncGenerator(gen)); // true
  * console.log(isAsyncGenerator(genFn)); // false
  * ```
- * @category Generators
+ * @category Iteration
+ * @tags Async
  * @module async-generator
  */
 // deno-lint-ignore no-explicit-any

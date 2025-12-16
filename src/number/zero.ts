@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/zero
+ * @see https://jsr.io/@nick/is/doc/number/zero
  */
 
 // #region Zero
@@ -14,7 +14,7 @@ import type { Cast, MAYBE_ZERO, ZERO } from "./types.ts";
  *
  * @example
  * ```ts
- * import { isZero, type Zero } from "jsr:@type/number/zero";
+ * import { isZero, type Zero } from "jsr:@nick/is/number/zero";
  *
  * let x = 0 as Zero, y = 1;
  *
@@ -27,7 +27,7 @@ import type { Cast, MAYBE_ZERO, ZERO } from "./types.ts";
  * // This will raise a TypeScript compiler error:
  * x = 1; // <- TS2322 Type '1' is not assignable to type 'Zero'.
  * ```
- * @category Numbers
+ * @category Numeric
  * @module zero
  */
 export type Zero<N = number> = Cast<N, ZERO>;
@@ -38,7 +38,7 @@ export type Zero<N = number> = Cast<N, ZERO>;
  *
  * @example
  * ```ts
- * import { isZero, type MaybeZero } from "jsr:@type/number";
+ * import { isZero, type MaybeZero } from "jsr:@nick/is/number";
  *
  * let x = 0 as MaybeZero, y = 1;
  *
@@ -50,7 +50,7 @@ export type Zero<N = number> = Cast<N, ZERO>;
  *
  * y = 0; // <- No error! (this is the main difference from `Zero`)
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export type MaybeZero<N = number> = Cast<N, MAYBE_ZERO>;
 
@@ -60,7 +60,7 @@ export type MaybeZero<N = number> = Cast<N, MAYBE_ZERO>;
  * - To check exclusively for `-0`, use {@link isNegativeZero} instead.
  * - To check exclusively for `+0` (meaning zero, but **not** negative zero),
  *   use {@link isPositiveZero} instead.
- * @category Numbers
+ * @category Numeric
  */
 export function isZero<const N = number>(it: N): it is Zero<N>;
 
@@ -70,7 +70,7 @@ export function isZero<const N = number>(it: N): it is Zero<N>;
  * - To check exclusively for `-0`, use {@link isNegativeZero} instead.
  * - To check exclusively for `+0` (meaning zero, but **not** negative zero),
  *   use {@link isPositiveZero} instead.
- * @category Numbers
+ * @category Numeric
  */
 export function isZero(it: unknown): it is Zero;
 

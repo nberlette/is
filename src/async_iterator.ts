@@ -18,7 +18,7 @@
  * console.log(isAsyncIterator(iter)); // true
  * console.log(isAsyncIterator(iter[Symbol.asyncIterator]())); // true
  * ```
- * @category Iterables
+ * @category Iteration
  * @module async-iterator
  */
 export function isAsyncIterator<T>(it: unknown): it is AsyncIterator<T> {

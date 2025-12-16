@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/uint16
+ * @see https://jsr.io/@nick/is/doc/number/uint16
  */
 
 /**
@@ -12,7 +12,7 @@
  *
  * @example
  * ```ts
- * import { isUint16, type Uint16, type MaybeUint16 } from "@nick/is/number";
+ * import { isUint16, type Uint16, type MaybeUint16 } from "jsr:@nick/is/number";
  *
  * let value = 1 as Uint16;
  *
@@ -25,7 +25,7 @@
  * // This will raise a TypeScript compiler error:
  * value = -1; // <- TS2322 Type '-1' is not assignable to type 'Uint16'.
  * ```
- * @category Numbers
+ * @category Numeric
  * @tags uint16, number
  * @module uint16
  */
@@ -38,7 +38,7 @@ import type { Cast, MAYBE_UINT16, UINT16 } from "./types.ts";
  * @template [N=number] The type of the value to cast.
  * @example
  * ```ts
- * import { isUint16, type Uint16, type MaybeUint16 } from "@nick/is/number";
+ * import { isUint16, type Uint16, type MaybeUint16 } from "jsr:@nick/is/number";
  *
  * let value = 1 as Uint16;
  *
@@ -51,7 +51,7 @@ import type { Cast, MAYBE_UINT16, UINT16 } from "./types.ts";
  * // This will raise a TypeScript compiler error:
  * value = -1; // <- TS2322 Type '-1' is not assignable to type 'Uint16'.
  * ```
- * @category Numbers
+ * @category Numeric
  * @category Types
  * @tags unsigned, integer
  */
@@ -63,7 +63,7 @@ export type Uint16<N = number> = Cast<N, UINT16>;
  * @template [N=number] The type of the value to cast.
  * @example
  * ```ts
- * import { isUint16, type Uint16, type MaybeUint16 } from "@nick/is/number";
+ * import { isUint16, type Uint16, type MaybeUint16 } from "jsr:@nick/is/number";
  *
  * let value = 1 as Uint16;
  *
@@ -76,7 +76,7 @@ export type Uint16<N = number> = Cast<N, UINT16>;
  * // This will raise a TypeScript compiler error:
  * value = -1; // <- TS2322 Type '-1' is not assignable to type 'Uint16'.
  * ```
- * @category Numbers
+ * @category Numeric
  * @category Types
  * @tags maybe, unsigned, integer
  */
@@ -90,7 +90,7 @@ export type MaybeUint16<N = number> = Cast<N, MAYBE_UINT16>;
  * @returns {it is Uint16<N>} `true` if `it` is an unsigned 16-bit integer, `false` otherwise.
  * @example
  * ```ts
- * import { isUint16, type Uint16, type MaybeUint16 } from "@nick/is/number";
+ * import { isUint16, type Uint16, type MaybeUint16 } from "jsr:@nick/is/number";
  *
  * let value = 1 as Uint16;
  *
@@ -103,7 +103,7 @@ export type MaybeUint16<N = number> = Cast<N, MAYBE_UINT16>;
  * // This will raise a TypeScript compiler error:
  * value = -1; // <- TS2322 Type '-1' is not assignable to type 'Uint16'.
  * ```
- * @category Numbers
+ * @category Numeric
  * @tags number, unsigned, integer
  */
 export function isUint16<const N = number>(it: N): it is Uint16<N>;
@@ -115,7 +115,7 @@ export function isUint16<const N = number>(it: N): it is Uint16<N>;
  * @returns `true` if `it` is an unsigned 16-bit integer, `false` otherwise.
  * @example
  * ```ts
- * import { isUint16, type Uint16, type MaybeUint16 } from "@nick/is/number";
+ * import { isUint16, type Uint16, type MaybeUint16 } from "jsr:@nick/is/number";
  *
  * let value = 1 as Uint16;
  *
@@ -128,7 +128,7 @@ export function isUint16<const N = number>(it: N): it is Uint16<N>;
  * // This will raise a TypeScript compiler error:
  * value = -1; // <- TS2322 Type '-1' is not assignable to type 'Uint16'.
  * ```
- * @category Numbers
+ * @category Numeric
  * @tags number, unsigned, integer
  */
 export function isUint16(it: unknown): it is Uint16<number>;

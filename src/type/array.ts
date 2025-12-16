@@ -1,8 +1,9 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/array
+ * @see https://jsr.io/@nick/is/doc/type/array
  */
+
 /**
  * @module array
  */
@@ -18,7 +19,7 @@ import type { IsTuple } from "./tuple.ts";
  *
  * @example
  * ```ts
- * import type { IsArray } from "@nick/is/type";
+ * import type { IsArray } from "jsr:@nick/is/type";
  *
  * type A = IsArray<[1, 2, 3]>; // true
  * type B = IsArray<[unknown, unkown, unknown, unknown, unknown]>; // true
@@ -45,7 +46,7 @@ export type IsArray<T, True = true, False = false> = IsAnyOrUnknownOrNever<
  *
  * @example
  * ```ts
- * import type { IsNonTupleArray } from "@nick/is/type";
+ * import type { IsNonTupleArray } from "jsr:@nick/is/type";
  *
  * type A = IsNonTupleArray<[1, 2, 3]>; // false
  * type B = IsNonTupleArray<[unknown, unkown, unknown]>; // false

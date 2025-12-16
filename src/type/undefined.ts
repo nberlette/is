@@ -1,8 +1,9 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/undefined
+ * @see https://jsr.io/@nick/is/doc/type/undefined
  */
+
 /**
  * @module undefined
  *
@@ -12,7 +13,7 @@
  *
  * @example
  * ```ts
- * import type { IsUndefined } from "@nick/is/type";
+ * import type { IsUndefined } from "jsr:@nick/is/type";
  *
  * type A = IsUndefined<undefined>; // true
  * type B = IsUndefined<null>; // false
@@ -29,7 +30,7 @@
  *
  * @example
  * ```ts
- * import type { IsUndefined } from "@nick/is/type";
+ * import type { IsUndefined } from "jsr:@nick/is/type";
  *
  * type A = IsUndefined<undefined>; // true
  * type B = IsUndefined<null>; // false
@@ -49,7 +50,7 @@ export type IsUndefined<T, True = true, False = false> = [T] extends [never]
  *
  * @example
  * ```ts
- * import type { OmitUndefined } from "@nick/is/type";
+ * import type { OmitUndefined } from "jsr:@nick/is/type";
  *
  * type A = { a: string; b: undefined; c: number };
  * type B = OmitUndefined<A>;

@@ -23,7 +23,7 @@ import { isTagged } from "./tagged.ts";
  * console.log(isArrayIterator(iterator)); // true
  * console.log(isArrayIterator(array)); // false
  * ```
- * @category Iterables
+ * @category Iteration
  * @module array-iterator
  */
 export function isArrayIterator<T>(it: unknown): it is ArrayIterator<T> {

@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/even
+ * @see https://jsr.io/@nick/is/doc/number/even
  */
 
 /**
@@ -13,7 +13,7 @@
  *
  * @example
  * ```ts
- * import { isEven } from "@nick/is/even";
+ * import { isEven } from "jsr:@nick/is/even";
  *
  * isEven(0); // true
  * isEven(1); // false
@@ -64,7 +64,7 @@ export type Even<T extends Numeric = Numeric> = Cast<T, EVEN>;
  * @returns `true` if the value is even, `false` otherwise.
  * @example
  * ```ts
- * import { isEven } from "@nick/is/even";
+ * import { isEven } from "jsr:@nick/is/even";
  *
  * isEven(0); // true
  * isEven(1); // false
@@ -84,7 +84,7 @@ export function isEven<T extends Numeric>(it: T): IsEven<T>;
  * @returns `true` if the value is even, `false` otherwise.
  * @example
  * ```ts
- * import { isEven } from "@nick/is/even";
+ * import { isEven } from "jsr:@nick/is/even";
  *
  * isEven(0); // true
  * isEven(1); // false
@@ -104,7 +104,7 @@ export function isEven(it: number | `${number}`): it is Even<number>;
  * @returns `true` if the value is even, `false` otherwise.
  * @example
  * ```ts
- * import { isEven } from "@nick/is/even";
+ * import { isEven } from "jsr:@nick/is/even";
  *
  * isEven(0); // true
  * isEven(1); // false
@@ -124,7 +124,7 @@ export function isEven(it: bigint | `${bigint}`): it is Even<bigint>;
  * @returns `true` if the value is an even finite integer, `false` otherwise.
  * @example
  * ```ts
- * import { isEven } from "@nick/is/even";
+ * import { isEven } from "jsr:@nick/is/even";
  *
  * isEven(0); // true
  * isEven(1); // false
@@ -155,3 +155,5 @@ export function isEven(it: unknown): it is Even {
 
 /** @ignore */
 export default isEven;
+
+export { isEven as isEvenNumber };

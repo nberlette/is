@@ -1,8 +1,9 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/null
+ * @see https://jsr.io/@nick/is/doc/type/null
  */
+
 /**
  * @module null
  *
@@ -12,7 +13,7 @@
  *
  * @example
  * ```ts
- * import type { IsNull } from "@nick/is/type";
+ * import type { IsNull } from "jsr:@nick/is/type";
  *
  * type A = IsNull<null>; // true
  * type B = IsNull<undefined>; // false
@@ -31,7 +32,7 @@
  * @template [False=false] The type to return if the check fails.
  * @example
  * ```ts
- * import type { IsNull } from "@nick/is/type";
+ * import type { IsNull } from "jsr:@nick/is/type";
  *
  * type A = IsNull<null>; // true
  * type B = IsNull<undefined>; // false
@@ -51,7 +52,7 @@ export type IsNull<T, True = true, False = false> = [T] extends [never] ? False
  * @template [Deep=false] Whether to perform a deep omit operation.
  * @example
  * ```ts
- * import type { OmitNull } from "@nick/is/type";
+ * import type { OmitNull } from "jsr:@nick/is/type";
  *
  * type A = { a: string; b: null; c: number };
  * type B = OmitNull<A>;

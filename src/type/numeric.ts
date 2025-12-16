@@ -1,8 +1,9 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/numeric
+ * @see https://jsr.io/@nick/is/doc/type/numeric
  */
+
 /**
  * If the given string {@linkcode T} is numeric (meaning a literal number like
  * `0`, a literal bigint like `0n`, the generic types `number` or `bigint`, or

@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/positive
+ * @see https://jsr.io/@nick/is/doc/number/positive
  */
 
 import type { Cast, MAYBE_POSITIVE, POSITIVE } from "./types.ts";
@@ -12,7 +12,7 @@ import type { Cast, MAYBE_POSITIVE, POSITIVE } from "./types.ts";
  *
  * @example
  * ```ts
- * import { isPositive, type Positive } from "jsr:@type/number";
+ * import { isPositive, type Positive } from "jsr:@nick/is/number";
  *
  * let x = 1 as Positive, y = 0;
  *
@@ -25,7 +25,7 @@ import type { Cast, MAYBE_POSITIVE, POSITIVE } from "./types.ts";
  * // This will raise a TypeScript compiler error:
  * x = 0; // <- TS2322 Type '0' is not assignable to type 'Positive'.
  * ```
- * @category Numbers
+ * @category Numeric
  * @category Types
  * @tags positive, number
  * @module positive
@@ -38,7 +38,7 @@ export type Positive<N = number> = Cast<N, POSITIVE>;
  *
  * @example
  * ```ts
- * import { isPositive, type MaybePositive } from "jsr:@type/number";
+ * import { isPositive, type MaybePositive } from "jsr:@nick/is/number";
  *
  * let x = 1 as MaybePositive, y = 0;
  *
@@ -50,7 +50,7 @@ export type Positive<N = number> = Cast<N, POSITIVE>;
  *
  * y = 1; // <- No error! (this is the main difference from `Positive`)
  * ```
- * @category Numbers
+ * @category Numeric
  * @category Types
  * @tags maybe, positive, number
  */
@@ -72,7 +72,7 @@ export type MaybePositive<N = number> = Cast<N, MAYBE_POSITIVE>;
  * console.log(isPositive(NaN)); // false
  * console.log(isPositive(Infinity)); // true
  * ```
- * @category Numbers
+ * @category Numeric
  * @tags positive, number
  */
 export function isPositive<const N = number>(
@@ -95,7 +95,7 @@ export function isPositive<const N = number>(
  * console.log(isPositive(NaN)); // false
  * console.log(isPositive(Infinity)); // true
  * ```
- * @category Numbers
+ * @category Numeric
  * @tags positive, number
  */
 export function isPositive(it: unknown): it is Positive;
@@ -107,3 +107,5 @@ export function isPositive(it: unknown): it is Positive {
 
 /** @ignore */
 export default isPositive;
+
+export { isPositive as isPositiveNumber };

@@ -1,8 +1,9 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/tuple
+ * @see https://jsr.io/@nick/is/doc/type/tuple
  */
+
 /**
  * Resolves to {@linkcode True} if {@linkcode A} is a tuple, which is an array
  * with a pre-determined length and type for each of its elements. This check
@@ -12,7 +13,7 @@
  *
  * @example
  * ```ts
- * import type { IsTuple } from "@nick/is/type";
+ * import type { IsTuple } from "jsr:@nick/is/type";
  *
  * type A = IsTuple<[1, 2, 3]>; // true
  * type B = IsTuple<string[]>; // false
@@ -20,7 +21,7 @@
  * ```
  * @example
  * ```ts
- * import type { IsTuple } from "@nick/is/type";
+ * import type { IsTuple } from "jsr:@nick/is/type";
  *
  * // using the conditional type parameters in a custom type
  * type EnsureTuple<T> = IsTuple<T, T, never>;

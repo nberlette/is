@@ -1,8 +1,9 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/literal
+ * @see https://jsr.io/@nick/is/doc/type/literal
  */
+
 import type { IsBoolean } from "./boolean.ts";
 
 /**
@@ -14,7 +15,7 @@ import type { IsBoolean } from "./boolean.ts";
  *
  * @example
  * ```ts
- * import type { IsLiteral } from "@nick/is/type";
+ * import type { IsLiteral } from "jsr:@nick/is/type";
  *
  * type A1 = IsLiteral<"foo">; // true
  * type A2 = IsLiteral<string | 420>; // false

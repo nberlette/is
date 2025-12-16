@@ -1,8 +1,9 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/never
+ * @see https://jsr.io/@nick/is/doc/type/never
  */
+
 /**
  * Checks if the type {@linkcode T} is specifically `never`, returning
  * {@linkcode True} if it is, and {@linkcode False} if not. This is useful for
@@ -44,7 +45,7 @@
  * `never` as a type. This is where the `Never` type guard comes in handy:
  *
  * ```ts
- * import type { IsNever } from "@nick/is/type";
+ * import type { IsNever } from "jsr:@nick/is/type";
  *
  * // we first check if the type is `never`, returning `False` if it is.
  * // if it is not `never`, we can then safely check if it is `true`.
@@ -68,7 +69,7 @@
  * @template [False=false] The type to return if the check fails.
  * @example
  * ```ts
- * import type { IsNever } from "@nick/is/type/never";
+ * import type { IsNever } from "jsr:@nick/is/type/never";
  *
  * type A = IsNever<never>; // true
  * type B = IsNever<never, "never", "not never">; // "never"
@@ -85,7 +86,7 @@ export type IsNever<T, True = true, False = false> = [T] extends [never] ? True
  *
  * @example
  * ```ts
- * import type { OmitNever } from "@nick/is/type/never";
+ * import type { OmitNever } from "jsr:@nick/is/type/never";
  *
  * type A = Required<{ a: string; b: number } & { b: bigint; c: number }>;
  * //   ^? type A = { a: string; b: never; c: number }

@@ -27,7 +27,18 @@
 import { isIterator } from "./iterator.ts";
 import { isTagged } from "./tagged.ts";
 
-/** Represents a string iterator. */
+/**
+ * Represents an iterator object that iterates over one or more characters from
+ * a given string.
+ *
+ * This is the type returned by the native `[Symbol.iterator]` method on the
+ * `String.prototype` object, to iterate over a string's characters one-by-one.
+ *
+ * @category Iteration
+ * @tags String, Iterator
+ * @template T The type of string being iterated over, defaults to `string`.
+ * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/@@iterator
+ */
 export interface StringIterator<T extends string = string>
   extends IteratorObject<T> {
   readonly [Symbol.toStringTag]: "String Iterator";
@@ -45,11 +56,12 @@ export interface StringIterator<T extends string = string>
  * import { isStringIterator } from "jsr:@nick/is/string-iterator";
  *
  * const str = "foo";
- * const iter = str[Symbol.iterator]();
- * console.log(isStringIterator(iterator)); // true
  * console.log(isStringIterator(str)); // false
+ *
+ * const iter = str[Symbol.iterator]();
+ * console.log(isStringIterator(iter)); // true
  * ```
- * @category Iterables
+ * @category Iteration
  * @tags String, Iterator
  */
 export function isStringIterator<T extends string = string>(

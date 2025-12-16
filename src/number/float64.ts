@@ -1,7 +1,7 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/float64
+ * @see https://jsr.io/@nick/is/doc/number/float64
  */
 
 /**
@@ -15,7 +15,7 @@
  *
  * @example
  * ```ts
- * import { isFloat64, type Float64 } from "jsr:@type/number/float64";
+ * import { isFloat64, type Float64 } from "jsr:@nick/is/number/float64";
  *
  * let x = 1.5, y = 0;
  *
@@ -24,7 +24,7 @@
  * if (isFloat64(x)) z = x;
  * ```
  *
- * @category Numbers
+ * @category Numeric
  */
 import { isFloat } from "./float.ts";
 import type { Cast, FLOAT64, MAYBE_FLOAT64 } from "./types.ts";
@@ -35,7 +35,7 @@ import type { Cast, FLOAT64, MAYBE_FLOAT64 } from "./types.ts";
  *
  * @example
  * ```ts
- * import { isFloat64, type Float64 } from "jsr:@type/number/float64";
+ * import { isFloat64, type Float64 } from "jsr:@nick/is/number/float64";
  *
  * let x = 1.5 as Float64, y = 0;
  *
@@ -48,7 +48,7 @@ import type { Cast, FLOAT64, MAYBE_FLOAT64 } from "./types.ts";
  * // This will raise a TypeScript compiler error:
  * x = 1; // <- TS2322 Type '1' is not assignable to type 'Float64'.
  * ```
- * @category Numbers
+ * @category Numeric
  * @category Types
  * @tags float64, number
  * @module float64
@@ -61,7 +61,7 @@ export type Float64<N = number> = Cast<N, FLOAT64>;
  *
  * @example
  * ```ts
- * import { isFloat64, type MaybeFloat64 } from "jsr:@type/number/float64";
+ * import { isFloat64, type MaybeFloat64 } from "jsr:@nick/is/number/float64";
  *
  * let x = 1.5 as MaybeFloat64, y = 0;
  *
@@ -73,7 +73,7 @@ export type Float64<N = number> = Cast<N, FLOAT64>;
  *
  * y = 1; // <- No error! (this is the main difference from `Float64`)
  * ```
- * @category Numbers
+ * @category Numeric
  * @category Types
  * @tags maybe, float64, number
  */
@@ -96,7 +96,7 @@ export type MaybeFloat64<N = number> = Cast<N, MAYBE_FLOAT64>;
  * console.log(isFloat64(NaN)); // false
  * console.log(isFloat64(Infinity)); // false
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isFloat64<const N = number>(it: N): it is Float64<N>;
 
@@ -117,7 +117,7 @@ export function isFloat64<const N = number>(it: N): it is Float64<N>;
  * console.log(isFloat64(NaN)); // false
  * console.log(isFloat64(Infinity)); // false
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isFloat64(it: unknown): it is Float64;
 

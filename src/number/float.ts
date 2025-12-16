@@ -1,12 +1,10 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/float
+ * @see https://jsr.io/@nick/is/doc/number/float
  */
 
 /**
- * @module float
- *
  * Checks if a given number is a floating-point number. Returns `true` if the
  * value is a number and **not** an integer, otherwise `false`.
  *
@@ -16,6 +14,8 @@
  *
  * - For single precision floating-points, try {@link isFloat32} instead.
  * - For double precision, see {@link isFloat64} (alias {@link isDouble}).
+ *
+ * @module float
  */
 import type { Cast, FLOAT, MAYBE_FLOAT } from "./types.ts";
 
@@ -25,7 +25,7 @@ import type { Cast, FLOAT, MAYBE_FLOAT } from "./types.ts";
  *
  * @example
  * ```ts
- * import { isFloat, type Float } from "@nick/is/float";
+ * import { isFloat, type Float } from "jsr:@nick/is/float";
  *
  * let x = 1.5 as Float, y = 0;
  *
@@ -38,10 +38,8 @@ import type { Cast, FLOAT, MAYBE_FLOAT } from "./types.ts";
  * // This will raise a TypeScript compiler error:
  * x = 1; // <- TS2322 Type '1' is not assignable to type 'Float'.
  * ```
- * @category Numbers
- * @category Types
+ * @category Numeric
  * @tags float, number
- * @module float
  */
 export type Float<N = number> = Cast<N, FLOAT>;
 
@@ -51,7 +49,7 @@ export type Float<N = number> = Cast<N, FLOAT>;
  *
  * @example
  * ```ts
- * import { isFloat, type MaybeFloat } from "@nick/is/float";
+ * import { isFloat, type MaybeFloat } from "jsr:@nick/is/float";
  *
  * let x = 1.5 as MaybeFloat, y = 0;
  *
@@ -63,8 +61,7 @@ export type Float<N = number> = Cast<N, FLOAT>;
  *
  * y = 1; // <- No error! (this is the main difference from `Float`)
  * ```
- * @category Numbers
- * @category Types
+ * @category Numeric
  * @tags maybe, float, number
  */
 export type MaybeFloat<N = number> = Cast<N, MAYBE_FLOAT>;
@@ -77,14 +74,14 @@ export type MaybeFloat<N = number> = Cast<N, MAYBE_FLOAT>;
  * @returns `true` if the value is a floating-point number, `false` otherwise.
  * @example
  * ```ts
- * import { isFloat } from "@nick/is/float";
+ * import { isFloat } from "jsr:@nick/is/float";
  *
  * isFloat(1); // false
  * isFloat(1.0); // false
  * isFloat(1.1); // true
  * isFloat(1.00001e1); // true
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isFloat<const N = number>(it: N): it is Float<N>;
 
@@ -102,7 +99,7 @@ export function isFloat<const N = number>(it: N): it is Float<N>;
  * @returns `true` if the value is a floating-point number, `false` otherwise.
  * @example
  * ```ts
- * import { isFloat } from "@nick/is/float";
+ * import { isFloat } from "jsr:@nick/is/float";
  *
  * isFloat(0); // true
  * isFloat(1); // false
@@ -110,7 +107,7 @@ export function isFloat<const N = number>(it: N): it is Float<N>;
  * isFloat(1.1); // true
  * isFloat(1.00001e1); // true
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isFloat(it: unknown): it is Float;
 

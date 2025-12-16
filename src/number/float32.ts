@@ -1,12 +1,10 @@
 /*!
  * Copyright (c) 2024-2025 Nicholas Berlette. All rights reserved.
  * @license MIT (https://nick.mit-license.org/2024)
- * @see https://jsr.io/@nick/is@0.2.0-rc.5/doc/float32
+ * @see https://jsr.io/@nick/is/doc/number/float32
  */
 
 /**
- * @module float32
- *
  * Checks if a given number is a floating-point number. Returns `true` if the
  * value is a number and **not** an integer, otherwise `false`.
  *
@@ -16,10 +14,21 @@
  *
  * - For single precision floating-points, try {@link isFloat32} instead.
  * - For double precision, see {@link isFloat64} (alias {@link isDouble}).
+ *
+ * @example
+ * ```ts
+ * import { isFloat32 } from "jsr:@nick/is/float32";
+ *
+ * console.assert(isFloat32(1.1)); // true
+ * console.assert(isFloat32(1.00001e1)); // true
+ * console.assert(!isFloat32(1)); // false
+ * console.assert(!isFloat32(1.0)); // false
+ * ```
+ * @module float32
  */
 import { isFloat } from "./float.ts";
-import { fround } from "@nick/math/fround";
-import type { Cast, FLOAT32, MAYBE_FLOAT32 } from "./types.ts";
+import type { Float32 } from "@nick/math/types";
+import { roundFloat32 } from "@nick/math/float32";
 
 /**
  * Casts a value into a floating-point type. If the value is not a number, it
@@ -27,7 +36,7 @@ import type { Cast, FLOAT32, MAYBE_FLOAT32 } from "./types.ts";
  *
  * @example
  * ```ts
- * import { isFloat32, type Float32 } from "@nick/is/float32";
+ * import { isFloat32, type Float32 } from "jsr:@nick/is/float32";
  *
  * let x = 1.5 as Float32, y = 0;
  *
@@ -40,12 +49,11 @@ import type { Cast, FLOAT32, MAYBE_FLOAT32 } from "./types.ts";
  * // This will raise a TypeScript compiler error:
  * x = 1; // <- TS2322 Type '1' is not assignable to type 'Float32'.
  * ```
- * @category Numbers
  * @category Types
  * @tags float32, number
  * @module float32
  */
-export type Float32<N = number> = Cast<N, FLOAT32>;
+export type { Float32 } from "@nick/math/types";
 
 /**
  * Casts a value into a partial floating-point type. If the value is not a
@@ -53,7 +61,7 @@ export type Float32<N = number> = Cast<N, FLOAT32>;
  *
  * @example
  * ```ts
- * import { isFloat32, type MaybeFloat32 } from "@nick/is/float32";
+ * import { isFloat32, type MaybeFloat32 } from "jsr:@nick/is/float32";
  *
  * let x = 1.5 as MaybeFloat32, y = 0;
  *
@@ -65,11 +73,11 @@ export type Float32<N = number> = Cast<N, FLOAT32>;
  *
  * y = 1; // <- No error! (this is the main difference from `Float32`)
  * ```
- * @category Numbers
+ * @category Numeric
  * @category Types
  * @tags maybe, float32, number
  */
-export type MaybeFloat32<N = number> = Cast<N, MAYBE_FLOAT32>;
+export type MaybeFloat32<N extends number = number> = N & Partial<Float32<N>>;
 
 /**
  * Checks if the value is a floating-point number. Supports single-precision
@@ -80,16 +88,16 @@ export type MaybeFloat32<N = number> = Cast<N, MAYBE_FLOAT32>;
  * otherwise `false`.
  * @example
  * ```ts
- * import { isFloat32 } from "@nick/is/float32";
+ * import { isFloat32 } from "jsr:@nick/is/float32";
  *
  * isFloat32(1); // false
  * isFloat32(1.0); // false
  * isFloat32(1.1); // true
  * isFloat32(1.00001e1); // true
  * ```
- * @category Numbers
+ * @category Numeric
  */
-export function isFloat32<const N = number>(it: N): it is Float32<N>;
+export function isFloat32<const N extends number>(it: N): it is Float32<N>;
 
 /**
  * Checks if the value is a floating-point number. Supports single-precision
@@ -100,20 +108,20 @@ export function isFloat32<const N = number>(it: N): it is Float32<N>;
  * otherwise `false`.
  * @example
  * ```ts
- * import { isFloat32 } from "@nick/is/float32";
+ * import { isFloat32 } from "jsr:@nick/is/float32";
  *
  * isFloat32(1); // false
  * isFloat32(1.0); // false
  * isFloat32(1.1); // true
  * isFloat32(1.00001e1); // true
  * ```
- * @category Numbers
+ * @category Numeric
  */
 export function isFloat32(it: unknown): it is Float32;
 
 /** @ignore */
 export function isFloat32(it: unknown): it is Float32 {
-  return isFloat(it) && it === fround(it);
+  return isFloat(it) && it === roundFloat32(it);
 }
 
 /** @ignore */

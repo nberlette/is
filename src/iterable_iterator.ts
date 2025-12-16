@@ -22,7 +22,7 @@ import { isIterator } from "./iterator.ts";
  * console.log(isIterableIterator(iter[Symbol.iterator]())); // true
  * console.log(isIterableIterator("foo"[Symbol.iterator]())); // false
  * ```
- * @category Iterables
+ * @category Iteration
  * @module iterable-iterator
  */
 export function isIterableIterator<T>(it: unknown): it is IterableIterator<T> {

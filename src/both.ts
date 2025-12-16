@@ -85,7 +85,10 @@ import type { Predicate } from "./type/predicate.ts";
  * ```
  * @category Composition
  */
-export function isBoth<L, R>(l: Predicate<L>, r: Predicate<R>): Predicate<L & R> {
+export function isBoth<L, R>(
+  l: Predicate<L>,
+  r: Predicate<R>,
+): Predicate<L & R> {
   if (typeof l !== "function" || typeof r !== "function") {
     const typeL = l === null ? "null" : typeof l;
     const typeR = r === null ? "null" : typeof r;

@@ -261,7 +261,6 @@ export var DatePrototypeToLocaleString: Uncurry<Date["toLocaleString"], Date> =
 
 // #endregion Date
 
-
 // #region RegExp
 export var RegExp: RegExpConstructor = $globalThis.RegExp;
 export var RegExpPrototype: RegExp = RegExp.prototype;
